@@ -115,7 +115,7 @@ Possiamo tradurre questo sistema con due equazioni differenziali (ad intuito):
 .\] 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/Volpi-Conigli.png}
+    \includegraphics[width=0.4\textwidth]{figures/Volpi-Conigli.png}
     \caption{\scriptsize Andamento delle soluzioni}
     \label{fig:conigli}
 \end{figure}
@@ -154,10 +154,11 @@ Possiamo trovare l'evoluzione temporale come:
 \begin{redbox}{Esempio di Master Equation}
     \begin{equation}
         \begin{aligned}
-	    \frac{P(x,y,y+\Delta  t) - P(x,y,t)}{\Delta  t}  =& P_r(x-1\to x, y) \cdot P(x-1,y,t) +\\
-				&P_r(x+1\to x, y-1\to y) \cdot P(x+1,y,t) + \\
-				&P(x\to x, y+1\to y) P(x,y+1,t) + \\
-				& \left[P_r(x\to x, y\to y) - 1\right]\cdot P(x,y,t) 
+	    &\frac{P(x,y,t+\Delta  t) - P(x,y,t)}{\Delta  t}  =\\
+	    & \quad P_r(x-1\to x, y) \cdot P(x-1,y,t) +\\
+	    & \quad P_r(x+1\to x, y-1\to y) \cdot P(x+1,y,t) + \\
+	    & \quad P(x\to x, y+1\to y) P(x,y+1,t) + \\
+	    & \quad \left[P_r(x\to x, y\to y) - 1\right]\cdot P(x,y,t) 
         \end{aligned}
     \end{equation}
 \end{redbox}

@@ -1,4 +1,4 @@
-\documentclass[a4paper]{report}
+\documentclass[a4paper, twocolumn]{report}
 \usepackage{float}
 \usepackage{verbatim}
 \usepackage[utf8]{inputenc}
@@ -23,6 +23,13 @@
 {colback=blue!5!white,colframe=blue!75!black,fonttitle=\bfseries,title=#1}
 
 
+\lstset{
+      basicstyle=\ttfamily,
+        columns=fullflexible,
+	frame=single,
+      	breaklines=true,
+      	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
 % figure support
 \usepackage{import}
 \usepackage{xifthen}
@@ -68,4 +75,5 @@
 \clearpage
 \tableofcontents
 \input{lezioni/lez_1.tex}
+\input{lezioni/lez_2.tex}
 \end{document}

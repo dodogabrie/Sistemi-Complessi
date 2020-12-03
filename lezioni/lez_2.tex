@@ -1,0 +1,135 @@
+\lez{2}{25-09-2020}{Argomento}
+\subsection{Esempi di Master equation}%
+\begin{itemize}
+    \item Rumore shot.
+    \item Rumore Jonshon
+\end{itemize}
+Prendiamo il rumore Shot, questo si basa sul fatto che la corrente non è proprio continua, chiamiamo $t_k$ il tempo di arrivo di un elettrone:
+\[
+    I(t) = \sum_{t_k}^{} F(t-t_k) 
+.\] 
+Mentre $F(t-t_k)$ è una funzione a pinna di squalo. Cerchiamo la Master equation per questo sistema:
+\[
+    P(n\to n+1, \text{in }\Delta  t) = \lambda \Delta tP_n(t) 
+.\] 
+Visto che possiamo riscrivere la probabilità di avere $n$ elettroni al tempo $t+\Delta t$ come: 
+\[
+    P_n(t+\Delta  t) = \left(1-\lambda\Delta t\right)P_n(t) + \lambda\Delta t 
+.\] 
+Si ottiene:
+\[
+    \frac{P(n, t+\Delta  t) - P(n,t)}{\Delta t} = \lambda (P(n-1,t) -P(n,t)) 
+.\] 
+\subsection{Metodo della funzione generatrice}%
+Possiamo risolvere questa equazione utilizzando una tecnica standard: la funzione generatrice $G(s,t)$:
+\[
+    G(s,t) =\sum_{}^{} s^nP(n,t) 
+.\] 
+Sostituendo nella master si ha:
+\[
+    \frac{\partial G(s,t)}{\partial t} = \lambda (s-1) G(s,t) 
+.\] 
+Che si risolve con il risultato:
+\[
+    G(s,t) = \exp\left(\lambda (s-1) t\right)G(s,0) 
+.\] 
+Gli elettroni arrivano per $t\ge 0$, infatti si deve avere che: $P(0,0)=1$, $P(n,0) = 0 \ \forall n$, queste condizioni iniziali ci portano a $G(s,0) = 1$.
+\[\begin{aligned}
+    G(s,t) =& e^{\lambda (s-1) t}G(s,0) = \sum_{}^{} s^n P(n,t) \implies  \\
+		&\sum_{}^{} e^{-\lambda t}\frac{\left(\lambda ts\right)^n }{n!}G(s,0)  = \sum_{}^{} s^nP(n,t) 
+.\end{aligned}\]
+In cui si è sfruttato la serie dell'esponenziale $e^{\lambda st}$.
+\begin{redbox}{Distribuzione di Poisson}
+    \[
+	P(n,t)= e^{-\lambda t}\frac{\left(\lambda t\right)^{n}}{n!}
+    .\] 
+    Dove $P(n,t)$ è la probabilità che al tempo $t$ abbiamo $N(t) =n$ elettroni.
+\end{redbox}
+\noindent
+Tornando alla corrente dobbiamo trovare un modo per contare gli elettroni:
+\[
+    \mu (t) = \frac{\text{d} N}{\text{d} t} \quad
+    \begin{cases}
+	&0 \quad \text{di solito}\\
+	&\delta (t-t_k) \quad \text{Arriva e$^-$ al tempo }t_k
+    \end{cases}
+\] 
+Dove ricordiamo che $t_k$ è random.
+Quindi abbiamo che: 
+\[
+    \mu (t) = \sum_{k}^{} \delta (t-t_k) 
+.\] 
+Allora possiamo riscrivere la corrente con un integrale sfruttando le $\delta$:
+\[
+    I(t) = \int dx F(t-t_k) \mu (x) 
+.\] 
+Prendendo come $F$ modello la funzione:
+\[
+    F(t) = \begin{cases}
+        0 \quad t<0\\
+	q \exp\left(-\alpha t\right) \quad t \ge 0
+    \end{cases}
+.\] 
+Otteniamo per la corrente:
+\[
+    I(t) = \int_{- \infty}^{t} q \exp\left(-\alpha (t-x) \right) \frac{\text{d} N}{\text{d} x} dx 
+.\] 
+Adesso dobbiamo risolvere il problema che $N(t)$ è una funzione a salti irregolari tra loro. Vediamo l'equazione differenziale per $I(t)$.
+\[\begin{aligned}
+    \frac{\text{d} I}{\text{d} t} =& q\exp\left(-\alpha (t-x)\right)\left.\dot{N}\right|_{x=t} + \\
+				   &+\int_{-\infty}^{t} \left(-\alpha q\right)\exp\left(-\alpha (t-x)\right)\dot{N}dx 
+.\end{aligned}\]
+Risolvendo a sinistra ed usando le definizioni ci si riduce a:
+\begin{redbox}{Equazione stocastica differenziale}
+ \[
+    \frac{\text{d} I}{\text{d} t} = -\alpha I(t) + q\mu (t) 
+.\]    
+\end{redbox}
+Il termine in $\mu$ dipende dalla sequenza casuale di $\delta$, ogni sequenza casuale diversa ci può dare soluzioni diverse.\\
+L'idea per risolvere il problema è di interpolare l'andamento di $N$ con un moto browniano, prendendo la media e le fluttuazioni del termine stocastico.
+Essendo il termine in $\mu$ la derivata di un processo poissoniano abbiamo le seguenti proprietà:
+\[\begin{aligned}
+    &\left<\mu dt\right>=\left<dN\right> = \lambda dt\\
+    & \left<\left(\lambda dt - \mu dt\right)^2\right> = \lambda dt
+.\end{aligned}\]
+Si ha un termine di fluttuazioni $d\eta$ tale che:
+\[
+    dN = \lambda dt + d\eta	
+.\] 
+Il differenziale della corrente si scrive come::
+\[
+    dI(t) = \left(\lambda q-\alpha I\right)dt+ qd\eta (t) 
+.\] 
+Prendendo la media di questa equazione abbiamo che il termine di fluttuazione media a zero:
+\[
+    \frac{\text{d} }{\text{d} t} \left<I\right> = \lambda q -\alpha\left<I\right>
+.\] 
+Questa equazione per tempi lunghi da il risultato stazionario:
+\[
+    \left<I\right>_{\infty}=\frac{\lambda q}{\alpha}
+.\] 
+Andiamo avanti nel conto con la seguente presa di posizione:
+\begin{equation}
+    \left(I+dI\right)^2 \approx I^2 + 2IdI	\label{eq:baddiff}
+\end{equation}
+Quindi con il risultato che dovrebbe esser noto sui differenziali: $d\left(I^2\right) = 2IdI$, se assumiamo questo e moltiplichiamo a destra e sinistra per $\left<I\right>$ nella equazione   per la corrente otteniamo:
+\[
+    \frac{1}{2}\frac{\text{d} }{\text{d} t} \left<I^2\right>= \lambda q\left<I\right>-\alpha\left<I^2\right>
+.\] 
+Che ci porta a concludere che:
+\[
+    \left<I^2\right>_{\infty} = \frac{\lambda q}{\alpha}\left<I\right>_{\infty} = \left(\left<I\right>_{\infty}\right)^2
+.\] 
+Otteniamo quindi un paradosso, la corrente ha varianza nulla:
+\[
+  \left<I^2\right>-\left<I\right>^2 = 0  
+.\] 
+Questo significherebbe che la "larghezza" del moto Browniano è nulla, quindi la corrente sarebbe costante e continua.\\
+L'errore è dovuto al differenziale \ref{eq:baddiff}, infatti il termine trascurato vale:
+\[
+    \left<dI^2\right> = \left<q^2d\eta^2\right> = q^2\lambda dt
+.\] 
+Che è anch'esso di prim'ordine nel tempo! L'equazione corretta sarebbe allora:
+\[
+    \frac{1}{2}\frac{\text{d} }{\text{d} t} \left<I^2\right>= \lambda q\left<I\right>-\alpha\left<I^2\right> + q^2\lambda
+.\]
