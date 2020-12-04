@@ -1,6 +1,6 @@
 %% Creator: Inkscape 1.0 (4035a4fb49, 2020-05-01), www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
-%% Accompanies image file '1-brow.pdf' (pdf, eps, ps)
+%% Accompanies image file '1-brown.pdf' (pdf, eps, ps)
 %%
 %% To include the image in your LaTeX document, write
 %%   \input{<filename>.pdf_tex}
@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{900.1618537bp}%
+    \setlength{\unitlength}{344.1368884bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -50,15 +50,15 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.13618027)%
+  \begin{picture}(1,0.14854)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
-    \put(0,0){\includegraphics[width=\unitlength,page=1]{1-brow.pdf}}%
-    \put(0.25779619,0.52273377){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\Delta$\end{tabular}}}}%
-    \put(0.22024825,0.63596565){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$x-\Delta$  \end{tabular}}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=2]{1-brow.pdf}}%
-    \put(0.49514582,0.62545538){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\xi$ \end{tabular}}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=3]{1-brow.pdf}}%
-    \put(0.40398415,0.52310142){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$d\Delta$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{1-brown.pdf}}%
+    \put(0.94262703,0.01808782){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$r$\\\end{tabular}}}}%
+    \put(0.1331484,0.00563429){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$x-\Delta$\end{tabular}}}}%
+    \put(0.41023904,0.10214902){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\Delta$\end{tabular}}}}%
+    \put(0.6235056,0.00874764){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$x$\end{tabular}}}}%
+    \put(0.67331982,0.12394266){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$dx$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{1-brown.pdf}}%
   \end{picture}%
 \endgroup%

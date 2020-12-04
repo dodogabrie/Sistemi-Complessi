@@ -1,4 +1,6 @@
-\lez{1}{24-09-2020}{Introduzione}
+\section{Lezione 1}%
+\label{sub:Lezione 1}
+
 \subsection{Moto Browniano}%
 Il conte Brown nel 1827 pensò di aver scoperto la vita osservando particelle di polline in acqua che si muovevano in modo casuale, ne concluse che le particelle fossero vive. Successivamente fu Einstein a dare una descrizione collisionale con i seguenti punti chiave:
 \begin{itemize}
@@ -11,29 +13,30 @@ Sempre per ipotesi per ogni pallina si ha la proprietà:
 \[
     x(t=0) = x \implies  x(t=\tau) = x + \Delta
 .\] 
-Dove $\Delta$ varia da pallina a pallina, di conseguenza possiamo definire una distribuzione pari di questi $\Delta$: $f(\Delta)$
+Dove $\Delta$ varia da pallina a pallina, possiamo definire una distribuzione pari di questi $\Delta$: $f(\Delta)$
 \[\begin{aligned}
     &\int f(\Delta) d\Delta = 1; \quad &f(\Delta) = f(-\Delta) 
 .\end{aligned}\]
-\subsection{Primo esempio di equazione di Fokker-Plank}%
-Possiamo trovare il numero di palline che si muovono di una quantità $\xi$: $\Delta < \xi < \Delta  + d\Delta$, chiamiamo tale numero $dn$.
+\paragraph{Primo esempio di equazione di Fokker-Plank}%
+Possiamo trovare il numero $dn$ di palline che si muovono di una quantità $\xi$: $\Delta < \xi < \Delta  + d\Delta$.
 \begin{figure}[H]
     \centering
-    \incfig{1-brow}
-    \caption{Particelle che si muovono di $\xi$.}
+    \incfig{1-brown}
+    \caption{\scriptsize Particelle che si muovono di $\xi$, dove $\Delta$ è la variabile stocastica per le palline.}
     \label{fig:1-brown}
 \end{figure}
+\noindent
 \[
     dn = n f(\Delta) d\Delta
 .\] 
 La probabilità che una pallina si trovi nel punto $x$ al tempo $t+\tau$ per $dx$ è:
-\begin{greenbox}{Equazione di Chapman-Kulmogorov}
+\begin{greenbox}{Equazione di Chapman-Kolmogorov}
  \begin{equation}
     P(x,t+\tau) dx = dx \int P(x-\Delta,t) f(\Delta) d\Delta \label{eq:CK_1}
 \end{equation}
-Rappresenta il fatto che il processo è markoviano. Se tale processo non fosse stato di questo tipo avremmo dovuto mettere a destra più di un tempo.
 \end{greenbox}
 \noindent
+L'equazione rappresenta il fatto che il processo in question è markoviano. Se così non fosse avremmo dovuto mettere a destra più di un tempo (anticipazione di argomento del corso).\\
 Espandendo in serie (di Kramers-Moyal) le probabilità:
 \[\begin{aligned}
     &P(x, t+\tau) = P(x, t) + \frac{\partial P}{\partial t} \tau  \\
@@ -55,7 +58,7 @@ Integrando la \ref{eq:FP_1} si ottiene, con le condizioni iniziali: $P(x,t=0) = 
 \[
     P(x,t) = \frac{n}{\sqrt{4\pi Dt}}\exp\left(-\frac{x^2}{4Dt}\right)   
 .\] 
-\subsection{Introduzione ad una dinamica mesoscopica: Langevin}%
+\subsection{Dinamica mesoscopica: Langevin}%
 Possiamo scrivere una equazione del moto per le palline tenendo di conto di:
 \begin{itemize}
     \item Attrito: $-6\pi\eta d \dot{x}$ (Approccio alla Stokes) 
@@ -84,10 +87,11 @@ Possiamo buttare il secondo termine ottenendo:
     \end{equation}
 \end{redbox}
 Andando a vedere l'equazione di Fokker-Plank vista sopra si scopre che c'è una relazione tra $D$  ed i coefficienti di questa equazione:
-\begin{bluebox}{Relazione tra coefficienti}
+\begin{bluebox}{Coefficiente di Einstein}
     \[
         D = \frac{kT}{6\pi\eta d}
     .\] 
+    Detto anche coefficiente di diffusione.
 \end{bluebox}
 \subsection{Nascita-Morte: Master equation}%
 Ipotizziamo di avere due specie di animali:
