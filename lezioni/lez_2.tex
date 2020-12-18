@@ -6,88 +6,88 @@
     \item Rumore shot.
     \item Rumore Jonshon
 \end{itemize}
-Prendiamo il rumore Shot, questo si basa sul fatto che la corrente non è proprio continua, chiamiamo $t_k$ il tempo di arrivo di un elettrone:
+\paragraph{Rumore shot}%
+La corrente è composta da elettroni che si spostano, le fluttuazioni del numero di elettroni generano rumore.\\
+Chiamiamo $t_k$ il tempo di arrivo di un elettrone su una certa sezione ortogonale alla direzione del flusso, si sceglie il seguente modello per la corrente:
 \[
     I(t) = \sum_{t_k}^{} F(t-t_k) 
 .\] 
-Mentre $F(t-t_k)$ è una funzione a pinna di squalo. Cerchiamo la Master equation per questo sistema:
+$F(t-t_k)$ ha la forma di una scarica di condensatore:
+\[
+    F(t) = \begin{cases}
+	0	 			&t<0\\
+	q \exp\left(-\alpha t\right) 	&t \ge 0
+    \end{cases}
+\] 
+Cerchiamo la Master equation per questo sistema:
 \[
     P(n\to n+1, \text{in }\Delta  t) = \lambda \Delta tP_n(t) 
 .\] 
 Visto che possiamo riscrivere la probabilità di avere $n$ elettroni al tempo $t+\Delta t$ come: 
 \[
-    P_n(t+\Delta  t) = \left(1-\lambda\Delta t\right)P_n(t) + \lambda\Delta t 
-.\] 
-Si ottiene:
+    P_n(t+\Delta  t) = \left(1-\lambda\Delta t\right)P_n(t) + \lambda\Delta t  \implies 
+\] 
 \[
-    \frac{P(n, t+\Delta  t) - P(n,t)}{\Delta t} = \lambda (P(n-1,t) -P(n,t)) 
+	\frac{P(n, t+\Delta  t) - P(n,t)}{\Delta t} = \lambda\left[P(n-1,t) -P(n,t)\right] 
 .\] 
 \subsection{Metodo della funzione generatrice}%
-Possiamo risolvere questa equazione utilizzando una tecnica standard: la funzione generatrice $G(s,t)$:
+Per risolvere il problema introduciamo la funzione generatrice $G(s,t)$:
 \[
-    G(s,t) =\sum_{}^{} s^nP(n,t) 
+    G(s,t) =\sum_{n}^{} s^nP(n,t) 
 .\] 
 Sostituendo nella master si ha:
 \[
-    \frac{\partial G(s,t)}{\partial t} = \lambda (s-1) G(s,t) 
+    \frac{\partial G(s,t)}{\partial t} = \lambda (s-1) G(s,t)
 .\] 
-Che si risolve con il risultato:
 \[
-    G(s,t) = \exp\left(\lambda (s-1) t\right)G(s,0) 
+     \implies  G(s,t) = \exp\left(\lambda (s-1) t\right)G(s,0) 
 .\] 
-Gli elettroni arrivano per $t\ge 0$, infatti si deve avere che: $P(0,0)=1$, $P(n,0) = 0 \ \forall n$, queste condizioni iniziali ci portano a $G(s,0) = 1$.
+Gli elettroni arrivano per $t\ge 0$, infatti si deve avere che: 
+\[
+    \begin{cases}
+	&P(0,0)=1\\
+	&P(n,0) = 0
+    \end{cases}
+    \ \forall n \implies  G(s,0) = 1 
+.\] 
 \[\begin{aligned}
-    G(s,t) =& e^{\lambda (s-1) t}G(s,0) = \sum_{}^{} s^n P(n,t) \implies  \\
-		&\sum_{}^{} e^{-\lambda t}\frac{\left(\lambda ts\right)^n }{n!}G(s,0)  = \sum_{}^{} s^nP(n,t) 
+    G(s,t) =& e^{\lambda (s-1) t} = \sum_{}^{} s^n P(n,t) \implies  \\
+		&\sum_{}^{} e^{-\lambda t}\frac{\left(\lambda ts\right)^n }{n!}  = \sum_{}^{} s^nP(n,t) 
 .\end{aligned}\]
 In cui si è sfruttato la serie dell'esponenziale $e^{\lambda st}$.
 \begin{redbox}{Distribuzione di Poisson}
     \[
 	P(n,t)= e^{-\lambda t}\frac{\left(\lambda t\right)^{n}}{n!}
     .\] 
-    Dove $P(n,t)$ è la probabilità che al tempo $t$ abbiamo $N(t) =n$ elettroni.
+    Dove $P(n,t)$ è la probabilità che al tempo $t$ ci siano $N(t) =n$ elettroni nel sistema.
 \end{redbox}
 \noindent
 Tornando alla corrente dobbiamo trovare un modo per contare gli elettroni:
 \[
-    \mu (t) = \frac{\text{d} N}{\text{d} t} \quad
-    \begin{cases}
-	&0 \quad \text{di solito}\\
-	&\delta (t-t_k) \quad \text{Arriva e$^-$ al tempo }t_k
-    \end{cases}
+    \mu(t) \equiv 
+    \frac{\text{d} N}{\text{d} t} 
+    =\delta (t-t_k)  
 \] 
-Dove ricordiamo che $t_k$ è random.
-Quindi abbiamo che: 
-\[
-    \mu (t) = \sum_{k}^{} \delta (t-t_k) 
-.\] 
-Allora possiamo riscrivere la corrente con un integrale sfruttando le $\delta$:
-\[
-    I(t) = \int dx F(t-t_k) \mu (x) 
-.\] 
-Prendendo come $F$ modello la funzione:
-\[
-    F(t) = \begin{cases}
-        0 \quad t<0\\
-	q \exp\left(-\alpha t\right) \quad t \ge 0
-    \end{cases}
-.\] 
-Otteniamo per la corrente:
-\[
-    I(t) = \int_{- \infty}^{t} q \exp\left(-\alpha (t-x) \right) \frac{\text{d} N}{\text{d} x} dx 
-.\] 
-Adesso dobbiamo risolvere il problema che $N(t)$ è una funzione a salti irregolari tra loro. Vediamo l'equazione differenziale per $I(t)$.
+Dove $t_k$ è il tempo (random) in cui arriva un elettrone.
+Passiamo al continuo nei tempi di arrivo degli elettroni e riscriviamo la corrente come:
 \[\begin{aligned}
-    \frac{\text{d} I}{\text{d} t} =& q\exp\left(-\alpha (t-x)\right)\left.\dot{N}\right|_{x=t} + \\
-				   &+\int_{-\infty}^{t} \left(-\alpha q\right)\exp\left(-\alpha (t-x)\right)\dot{N}dx 
+    I(t) =& \int dx F(t-x) \mu(x) =\\
+	 =&\int_{- \infty}^{t} q \exp\left(-\alpha (t-x) \right) \frac{\text{d} N}{\text{d} x} dx 
 .\end{aligned}\]
-Risolvendo a sinistra ed usando le definizioni ci si riduce a:
+La difficoltà dell'espressione sta nel fatto che $N(t)$ è una funzione a salti irregolari.\\
+Differenziando rispetto al tempo $I(t)$:
+\[\begin{aligned}
+    \frac{\text{d} I}{\text{d} t} &= q\exp\left(-\alpha (t-x)\right)\left.\dot{N}\right|_{x=t} + \\
+				   &\qquad +\int_{-\infty}^{t} \left(-\alpha q\right)\exp\left(-\alpha (t-x)\right)\dot{N}dx =\\
+				   &= q\mu (t) - \alpha I(t) 
+.\end{aligned}\]
 \begin{redbox}{Equazione stocastica differenziale}
  \[
     \frac{\text{d} I}{\text{d} t} = -\alpha I(t) + q\mu (t) 
 .\]    
 \end{redbox}
-Il termine in $\mu$ dipende dalla sequenza casuale di $\delta$, ogni sequenza casuale diversa ci può dare soluzioni diverse.\\
+\noindent
+Il termine in $\mu$ dipende dalla sequenza casuale di $\delta$, ognuna di queste può dare soluzioni differenti.\\
 L'idea per risolvere il problema è di interpolare l'andamento di $N$ con un moto browniano, prendendo la media e le fluttuazioni del termine stocastico.
 Essendo il termine in $\mu$ la derivata di un processo poissoniano abbiamo le seguenti proprietà:
 \[\begin{aligned}
@@ -98,19 +98,19 @@ Si ha un termine di fluttuazioni $d\eta$ tale che:
 \[
     dN = \lambda dt + d\eta	
 .\] 
-Il differenziale della corrente si scrive come::
+Il differenziale della corrente si scrive come:
 \[
     dI(t) = \left(\lambda q-\alpha I\right)dt+ qd\eta (t) 
 .\] 
-Prendendo la media di questa equazione abbiamo che il termine di fluttuazione media a zero:
+Prendendo la media di questa equazione abbiamo che il termine di fluttuazione $\left(I d\eta\right)$ media a zero per ipotesi:
 \[
     \frac{\text{d} }{\text{d} t} \left<I\right> = \lambda q -\alpha\left<I\right>
 .\] 
-Questa equazione per tempi lunghi da il risultato stazionario:
+Il risultato stazionario per l'equazione è:
 \[
     \left<I\right>_{\infty}=\frac{\lambda q}{\alpha}
 .\] 
-Andiamo avanti nel conto con la seguente presa di posizione:
+Procediamo con una ipotesi sbagliata: trascurare le fluttuazioni nel seguente termine
 \begin{equation}
     \left(I+dI\right)^2 \approx I^2 + 2IdI	\label{eq:baddiff}
 \end{equation}
@@ -133,5 +133,176 @@ L'errore è dovuto al differenziale \ref{eq:baddiff}, infatti il termine trascur
 .\] 
 Che è anch'esso di prim'ordine nel tempo! L'equazione corretta sarebbe allora:
 \[
-    \frac{1}{2}\frac{\text{d} }{\text{d} t} \left<I^2\right>= \lambda q\left<I\right>-\alpha\left<I^2\right> + q^2\lambda
+    \frac{1}{2}\frac{\text{d} }{\text{d} t} \left<I^2\right>= \lambda q\left<I\right>-\alpha\left<I^2\right> + q^2\lambda + O(dt)
 .\]
+
+
+\subsection{Correlazione e densità spettrale}%
+\label{sub:Correlazione e densità spettrale}
+Si rimembrano definizioni utili ai fini del corso. 
+\begin{bluebox}{Correlazione}
+    \[
+        G\left(t\right)=\lim_{T \to \infty} \frac{1}{T}\int_{0}^{T} x\left(t+s\right) x\left(s\right)ds
+    .\] 
+\end{bluebox}
+\noindent
+Se il sistema è ergodico questa definizione è equivalente a quella mediata sull'Ensemble:
+\[
+    G( t) = \left<x(t+s) \cdot  x(s)\right>
+.\] 
+\begin{bluebox}{Densità spettrale}
+    \[
+        S\left(\omega\right) = \lim_{T \to \infty} \frac{1}{2\pi T}\left|\int_{0}^{T} x\left(t\right)e^{-i\omega t}dt \right|
+    .\] 
+\end{bluebox}
+\noindent
+Le due definizioni sono legate da una trasformata di Fourier: 
+\begin{bluebox}{}
+    \[
+        S\left(\omega\right) = \frac{1}{2\pi}\int G\left(\omega\right)e^{-i\omega t}dt
+    .\] 
+\end{bluebox}
+
+
+
+\subsection{Probabilità}%
+\label{sub:Probabilità}
+Possiamo ripensare una definizione assiomatica della probabilità.
+\input{lezioni/tikz/lez_2_prob.tex}
+Nella quale $\boldsymbol{x}$ è un evento, $A$ è un set di eventi possibili appartenente ad $\Omega$: l'insieme di tutti gli eventi possibili $(A \in \Omega)$.
+\paragraph{Proprietà di $P$ }%
+\label{par:Proprietà di P}
+\begin{itemize}
+    \item $P\left(A\right)\ge 0$.
+    \item $P\left(\Omega\right) = 1$.
+    \item $P\left(\cup_{i}^{} A_i \right) = \sum_{i}^{} P\left(A_i\right)$ con $A_i$ collezione di insiemi disgiunti numerabile.
+    \item $P\left(\overline{A}\right) = 1- P\left(A\right)$.
+    \item Se $\omega \in A \cup B$ con $A \cup B = 0$ $\implies$ $\omega\in A \ \cap \ \omega  \in B$.
+\end{itemize}
+\paragraph{Probabilità condizionata}%
+\label{par:Probabilità condizionata}
+La probabilità che avvenga l'evento $A$ sapendo che è già avvenuto un evento $B$ è data da:
+\begin{greenbox}{}
+	\[
+	    P\left(A|B\right) = \frac{P\left(A \cap B\right)}{P\left(B\right)}
+	.\] 
+\end{greenbox}
+Ovviamente si ha anche che:
+\[
+    P\left(A|B\right)P(B) = P(A)P\left(B|A\right)
+.\] 
+Prendiamo adesso un insieme $B_i$ di set di eventi:
+\[\begin{aligned}
+& B_i \cap B_j = \O \quad \forall i,j \\
+& \bigcup_{i}^{} B_i = \Omega 
+.\end{aligned}\]
+Da queste ne deriva che, per il set $A$:
+\[
+    \begin{WithArrows}
+	\bigcup_{i}^{}  \left(A \cap B_i \right) = A \cap \left(\bigcup_{i}^{}  B_i\right) = A \cap \Omega = A &
+	\Arrow[jump=2,xoffset=0.5cm]{Utile per} \\
+													       &\\
+	\sum_{i}^{} P\left(A\cap B_i\right) = P\left(\bigcup_{i}^{} \left(A \cap B_i\right)\right) =  P(A) &
+    \end{WithArrows}
+.\] 
+Per la probabilità congiunta si ha in generale che:
+\begin{greenbox}{}
+	\[
+    		\sum_{i}^{} P\left(A|B_i\right)P(B_i) = \sum_{i}^{} P\left(A \cap B_i\right) = P(A) 
+	.\]    
+\end{greenbox}
+\paragraph{Eventi indipendenti}%
+\label{par:Eventi indipendenti}
+Due eventi $x_A, x_B$ si dicono indipendenti se i set a cui appartengono $(A, B)$ rispettano la seguente:
+\[
+    P(B) P(A|B) = P(A\cap B) = P(A) P(B) 
+.\] 
+Questa fattorizzazione è valida in generale per eventi indipendenti:
+\begin{bluebox}{}
+\[
+    P\left(\bigcap_i A_i\right) = \prod_i P(A_i) 
+.\]    
+\end{bluebox}
+\paragraph{Valor medio e distribuzione di probabilità}%
+\label{par:Valor medio e distribuzione di probabilità}
+Sia $R$ una variabile random funzione di un evento $\omega$, il valor medio di $R$ sarà:
+\begin{redbox}{}
+ \[
+    \left<R\right> = \sum_{\omega}^{} P(\omega) R(\omega) 
+.\]    
+\end{redbox}
+\noindent
+Possiamo facilmente estendere la definizione al caso continuo, definiamo il set $A(\omega_0, d\omega_0)$ come l'insieme degli eventi $\omega$ tali che:
+\[
+    \omega  \in \left[\omega_0, \omega_0 + d\omega_0\right]
+.\] 
+La densità di probabilità di trovare un evento nel set $A(\omega_0, d\omega_0)$ è data da:
+\[
+    P(\omega_0) d\omega_0 \equiv P\left[A(\omega_0,d\omega_0) \right] = P(\omega_0,d\omega_0) 
+.\] 
+Quindi il valor medio di $R$ nel continuo:
+\begin{redbox}{Valor medio nel continuo}
+ \[
+    \left<R\right> = \int\limits_{\omega\in \Omega} R(\omega) P(\omega) 
+.\]    
+\end{redbox}
+\subsection{Funzione caratteristica}%
+\label{sub:Funzione caratteristica}
+Sia $\vect{x}$ una variabile random con distribuzione di probabilità $P(\vect{x})$, la funzione caratteristica della distribuzione è:
+\begin{redbox}{}
+    \[
+	\phi (\vect{s}) = \int d\vect{x} P(\vect{x}) e^{i \vect{x}\cdot \vect{s}}
+    .\] 
+\end{redbox}
+
+\begin{exmp}[Distribuzione Gaussiana]
+ \[\begin{aligned}
+    &P(x) = \frac{e^{-x^2 / 2 \sigma^2}}{\sqrt{2\pi\sigma^2}} 
+    &\implies&
+    &\phi (s) = e^{-\sigma^2s^2 / 2}
+.\end{aligned}\]
+\end{exmp}
+
+\begin{exmp}[Distribuzione uniforme]
+\[
+    P(x) = 
+    \begin{cases}
+	1 & x \in \left[-\frac{1}{2}, \frac{1}{2}\right]\\
+	0 & \text{Altrimenti}
+    \end{cases}
+\] 
+\[
+    \phi (s) = \int_{-1 /2}^{1 /2} e^{ixs}dx = \frac{2}{s}\sin\left(\frac{s}{2}\right)  
+.\] 
+\end{exmp}
+
+\subsubsection{Proprietà della funzione caratteristica}%
+\label{ssub:Proprietà della funzione caratteristica}
+\begin{enumerate}
+    \item $\left|\phi (s) \right|= 1 $.
+    \item $\phi (s) $ è continua.
+    \item Se $\exists \left<x^n\right>$ allora: 
+	\[
+		\left<x^n\right> = \left(-i\right)^n \left.\frac{\partial ^n}{\partial s^n} \phi (s)\right|_{s=0} 
+	.\] 
+    \item Una sequenza di distribuzioni converge ad una distribuzione limite $\iff$ converge la sequenza di funzioni caratteristiche.
+    \item Dato $\vect{x} = \left(x_1, \ldots, x_n\right)$ con $x_i$ indipendenti $\forall i$ allora:
+	\[ 
+	    \phi (s_1, s_2, \ldots) = \prod_{i=1}^{n} \phi (s_i)  
+	\]
+    \item Se $y = \sum_{i}^{} x_i$ con $x_i$ indipendenti, allora:
+	\[
+	    \phi (s) = \left<e^{isy}\right> = \prod_{i}^{} \phi_i(s)  
+	.\] 
+	\begin{exmp}
+	    Se $y = x_1 + x_2$ ho che:
+	    \[
+		P(y) = \int P(x_1) P(y-x_1) dx_1
+	    .\] 
+	    Allora per le proprietà della trasformata di una convoluzione:
+	    \[
+		\phi (s) = \phi_1(s) \phi_2(s) 
+	    .\] 
+	\end{exmp}
+\end{enumerate}
+\clearpage

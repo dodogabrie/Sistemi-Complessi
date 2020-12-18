@@ -1,0 +1,189 @@
+\section{Lezione 5}%
+\label{sub:Lezione 5}
+\subsection{Processo di Ornstein - Uhlenback}%
+\label{sub:Processo di Ornstein - Uhlenback}
+Prendiamo in considerazione altri esempi di processi di Markov.
+\begin{redbox}{Equazione di Ornstein - Uhlenback}
+    \[
+	\frac{\partial P}{\partial t} = \frac{\partial }{\partial x} (kxP) + \frac{1}{2}D\frac{\partial ^2}{\partial x^2} P
+    .\] 
+\end{redbox}
+\noindent
+\subsubsection{Soluzione stazionaria}%
+\label{subsub:Soluzione stazionaria}
+Cerchiamo intanto la soluzione con ($\partial_{t}P=0$):
+\[
+    \frac{\partial }{\partial x} \left(kxP + \frac{1}{2}D \frac{\partial }{\partial x} P\right) = 0 \implies
+\] 
+\[
+    \implies  \left[kxP + \frac{1}{2}D \frac{\partial }{\partial x} P\right]_{-\infty}^{x} = J
+.\] 
+Se ipotizziamo che:
+\[\begin{aligned}
+    & 1. \ \lim_{\left|x\right| \to \infty} P(x, t|x_0,t_0) = 0 \\
+    & 2. \ \lim_{\left|x\right| \to \infty} xP(x, t|x_0,t_0) = 0
+.\end{aligned}\]
+Allora possiamo affermare che la corrente $J=0$ per $x\to \infty$. Si risolve allora l'equazione differenziale:
+\begin{bluebox}{Soluzione stazionaria}
+    \[
+    P_s(x) = \frac{1}{\sqrt{\pi} D /k}e^{-kx^2 / D}
+    .\] 
+\end{bluebox}
+\noindent
+\subsubsection{Soluzione dipendente dal tempo.}%
+\label{subsub:Soluzione dipendente dal tempo}
+Per la dipendenza temporale sfruttiamo la funzione caratteristica $\phi (s)$.
+\[
+    \phi (s) = \int e^{isx}P(x,t|x_0,t_0) dx
+.\] 
+L'equazione del processo diventa:
+\[
+    \partial_{t}\phi  = -ks\partial_{s}\phi  - \frac{1}{2}Ds^2\phi
+.\] 
+Questa equazione alle derivate parziali può essere risolta tramite il metodo delle caratteristiche (\ref{sub:caratteristiche}).\\
+L'unico ostacolo all'utilizzo del metodo è il secondo termine dopo l'uguale (contiene la soluzione), vorremmo ricondurci all'equazione in forma standard. \\
+Facciamo allora il cambio di variabile:
+\[
+    g = \ln\phi 
+.\] 
+Visto che:
+\[
+     \partial_{t}g 
+.\] 
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Codice per appendice  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent\rule{0.48\textwidth}{0.7pt}
+\addtocounter{Sec}{\value{section}}%Mantengo il numero delle sezioni
+\begin{appendices}
+\section*{Appendice}%
+\setcounter{section}{\theSec}%Applico numero sezioni
+\setcounter{subsection}{0}%Applico numero sezioni
+\renewcommand{\thesubsection}{\arabic{section}.\Alph{subsection}}
+
+\subsection{Metodo delle Caratteristiche.}
+\label{sub:caratteristiche}
+Supponiamo di avere una PDE della forma:
+\begin{redbox}{PDE per metodo delle caratteristiche}
+\[
+    a(x,y) \partial_{x}u + b(x,y) \partial_{y}u - c(x, y) = 0
+.\] 
+\end{redbox}
+\noindent
+Scrivibile anche come:
+\begin{equation}
+    \left(a,\ b,\ c\right)\cdot \left(\partial_{x}u,\ \partial_{y}u,\ -1\right) = 0
+    \label{eq:caratt}
+\end{equation}
+Ed una superficie parametrizzata con la soluzione della PDE ($u(x,y))$: 
+\[
+    S \equiv (x,y, u(x,y) ) 
+.\] 
+\input{lezioni/tikz/lez_5_caratteristiche_S.tex}
+\noindent
+\subsubsection{Vettore tangente a $S$}%
+\label{subsub:Vettore tangente a S}
+\begin{bluebox}{}
+Il vettore $\left(a, \ b, \ c\right)$ appartiene al piano tangente di $S$ in ogni punto $\left(x, y, z\right)$.
+\end{bluebox}
+\noindent
+La normale $\vect{N}$ alla superficie $S$ la si trova facendo il gradiente di:
+\[
+    \overline{S} = u(x,y) - z
+.\] 
+Si ottiene quindi:
+\[
+    \vect{N}  = \left(\partial_{x}u, \ \partial_{y}u, \ -1\right)
+.\] 
+Visto che $\vect{N}$ è il secondo termine nella \ref{eq:caratt} si vede che la soluzione è il luogo dei vettori $(a, b,c)$ ortogonali a $\vect{N}$, quindi tangenti al piano $S$.
+\input{lezioni/tikz/lez_5_caratteristiche.tex}
+\noindent
+Quindi la soluzione della PDE è tale per cui il vettore $(a,b,c)$ sta sul piano tangente.
+
+\subsubsection{Curva caratteristica}%
+\label{subsub:Curva caratteristica}
+Per mappare la soluzione si introduce una curva $C$ detta curva caratteristica che descrive la superficie. 
+\[
+    C: \quad C \equiv \left(x(\eta) , y(\eta), z(\eta) \right)
+.\] 
+$C$ è una curva parametrica in $\eta$ localmente tangente a $(a, b, c)$.\\
+La condizione di parallelismo implica il seguente sistema:
+\begin{greenbox}{Equazioni Caratteristiche}
+    Sono curve integrali per il campo vettoriale $(a, b, c)$ 
+\[
+    \begin{cases}
+	 &a(x(\eta) , y(\eta) ) = \dfrac{\text{d} x}{\text{d} \eta} \\
+								   &\\
+	 &b(x(\eta) , y(\eta) ) = \dfrac{\text{d} y}{\text{d} \eta} \\ 
+								   &\\
+	 &c(x(\eta) , y(\eta) ) = \dfrac{\text{d} z}{\text{d} \eta}  
+    \end{cases}
+\]
+\end{greenbox}
+\noindent
+Queste equazioni risolvono la PDE.
+\begin{exmp}[Equazione del trasporto.]
+   \[
+       u_t + a \cdot u_x = 0
+   .\]  
+   In questo caso si ha $(a, b, c) \to (a, 1, 0)$, quindi:
+   \[\begin{aligned}
+	   &\dfrac{\text{d} x}{\text{d} \eta} = a & \quad
+	   &\dfrac{\text{d} t}{\text{d} \eta} = 1 & \quad
+	   &\dfrac{\text{d} z}{\text{d} \eta} = 0 &
+   \end{aligned}\]
+   Passiamo alla risoluzione:
+   \[
+       \begin{cases}
+	    x(\eta) = a\eta +c_1\\
+	    t(\eta) = c_2 + \eta\\
+	    z(\eta) = c_3
+       \end{cases}
+       \implies\quad
+       \begin{cases}
+           x -at = x_0\\
+	   z=k
+       \end{cases}
+   \] 
+   In cui si è effettuata dell'algebra per eliminare $\eta$ nel primo sistema. 
+   \begin{itemize}
+       \item La funzione che risolve il sistema di destra è la soluzione dell'equazione del trasporto. 
+       \item  Graficamente le funzioni che risolvono sono delle rette con $z$ costante, l'unione di queste rette rappresenta $S$.
+       \item Abbiamo ottenuto un fascio di soluzioni poiché non abbiamo imposto alcuna soluzione al contorno.
+   \end{itemize}
+   In conclusione $z$ dovrà essere funzione di $x-at$, quindi la soluzione generale sarà una funzione del tipo:
+   \[
+       z(x, t ) = f(x-at) \equiv u(x, t) 
+   .\] 
+   Supponiamo che all'istante iniziale la soluzione fosse una gaussiana:
+   \[
+       f(x, t=0) = e^{-x^2}
+   .\] 
+   Quindi si ha che anche la soluzione a $t=0$ è una gaussiana:
+   \[
+       u(x, t=0) = e^{-x^2}
+   .\] 
+   Ed introducendo il tempo la soluzione diventa semplicemente:
+   \[
+       u(x, t) = e^{-\left(x-at\right)^2}
+   .\] 
+   
+\end{exmp}
+\noindent
+
+\end{appendices}
+
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+

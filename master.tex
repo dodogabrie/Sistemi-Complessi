@@ -1,9 +1,11 @@
 \documentclass[a4paper, twocolumn]{report}
+\setlength{\columnsep}{2em}
 \usepackage{float}
 \usepackage{verbatim}
 \usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
 \usepackage{amsmath}
+\usepackage{mathtools}
 \usepackage{amsbsy,amssymb,amsfonts, amsthm}
 \usepackage[version=4]{mhchem}
 \usepackage{graphicx}
@@ -13,8 +15,25 @@
 \usepackage{nameref}
 \usepackage{framed}
 \usepackage[framemethod=TikZ]{mdframed}
+\usepackage{appendix}
+\usepackage{tikz}
+\usetikzlibrary{math}
+\usetikzlibrary{shapes,arrows}
 \usepackage{tcolorbox}
 \usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{witharrows}
+
+\definecolor{myblue}{RGB}{0,163,243}
+\renewcommand{\footrulewidth}{0.4pt}% default is 0pt
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\itshape\nouppercase{\rightmark}}
+\fancyhead[RE,LO]{\itshape\nouppercase{\leftmark}}
+\fancyfoot[LE,CO]{Sistemi Complessi}
+\fancyfoot[LE,RO]{\thepage}
+
 
 \newcounter{Sec}
 
@@ -25,7 +44,7 @@
 \newtcolorbox{greenbox}[1]
 {opacityback=1, colback=green!5!white,colframe=green!75!black, opacityframe=0.09,fonttitle=\bfseries,coltitle=black, title=#1}
 \newtcolorbox{bluebox}[1]
-{opacityback=1, colback=blue!5!white,colframe=blue!75!black,opacityframe=0.09, fonttitle=\bfseries,coltitle=black,title=#1}
+{opacityback=1, colback=myblue!5!white,colframe=myblue!75!black,opacityframe=0.09, fonttitle=\bfseries,coltitle=black,title=#1}
 
 
 \lstset{
@@ -47,15 +66,15 @@
     \import{./figures/}{#1.pdf_tex}
 }
 \theoremstyle{plain}
-\newtheorem{thm}{Theorem}[chapter] % reset theorem numbering for each chapter
+\newtheorem{thm}{Theorem}[subsection] % reset theorem numbering for each chapter
 
 \theoremstyle{definition}
-\newtheorem{defn}[thm]{Definition} % definition numbers are dependent on theorem numbers
-\newtheorem{exmp}[thm]{Example} % same for example numbers
+\newtheorem{defn}{Definizione}[subsection] % definition numbers are dependent on theorem numbers
+\newtheorem{exmp}{Esempio}[subsection]
 
 \newcommand{\ffrac}[2]{\ensuremath{\frac{\displaystyle #1}{\displaystyle #2}}}
 \newcommand{\angstrom}{\mbox{\normalfont\AA}}
-\newcommand{\bs}{\boldsymbol}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
 %\renewcommand{\[}{\begin{equation}}
 %\renewcommand{\]}{\end{equation}}
 \renewcommand{\theequation}{\thesection.\arabic{equation}}
@@ -68,13 +87,18 @@
 \title{Sistemi complessi}
 \begin{document}
 \maketitle 
-\clearpage
 \tableofcontents
 
-\chapter{Processi stocastici}
-\input{lezioni/lez_1.tex}
-\input{lezioni/lez_2.tex}
+% Mindmap del corso
+\chapter*{MindMap del corso}
+\input{lezioni/tikz/lez_1_mindmap.tex}
 
+\chapter{Processi stocastici}
+%\input{lezioni/lez_1.tex}
+%\input{lezioni/lez_2.tex}
+%\input{lezioni/lez_3.tex}
+\input{lezioni/lez_4.tex}
+\input{lezioni/lez_5.tex}
 
 \addtocounter{Sec}{\value{section}}%Mantengo il numero delle sezioni
 \chapter{Sistemi caotici}

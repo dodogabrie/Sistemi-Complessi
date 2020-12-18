@@ -1,0 +1,23 @@
+\begin{center}
+\begin{tikzpicture}[x={(170:.9cm)},y={(55:.6cm)},z={(90:1cm)}]
+  %%%%%%%%%%%%%%%%%%%%
+  %  Piano Tangente  %
+  %%%%%%%%%%%%%%%%%%%%
+  \tikzmath{\x = 2.2; \z = -0.4;}
+  %%%%%%%%%%%%%%%%%
+  %  Piano curvo  %
+  %%%%%%%%%%%%%%%%%
+  \draw[fill=red!75!black, opacity=0.5, looseness=.8] (\x,-\x,\z) node[above right] {$S$}
+  to[bend left] (\x,\x,\z)
+  to[bend left] coordinate (mp) (-\x,\x,\z)
+  to[bend right] (-\x,-\x,\z)
+  to[bend right] coordinate (mm) (\x,-\x,\z)
+  -- cycle;
+  %%%%%%%%%%
+  %  Assi  %
+  %%%%%%%%%%
+  \draw[->] (0.5,0,-1.5) -- (-3,0,-1.5) node[right] {$y$};
+  \draw[->] (0,0.4,-1.5) -- (0,-3,-1.5) node[right] {$x$};
+  \draw[->] (0,0,-2) -- (0,0,1.5) node[right] {$u(x,y)$};
+\end{tikzpicture}
+\end{center}

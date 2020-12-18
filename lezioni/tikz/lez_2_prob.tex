@@ -1,0 +1,37 @@
+\\
+\tikzstyle{block} = [draw, fill=blue!20, rectangle, 
+    minimum height=3em, minimum width=6em]
+\tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+
+% The block diagram code is probably more verbose than necessary
+\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+    % We start by placing the blocks
+    \node [block] (a) {$\left(x_1, \ldots , x_n\right)$};
+    \node [block, right of=a, node distance=3cm] (b) {descritto};
+    \node [block, right of=b, node distance=3cm] (yes) {Max-Boltz};
+    % We draw an edge between the controller and system block to 
+    % calculate the coordinate u. We need it to place the measurement block. 
+    \draw [->] (a) -- node[name=u] {} (b);
+    \node [output, right of=b] (output) {};
+
+
+    \node [block, below of=a] (a1) {$\boldsymbol{x}$};
+    \node [block, right of=a1, node distance=3cm] (b1) {$\in$ };
+    \node [block, right of=b1, node distance=3cm] (yes1) {$A$ };
+    % We draw an edge between the controller and system block to 
+    % calculate the coordinate u. We need it to place the measurement block. 
+    \draw [->] (a1) -- node[name=u] {} (b1);
+    \node [output, right of=b1] (output1) {};
+
+
+
+    % Once the nodes are placed, connecting them is easy. 
+    \draw [->] (b) -- node [name=y] {}(output);
+    \draw [->] (b1) -- node [name=y] {}(output1);
+    \draw [->] (b) -- node [name=y] {}(b1);
+    \draw [->] (a) -- node [name=y] {}(a1);
+    \draw [->] (yes) -- node [name=y] {}(yes1);
+\end{tikzpicture}
