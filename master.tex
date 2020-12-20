@@ -19,10 +19,14 @@
 \usepackage{tikz}
 \usetikzlibrary{math}
 \usetikzlibrary{shapes,arrows}
+\usepackage{pgfplots}
 \usepackage{tcolorbox}
 \usepackage{listings}
 \usepackage{fancyhdr}
 \usepackage{witharrows}
+
+\newsavebox{\mybox}
+
 
 \definecolor{myblue}{RGB}{0,163,243}
 \renewcommand{\footrulewidth}{0.4pt}% default is 0pt
@@ -71,6 +75,7 @@
 \theoremstyle{definition}
 \newtheorem{defn}{Definizione}[subsection] % definition numbers are dependent on theorem numbers
 \newtheorem{exmp}{Esempio}[subsection]
+\newtheorem{ex}{Esercizio}[subsection] % definition numbers are dependent on theorem numbers
 
 \newcommand{\ffrac}[2]{\ensuremath{\frac{\displaystyle #1}{\displaystyle #2}}}
 \newcommand{\angstrom}{\mbox{\normalfont\AA}}
@@ -80,7 +85,6 @@
 \renewcommand{\theequation}{\thesection.\arabic{equation}}
 \counterwithin*{equation}{section}
 \newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
-
 
 
 \author{Edoardo Gabrielli}
@@ -94,11 +98,12 @@
 \input{lezioni/tikz/lez_1_mindmap.tex}
 
 \chapter{Processi stocastici}
-%\input{lezioni/lez_1.tex}
-%\input{lezioni/lez_2.tex}
-%\input{lezioni/lez_3.tex}
+\input{lezioni/lez_1.tex}
+\input{lezioni/lez_2.tex}
+\input{lezioni/lez_3.tex}
 \input{lezioni/lez_4.tex}
 \input{lezioni/lez_5.tex}
+\input{lezioni/lez_6.tex}
 
 \addtocounter{Sec}{\value{section}}%Mantengo il numero delle sezioni
 \chapter{Sistemi caotici}

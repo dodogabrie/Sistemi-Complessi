@@ -48,142 +48,195 @@ Facciamo allora il cambio di variabile:
 .\] 
 Visto che:
 \[
-     \partial_{t}g 
+     \partial_{t}g =\frac{\partial_{t}\phi}{\phi} \qquad 
+     \partial_{s}g = \frac{\partial_{s}\phi}{\phi}
 .\] 
-
-
-
-
-
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-%  Codice per appendice  %
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-\noindent\rule{0.48\textwidth}{0.7pt}
-\addtocounter{Sec}{\value{section}}%Mantengo il numero delle sezioni
-\begin{appendices}
-\section*{Appendice}%
-\setcounter{section}{\theSec}%Applico numero sezioni
-\setcounter{subsection}{0}%Applico numero sezioni
-\renewcommand{\thesubsection}{\arabic{section}.\Alph{subsection}}
-
-\subsection{Metodo delle Caratteristiche.}
-\label{sub:caratteristiche}
-Supponiamo di avere una PDE della forma:
-\begin{redbox}{PDE per metodo delle caratteristiche}
+Si ha una equazione in $g$ più maneggevole:
 \[
-    a(x,y) \partial_{x}u + b(x,y) \partial_{y}u - c(x, y) = 0
+    \partial_{t}g + k s \partial_{s}g = -\frac{1}{2}Ds^2
 .\] 
-\end{redbox}
-\noindent
-Scrivibile anche come:
-\begin{equation}
-    \left(a,\ b,\ c\right)\cdot \left(\partial_{x}u,\ \partial_{y}u,\ -1\right) = 0
-    \label{eq:caratt}
-\end{equation}
-Ed una superficie parametrizzata con la soluzione della PDE ($u(x,y))$: 
+Questa è risolubile con il metodo delle caratteristiche: 
 \[
-    S \equiv (x,y, u(x,y) ) 
+    (a, b, c) \to (1, ks, -\frac{1}{2}Ds^2) 
 .\] 
-\input{lezioni/tikz/lez_5_caratteristiche_S.tex}
-\noindent
-\subsubsection{Vettore tangente a $S$}%
-\label{subsub:Vettore tangente a S}
-\begin{bluebox}{}
-Il vettore $\left(a, \ b, \ c\right)$ appartiene al piano tangente di $S$ in ogni punto $\left(x, y, z\right)$.
-\end{bluebox}
-\noindent
-La normale $\vect{N}$ alla superficie $S$ la si trova facendo il gradiente di:
+Parametrizzando con $\eta$ abbiamo le equazioni caratteristiche:
 \[
-    \overline{S} = u(x,y) - z
+        \frac{\text{d} t}{\text{d} \eta} = 1 
+	\qquad
+	\frac{\text{d} s}{\text{d} \eta} = ks 
+	\qquad
+	\frac{\text{d} g}{\text{d} \eta} = -\frac{1}{2}D s^2
 .\] 
-Si ottiene quindi:
-\[
-    \vect{N}  = \left(\partial_{x}u, \ \partial_{y}u, \ -1\right)
-.\] 
-Visto che $\vect{N}$ è il secondo termine nella \ref{eq:caratt} si vede che la soluzione è il luogo dei vettori $(a, b,c)$ ortogonali a $\vect{N}$, quindi tangenti al piano $S$.
-\input{lezioni/tikz/lez_5_caratteristiche.tex}
-\noindent
-Quindi la soluzione della PDE è tale per cui il vettore $(a,b,c)$ sta sul piano tangente.
-
-\subsubsection{Curva caratteristica}%
-\label{subsub:Curva caratteristica}
-Per mappare la soluzione si introduce una curva $C$ detta curva caratteristica che descrive la superficie. 
-\[
-    C: \quad C \equiv \left(x(\eta) , y(\eta), z(\eta) \right)
-.\] 
-$C$ è una curva parametrica in $\eta$ localmente tangente a $(a, b, c)$.\\
-La condizione di parallelismo implica il seguente sistema:
-\begin{greenbox}{Equazioni Caratteristiche}
-    Sono curve integrali per il campo vettoriale $(a, b, c)$ 
+Possiamo risolvere per rimuovere $\eta$:
 \[
     \begin{cases}
-	 &a(x(\eta) , y(\eta) ) = \dfrac{\text{d} x}{\text{d} \eta} \\
-								   &\\
-	 &b(x(\eta) , y(\eta) ) = \dfrac{\text{d} y}{\text{d} \eta} \\ 
-								   &\\
-	 &c(x(\eta) , y(\eta) ) = \dfrac{\text{d} z}{\text{d} \eta}  
+        1. \quad dt = \dfrac{ds}{ks}\\
+	2. \quad \dfrac{ds}{ks} = - \dfrac{dg}{1 / 2 Ds^2}
     \end{cases}
-\]
-\end{greenbox}
+\] 
+Integrando queste equazioni escono fuori delle costanti, ridefinendo tali costanti come funzioni ($u_1,u_2$) saremo in grado di risalire alla $\phi$.\\ 
+Risolviamo la 1:
+\[
+    c_1 = t - \frac{1}{k}\ln (s) \ \implies  \ c'_1 = \exp\left(t- \frac{1}{k}\ln (s) \right) = s e^{-kt}
+.\] 
+Quindi definiamo la prima soluzione come $u_1$:
+\begin{equation}
+    u_1(t,s) = s e^{-kt} \label{eq:cat1}
+\end{equation}
+Passiamo alla equazione 2 del sistema, integrando si ottiene:
+\[
+    c_2 = \frac{s^2D}{4k} + g 
+.\] 
+Ricordando che $g=\ln\phi$ possiamo definire anche un'altra funzione a partire dalla costante $c_2$ (si fa l'esponenziale della 2):
+\begin{equation}
+    u_2(t,s) = \phi \exp\left(\frac{Ds^2}{4k}\right) \label{eq:cat2}
+\end{equation}
+Riscrivendo la \ref{eq:cat2} isolando $\phi$ si ha:
+\[
+    \phi  = u_2 \exp\left(-\frac{Ds^2}{4k}\right)
+.\]
+Visto che $u_1$ e $u_2$ sono entrambe costanti collegate dalle equazioni caratteristiche sarà vero che:
+\[
+    u_2 = f(u_1) 
+.\] 
+\begin{redbox}{Soluzione dipendente dal tempo per $\phi$}
+    \begin{equation}
+    \phi =f\left(se^{-kt}\right)\exp\left(-\frac{Ds^2}{4k}\right) 
+    \label{eq:car_phi}
+    \end{equation}
+\end{redbox}
 \noindent
-Queste equazioni risolvono la PDE.
-\begin{exmp}[Equazione del trasporto.]
-   \[
-       u_t + a \cdot u_x = 0
-   .\]  
-   In questo caso si ha $(a, b, c) \to (a, 1, 0)$, quindi:
-   \[\begin{aligned}
-	   &\dfrac{\text{d} x}{\text{d} \eta} = a & \quad
-	   &\dfrac{\text{d} t}{\text{d} \eta} = 1 & \quad
-	   &\dfrac{\text{d} z}{\text{d} \eta} = 0 &
-   \end{aligned}\]
-   Passiamo alla risoluzione:
-   \[
-       \begin{cases}
-	    x(\eta) = a\eta +c_1\\
-	    t(\eta) = c_2 + \eta\\
-	    z(\eta) = c_3
-       \end{cases}
-       \implies\quad
-       \begin{cases}
-           x -at = x_0\\
-	   z=k
-       \end{cases}
-   \] 
-   In cui si è effettuata dell'algebra per eliminare $\eta$ nel primo sistema. 
-   \begin{itemize}
-       \item La funzione che risolve il sistema di destra è la soluzione dell'equazione del trasporto. 
-       \item  Graficamente le funzioni che risolvono sono delle rette con $z$ costante, l'unione di queste rette rappresenta $S$.
-       \item Abbiamo ottenuto un fascio di soluzioni poiché non abbiamo imposto alcuna soluzione al contorno.
-   \end{itemize}
-   In conclusione $z$ dovrà essere funzione di $x-at$, quindi la soluzione generale sarà una funzione del tipo:
-   \[
-       z(x, t ) = f(x-at) \equiv u(x, t) 
-   .\] 
-   Supponiamo che all'istante iniziale la soluzione fosse una gaussiana:
-   \[
-       f(x, t=0) = e^{-x^2}
-   .\] 
-   Quindi si ha che anche la soluzione a $t=0$ è una gaussiana:
-   \[
-       u(x, t=0) = e^{-x^2}
-   .\] 
-   Ed introducendo il tempo la soluzione diventa semplicemente:
-   \[
-       u(x, t) = e^{-\left(x-at\right)^2}
-   .\] 
-   
-\end{exmp}
+\subsubsection{Condizioni al contorno}%
+\label{subsub:Condizioni al contorno}
+\[
+    P(x,0|x_0,0) = \delta (x-x_0) \implies  \phi (s,0) = e^{ix_0s}
+.\] 
+Prendiamo l'equazione \ref{eq:car_phi} ed invertiamola per trovare la $f(s)$ ($t=0$) inserendo anche la condizione iniziale:
+\[
+	f(s) = e^{ix_0s}\exp\left(\frac{Ds^2}{4k}\right)
+.\] 
+Per reinserire il tempo e trovare la soluzione con queste condizioni iniziali basta fare la sostituzione:
+\[
+    s \to se^{-kt}
+.\] 
+\begin{redbox}{Soluzione con condizione iniziale $\delta$}
+    \begin{equation}
+	\phi(s,t) =
+	\exp\left[-\frac{Ds^2}{4k}\left(1-e^{-2kt}\right) + isx_0e^{-kt}\right]
+    \end{equation}
+\end{redbox}
+\noindent
+A questo punto possiamo tornare indietro con una antitrasformata, altrimenti possiamo ricavare i momenti sfruttando le proprietà di $\phi$:
+\[
+    \left<x(t)\right> = \left.i\frac{\partial \phi}{\partial s} \right|_{s=0} = x_0e^{-kt}
+.\] 
+\[\begin{aligned}
+    \text{var(x(t) )} =& \left<x^2(t)\right> - \left<x(t)\right>^2 = \\
+    =& \left.-1 \frac{\partial ^2\phi}{\partial s^2}\right|_{s=0} - \left<x\right>^2 = \\
+    =&\frac{D}{2k}\left(1-e^{-2kt}\right)
+.\end{aligned}\]
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+	\begin{axis}[
+	    xmin= 0, xmax= 4,
+	    ymin= 0, ymax = 1.2,
+	    axis lines = middle,
+	    xlabel={t},
+	    ylabel={},
+	    ytick={0.5, 1},
+	    yticklabels={$\frac{D}{2k}$, $x_0$ },
+	    xtick={0},
+	    xticklabel={$$},
+	]
+	\addplot[domain=0:4, samples=100, color=red]{e^(-x)};
+	\addlegendentry{$\left<x(t) \right>$ }
+	\addplot[domain=0:4, samples=100, color=blue]{1/2*(1-e^(-2*x) ) };
+	\addlegendentry{var($x(t)$) }
+	\addplot[dotted, domain=0:4, samples=100]{0.5};
+	\end{axis}
+    \end{tikzpicture}
+    \caption{\scriptsize Andamento della media e della varianza per il processo di Ornstein-Uhlenback.}
+    \label{fig:mean-var}
+\end{figure}
+\noindent
+I risultati ottenuti sono conformi con le condizioni iniziali inserite. 
+\paragraph{Media}%
+all'istante iniziale tutti i camminatori sono in $x_0$ (grazie alla $\delta$). \\
+Quando il processo fa evolvere le posizioni dei camminatori allora i camminatori si allontanano da $x_0$ andando verso l'origine, questo è conforme con quanto visto per la soluzione stazionaria: una Gaussiana centrata nello $0$.
+\paragraph{Varianza}%
+Nell'istante iniziale, quando tutti i camminatori sono nel punto $x_0$, la varianza è nulla, questa si stabilizza nel tempo al valore dato dalla Gaussiana nelle condizioni stazionarie.
+\subsubsection{Calcolo delle correlazioni}%
+\label{subsub:Calcolo delle correlazioni}
+\[\begin{aligned}
+    \left<x(t_1) x(t_2) \right.&\left.|\left[x_0,t_0\right]\right> =\\
+    =&\int dx_1dx_2 P(x_1,t_1;x_2,t_2;x_0,t_0) x_1x_2 = \\
+    =&\int dx_1dx_2 x_1x_2P(\overline{x}_1,\overline{x}_2) P(\overline{x}_2, \overline{x}_0) 
+.\end{aligned}\]
+In cui si è assunto il processo Markoviano e la gerarchia temporale: $t_1>t_2>t_0$.\\
+Se il processo ha raggiunto la stazionarietà ($t_0\to \infty$) allora conosciamo la forma del propagatore:
+\[
+    P(x_2|x_0) \sim \exp\left(-k \frac{x_2^2}{D}\right)
+.\] 
+Risolvendo con questa si ottiene:
+\begin{redbox}{Correlazione temporale a due}
+    \[
+	\left<x(t) x(s) \right> \sim \frac{D}{2k}\exp\left(-k\left|t-s\right|\right)
+    .\] 
+    La correlazione temporale delle posizioni decade esponenzialmente.
+\end{redbox}
 \noindent
 
-\end{appendices}
+\subsubsection{Ornstein-Uhlenback come modello per rumore realistico.}%
+\label{subsub:Ornstein-Uhlenback come modello per rumore realistico.}
+Facendo la trasformata di Fourier della funzione di Correlazione si ottiene una Lorenziana:
+\[\begin{aligned}
+    S_{OU}(\omega) = & \mathcal{F}\left(\left<x(t) x(s) \right>\right)=\\
+		     =&\frac{1}{\omega^2 /k ^2 + 1}
+.\end{aligned}\]
 
-\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
-%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+	\begin{axis}[
+	    xmin= 0, xmax= 4,
+	    ymin= 0, ymax = 1.5,
+	    axis lines = middle,
+	    xlabel={$\omega$},
+	    ylabel={$S_{OU}(\omega)$},
+	    ytick={1, 0.5},
+	    yticklabels={$S_{OU}(0)$, $S_{OU}(0)/2$ },
+	    xtick={0, 1},
+	    xticklabels={$$ ,$\sim k$},
+	    every axis x label/.style={
+		at={(axis description cs:1,-0.1)},
+		anchor=south,
+                },
+	]
+	\addplot[domain=0:4, samples=100, color=red]{1/(x^2 + 1) };
+	\addplot[dotted, domain=0:1, samples=100]{0.5};
+	\addplot[dotted, domain=0:1, samples=100] coordinates{(1,0)(1,0.5)};
+	\end{axis}
+    \end{tikzpicture}
+    \caption{\scriptsize Andamento della trasformata della correlazione per il processo di Ornstein-Uhlenback.}
+    \label{fig:mean-var}
+\end{figure}
+\noindent
+Questo è esattamente quello che ci aspettiamo da un rumore realistico: il rumore ha una frequenza di cut-off dettata da una Lorenziana.	\\
+Il cut-off è dovuto al fatto che le cose non possono muoversi infinitamente veloci, l'inerzia dei corpi che partecipano al moto stocastico fissa la frequenza di cut-off.\\
+C'è quindi un tempo caratteristico di osservazione del fenomeno
+\[
+    \tau  = \frac{1}{k}
+.\] 
+Se osserviamo il moto su scale temporali di quest'ordine allora lo spettro degli urti tra i corpi va a zero, questo comporta che il moto oltre queste scale temporali non è più ben descritto dal processo di Wiener.
+\begin{ex}{Modifica all'equazione di OU}
+    Risolvere l'equazione di Ornstein-Uhlenback con l'aggiunta di un termine nella $\partial_{x}$:
+    \[
+	\frac{\partial P}{\partial t} = \frac{\partial }{\partial x} (\left(kx + \alpha\right)P) + \frac{1}{2}D\frac{\partial ^2}{\partial x^2} P
+    .\] 
+    \textbf{Soluzione}: Il moto dovrebbe andare a stazionarietà nel punto $-\alpha  / k$.
+\end{ex}
+% Appendice
+\input{lezioni/Appendix/App_lez_5.tex}
+\clearpage

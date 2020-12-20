@@ -1,0 +1,17 @@
+\usetikzlibrary{arrows.meta,bending}
+\begin{center}
+\begin{tikzpicture}[bullet/.style={circle,inner sep=0.7ex},x=2cm,auto,bend angle=40]
+    \tikzmath{\x = 1.5; \z =3.; \w = 0.5;}
+    \draw[->] (-\w,0) -- (\z,0) node[below right]{$x$};
+    \path 
+	(-\w,0) node[bullet] (-a) {}
+        (0,0) node[bullet] (0) {}
+        (\w,0) node[bullet] (a) {};
+    \foreach \X\Y in {-\w/-l, 0/0, \w/l, 2*\w/\left(N+1\right)l , 5*\w/\left(N^2+1\right)l}
+    { \draw (\X,0.05) -- (\X,-0.1) node[below]{$\Y$};}
+    \draw[-{Stealth[bend]},thick] (0) to[bend right=20]node[above]{$-R_0$ } (-a);
+    \draw[-{Stealth[bend]},thick] (0) to[bend left=20] node[above]{$R_0$ } (a);
+    \draw[-{Stealth[bend]},thick] (0) to[bend left=90] node[above]{$R_1$} (2*\w,0);
+    \draw[-{Stealth[bend]},thick] (0) to[bend left=90] node[above]{$R_2$ } (5*\w,0);
+\end{tikzpicture}
+\end{center}

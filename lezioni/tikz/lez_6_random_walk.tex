@@ -1,0 +1,14 @@
+\usetikzlibrary{arrows.meta,bending}
+\begin{center}
+\begin{tikzpicture}[bullet/.style={circle,inner sep=0.7ex},x=2cm,auto,bend angle=40]
+    \tikzmath{\x = 1.5; \z = 0;}
+    \draw[->] (-\x,0) -- (\x,0) node[below right]{$x$};
+    \path (-\x/3,0) node[bullet] (-a) {}
+     (0,0) node[bullet] (0) {}
+     (\x/3,0) node[bullet] (a) {};
+    \foreach \Y [count=\X starting from -2] in {-2,-1,0,1,2} 
+     {\draw (\X/2,0.05) -- (\X/2,-0.1) node[below]{$\Y$};}
+    \draw[-{Stealth[bend]},thick] (0) to[bend left] node{$+1$} (a);
+    \draw[-{Stealth[bend]},thick] (0) to[bend right] node[above]{$-1$} (-a);
+\end{tikzpicture}
+\end{center}
