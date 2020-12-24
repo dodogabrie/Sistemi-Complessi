@@ -374,12 +374,12 @@ Rimane soltanto:
 Di conseguenza con la scelta \ref{eq:tau} per i $\tau_i$ contano solo l'istante finale ed iniziale. \\
 Inoltre quando $\alpha =0$ l'integrale si annulla, mentre quando $\alpha =1$ l'integrale è l'intervallo temporale.\\
 La vera domanda da porsi è quale sia il giusto valore di $\alpha$\ldots
-\subsection{Integrale di Ito e di Stratonovich}%
+\subsection{Integrale di $\hat{\text{I}}$to e di Stratonovich}%
 \label{sub:Integrale di Ito e di Stratonovich}
-\subsubsection{Integrale di Ito}%
+\subsubsection{Integrale di $\hat{\text{I}}$to}%
 \label{subsub:Integrale di Ito}
-Ito è un matematico Giapponese, integrare con Ito implica scegliere $\tau_i$ all'inizio dell'intervallo.
-\begin{bluebox}{Integrale di Ito}
+$\hat{\text{I}}$to è un matematico Giapponese, integrare con $\hat{\text{I}}$to implica scegliere $\tau_i$ all'inizio dell'intervallo.
+\begin{bluebox}{Integrale di $\hat{\text{I}}$to}
     \[
         \alpha  = 0
     .\] 
@@ -392,7 +392,7 @@ Le somme parziali con questo integrale si scrivono come:
 \[
     S_n = \sum_{i}^{} \omega (t_{i-1}) \left[\omega (t_i) -\omega (t_{i-1}) \right]
 .\]
-L'integrazione di Ito forma una \texttt{Martingala}.
+L'integrazione di $\hat{\text{I}}$to forma una \texttt{Martingala}.
 \paragraph{Martingala}%
 \label{par:Martingala}
 Dato un set di variabili stocastiche:
@@ -405,13 +405,13 @@ Dato un set di variabili stocastiche:
 .\] 
 Con $E$: valore di aspettazione.\\
 Possiamo notare che il processo di Wiener realizza una martingala perché rispetta questa proprietà.\\
-Il calcolo di Ito è anche non anticipante:
+Il calcolo di $\hat{\text{I}}$to è anche non anticipante:
 \begin{redbox}{Funzione non anticipante}
     $G(t)$ è non anticipante se è indipendente dall'incremento $\omega (t) - \omega (s) $ $\forall t, s$.
 \end{redbox}
 \noindent
 \begin{exmp}[Esempi di funzioni non anticipanti]
-    Tutte le seguenti sono funzioni non anticipanti:
+    Dato un processo di Wiener $\omega (t)$ tutte le seguenti funzioni sono non anticipanti:
     \begin{itemize}
 	\item $\omega (t) $.
 	\item $\int dt f(\omega (t) ) $.
@@ -436,6 +436,18 @@ Le somme parziali in questo caso si scrivono come:
     S_n = \sum_{i}^{} \omega\left(\frac{t_i + t_{i-1}}{2}\right)\left[\omega (t_i) -\omega (t_{i-1}) \right]
 .\] 
 L'integrale di Stratonovich ha caratteristiche analoghe a quello che si usa normalmente in fisica, infatti si applica bene con funzioni "morbide".
+
+\begin{exmp}[]
+    \[
+	\int_{0}^{t} \omega (t) dt = 
+	\begin{cases}
+	    \dfrac{\omega^2(t)}{2}-\dfrac{\omega^2(0)}{2} = \dfrac{t}{2} & \text{ Strato}\\
+	    \sum_{}^{} \omega_{i-1}\left(\omega_i-\omega_{i-1}\right) = 0 & \text{ }\hat{\text{I}}\text{to}
+	\end{cases}
+    \] 
+\end{exmp}
+\noindent
+
 \subsection{Relazione tra l'incremento stocastico e l'incremento temporale.}%
 \label{sub:Relazione tra l'incremento stocastico e l'incremento temporale.}
 La relazione tra i due differenziali è la seguente:
@@ -466,19 +478,45 @@ Quindi anche che:
 \[
     \int\left(d\omega\right)^2 G(t) = \int dtG(t) 
 .\] 
-In particolare si ha anche che:
 \begin{redbox}{}
-    \[
-	d\omega  \sim O(dt^{1 /2}) 
-    .\] 
+    \begin{equation}
+	d\omega  \sim O(dt^{1 /2}) \label{eq:6_order}
+    \end{equation}
 \end{redbox}
 \noindent
 \subsubsection{Applicazione: Differenziale di una funzione}%
 \label{subsub:Applicazione: Differenziale di una funzione}
-Prendiamo una funzione del tempo e del processo di Wiener: $f\left[\omega,t\right]$. A causa dell'ordine dell'incremento stocastico possiamo affermare che il differenziale $df$  all'ordine più basso è:
+Prendiamo una funzione del tempo e del processo di Wiener: $f\left[\omega,t\right]$. Visto che si ha la \ref{eq:6_order} il differenziale $df$  all'ordine più basso è:
 \begin{bluebox}{Differenziale di una funzione}
     \[
 	df\left[\omega,t\right] = \left[\frac{\partial d}{\partial t} + \frac{1}{2}\frac{\partial ^2 f}{\partial \omega^2} \right]dt + \frac{\partial f}{\partial \omega} d\omega
     .\] 
 \end{bluebox}
 \noindent
+Questa struttura per il differenziale di una funzione è profondamente legata alla formula di $\hat{\text{I}}$to.
+\subsection{Formula di $\hat{\text{I}}$to}%
+\label{sub:Formula di ITO}
+Supponiamo di avere una SDE della seguente forma:
+\[
+    dx = a(x,t) dt + b(x,t) d\omega
+.\] 
+La soluzione formale è del seguente tipo:
+\[
+    x(t) = x_0 + \int_{t_0}^{t} a(x,s) ds + \int_{t_0}^{t} b(x,s) d\omega (s)   
+.\] 
+Supponiamo che esista una ed una sola soluzione non anticipante
+\footnote{Le ipotesi per cui vale sono negli appunti}. \\
+Allora se ho una $f(x,t)$ con $x$ soluzione della SDE scrivendone il differenziale all'ordine più basso si ha:
+\begin{redbox}{Formula di $\hat{\text{I}}$to}
+    \[\begin{aligned}
+	df(x,t) = 
+	\left[\frac{\partial f}{\partial t} + 
+	a \frac{\partial f}{\partial x} +
+        \frac{1}{2}b^2 \frac{\partial ^2 f}{\partial x^2} \right] dt +
+	b\frac{\partial f}{\partial x} d\omega 
+    .\end{aligned}\]
+    con $dx = adt + bd\omega$.
+\end{redbox}
+\noindent
+L'utilità della formula è che ci permette di fare cambi di variabili con funzioni dipendenti da una variabile casuale.
+\clearpage

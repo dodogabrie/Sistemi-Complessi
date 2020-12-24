@@ -1,0 +1,147 @@
+\section{Lezione 7}%
+\label{sub:Lezione 7}
+\subsection{Integrale di una SDE}%
+\label{sub:Integrale di una SDE}
+Prendiamo una SDE (Stochastical Differential Equation) del seguente tipo:
+\[
+    dx = f(x) dt + g(x) d\omega
+.\] 
+Con $\omega$ processo di Wiener. \\
+Nell'equazione abbiamo una parte deterministica ($f(x) dt$) ed una stocastica ($g(x)d\omega$).
+\begin{figure}[H]
+    \centering
+    \incfig{lez_7_int}
+    \caption{\scriptsize La linea rappresenta l'incremento della parte deterministica, in alto abbiamo invece il processo stocastico che discosta la $x$ dalla parte di funzione deterministica (come un rumore sovrapposto al segnale).}
+    \label{fig:lez_7_int}
+\end{figure}
+\noindent
+Abbiamo detto che formalmente possiamo integrare nel seguente modo (con $h$  passo di integrazione):
+\[
+    x_h - x_0 = \int_{0}^{h}  f(x(s) ) ds + \int_{0}^{h} g(x(s)) d\omega
+.\] 
+La formalità dell'espressione deriva dal fatto che le funzioni $f$ e $g$ dipendono da $x$, quindi non possiamo semplicemente risolvere questo integrale.
+\subsubsection{Soluzione perturbativa}%
+\label{subsub:Soluzione perturbativa}
+Se prendiamo un passo di integrazione $h$ piccolo, possiamo sviluppare $f$ e $g$ attorno al punto $x_0$:
+\[\begin{aligned}
+    f(x_s)   &=f_0 + f'_0\delta x_s + \frac{1}{2}f''_0(\delta x_s) ^2 \\
+    g(x_s)   &= g_0 + g'_0\delta x_s + \frac{1}{2}g''_0(\delta x_s) ^2 
+.\end{aligned}\]
+Con $\delta x_s = x_s-x_0$. Sostituendo nella equazione per la soluzione formale e tenendo solo l'ordine più basso si ha:
+\[
+    \delta x_h = \int_{0}^{h} f_0ds + \int_{0}^{h} g_0d\omega  = f_0h + g_0  \int_{0}^{h} d\omega 
+.\] 
+Al secondo termine abbiamo un integrale stocastico. Questo indica che, operativamente, per effettuare una integrazione numerica e calcolare il punto successivo $x_{n+1}$ si deve:
+\begin{itemize}
+    \item Valutare la $f$ nel punto $x_n$.
+    \item Valutare la $g$ nel punto $x_n$ (la $g$ di per se è solo una funzione, se la variabile è deterministica anche la $g$ da un risultato deterministico).
+    \item Ipotizzare una distribuzione per $\omega$.
+    \item Estrarre ogni volta un valore $Z_n$ secondo tale distribuzione
+    \footnote{caratterizzeremo meglio tale distribuzione sotto}
+     facendo in modo che, alla fine del processo, i valori siano distribuiti secondo la distribuzione di $\omega$.
+    \item $x_{n+1} = f(x_n)h + g(x_n) Z_n$ 
+\end{itemize}
+Il procedimento funziona perché l'integrale:
+\[
+    \int_{0}^{h} d\omega 
+.\] 
+\'E la somma di variabili Gaussiane, di conseguenza è anch'esso un processo con distribuzione Gaussiana:
+\[
+    Z_1(h) \equiv \int_{0}^{h} d\omega 
+.\]
+Vediamo le proprietà di $Z_1$:
+\[
+    \left<Z_1(h)\right> = \int_{0}^{h} \left<d\omega\right> = 0
+.\] 
+Poiché il processo di Wiener ha media nulla.
+\[\begin{aligned}
+    \left<Z^2(h) \right> = &\left<\int_{0}^{h} d\omega_s \int_{0}^{h} d\omega_t \right> = \\
+			   &=\left<\sum_{i}^{} \left(\omega_i-\omega_{i-1}\right) \sum_{J}^{} \left(\omega_J-\omega_{J-1}\right)\right> = \\
+			   &= \sum_{i}^{} \sum_{J}^{} \Delta t\delta_{iJ} = h
+.\end{aligned}\]
+Dove per risolvere si è usato che:
+\[
+    \left<\Delta\omega^2\right> = \Delta t
+.\] 
+Se ne conclude che la variabile $Z_1$ è una Gaussiana a media nulla e con varianza $\sqrt{h}$:
+\[
+    Z_1 \in G(0,\sqrt{h}) 
+.\] 
+Operativamente possiamo generare un numero random tra $0$ e $1$:
+\[
+    Y_1(i) \in G(0,1) 
+.\] 
+Ed ottenere la variabile da moltiplicare a $g_0$ con:
+\[
+    Z_1(h) = \sqrt{h} Y_1(i) 
+.\] 
+In conclusione si ha che:
+\begin{redbox}{}
+\[
+    \delta x_h = f_0 h + g_0Z_1(h) 
+.\]     
+\end{redbox}
+\noindent
+Guardando l'espressione notiamo che il primo termine è di ordine $h$ mentre il secondo è di ordine $\sqrt{h}$  poiché è un processo di Wiener. \\
+Risulta quindi necessario capire se ci siamo persi dei termini di ordine $h$  nella parte di sviluppo stocastico.\\
+Possiamo prendere la soluzione perturbativa al primo ordine e inserirla nuovamente all'interno dello sviluppo.\\
+Ci limitiamo inoltre ad inserire solo il termine all'ordine più basso ($g_0Z_1(h)$) poiché il termine con $f_0$  darebbe sicuramente contributi di ordine superiore.
+\[
+    \delta x_s^{(1 /2)} = g_0Z_1(h) = g_0  \int_{0}^{h} d\omega 
+.\] 
+\[\begin{aligned}
+    \delta x_t = &\int_{0}^{t} \left(f_0 + f'_0 g_0\int_{0}^{s}d\omega_r  \right) ds + \\
+		 & + \int_{0}^{h} \left(g_0+ g'_0 g_0 \int_{0}^{s} d\omega_r\right)d\omega_s  
+.\end{aligned}\]
+L'unico contributo di ordine $h$  deriva dal secondo integrale, che ci da un termine del tipo:
+\[
+    \int_{0}^{t} \int_{0}^{s} d\omega_r d\omega_s = \int_{0}^{t} \omega_sd\omega_s 
+.\] 
+Quindi adesso dobbiamo decidere quale calcolo utilizzare: $\hat{\text{I}}$to oppure Stratonovich. 
+\begin{bluebox}{}
+    L'evoluzione dell'equazione differenziale stocastica dipende dalla scelta del metodo di integrazione.
+\end{bluebox}
+\[
+  \int_{0}^{t} \omega_sd\omega_s =
+  \begin{cases}
+      \dfrac{\omega_t^2}{2} & \text{Strato}\\
+      \dfrac{1}{2}\left(\dfrac{\omega_t^2}{2} - t\right) & \hat{\text{I}}\text{to}
+  \end{cases}
+\] 
+In entrambi i casi si ottiene un termine $O(h)$, quindi:
+\begin{redbox}{}
+ \[
+    \delta x_h = 
+    g_0Z_1(h) +
+    f_0h + 
+    \frac{g_0g'_0}{2}\cdot \alpha (\hat{\text{I}}, S) 
+\] 
+Con $\alpha (\hat{\text{I}}, S)$ data da:
+\[
+    \alpha (\hat{\text{I}}, S) = 
+    \begin{cases}
+	Z_1^2(h) & \text{Strato}\\
+	Z_1^2(h) - h & \hat{\text{I}}to
+    \end{cases}
+\]    
+\end{redbox}
+\noindent
+\subsubsection{Uguaglianza tra i due metodi}%
+\label{subsub:Uguaglianza tra i due metodi}
+Effettuando il seguente cambio di variabili:
+\[
+    dx = \left(f-\frac{1}{2}gg'\right)dt + gd\omega
+.\] 
+si ha che i due $\delta x_h$ ($\hat{\text{I}}$to e Stratonovich) si eguagliano poiché il termine aggiunto va a compensare il termine che subentra con l'integrale di $\hat{\text{I}}$to.\\
+L'importanza di questo "cambio di variabili" è che ci autorizza ad utilizzare l'approccio di Stratonovich anche per sistemi che fisicamente andrebbero trattati con $\hat{\text{I}}$to
+\footnote{Stratonovich permette algoritmi di integrazione più potenti.}.
+\subsection{Algoritmo di Heun}%
+\label{sub:Algoritmo di Heun}
+Operativamente (per davvero) si usa spesso l'algoritmo di Heun per l'integrazione di SDE: si tratta di un algoritmo a 3 step:
+\[\begin{aligned}
+    & \tilde{x}_1 = x_0 + Z_1g_0 + f_0 h  + \frac{1}{2}g_0g'_0 Z_1^2\\
+    & x_1 = x_0 + Z_1 g(\tilde{x}_0) + f(\tilde{x}_0)  + \frac{1}{2}g(\tilde{x}_0) g'(\tilde{x}_0) Z_1^2\\
+    & x_h = \frac{1}{2}\left(x_1+ \tilde{x}_1\right)
+.\end{aligned}\]
+Sostanzialmente equivale a fare un primo step di predizione ed un successivo step di correzione.
+\clearpage

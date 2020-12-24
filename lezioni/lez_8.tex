@@ -1,0 +1,242 @@
+\section{Lezione 8}%
+\label{sub:Lezione 8}
+\subsection{Legame tra SDE e Fokker-Plank}%
+\label{sub:Legame tra SDE e Fokker-Plank}
+Prendiamo una equazione differenziale sticastica del tipo:
+\[
+    dx = adt + bd\omega
+.\] 
+Possiamo immaginare che questa SDE dia luogo ad una distribuzione di probabilità Markoviana, quindi che soddisfi l'equazione di Chapman-Kolmogorov (\ref{eq:4_CK}). \\
+Il problema è che la forma differenziale di CK è molto generale, cerchiamo di capire quale forma assume per soddisfare la SDE sopra.\\
+Prendiamo una generica funzione $f(x(t))$, il suo differenziale è dato dalla formula di $\hat{I}$to:
+\[
+    df = \left(a\partial_{x}f + \frac{1}{2}b^2\partial^2_{x^2}f\right)dt + b \partial_{x}f d\omega
+.\] 
+Consideriamo la derivata di $f$ rispetto al tempo mediata sulle realizzazioni di $\omega$:
+\[
+    \left<\frac{\text{d} f}{\text{d} t} \right>_{\omega} = \frac{\text{d} }{\text{d} t} \left<f(x(t) )\right>
+.\] 
+Essendo $\left<d\omega\right>_{\omega}=0$ si ha che:
+\begin{equation}
+    \frac{\text{d} \left<f\right>}{\text{d} t} = \left<a \partial_{x}f +\frac{1}{2}b^2\partial^2_{x^2}f\right>
+    \label{eq:8_dt}
+\end{equation}
+L'equazione di CK ci dava una condizione sul propagatore $P\left(x,t|x_0, t_0\right)$, tale propagatore entra in gioco nel calcolo del valor medio di $f$:
+\[
+    \left<f(x(t) ) \right> = \frac{\text{d} }{\text{d} t} \int  dx f(x) P\left(x,t|x_0, t_0\right)
+.\] 
+In tale espressione la dipendenza temporale entra soltanto all'interno del propagatore. \\
+Sostituendo la \ref{eq:8_dt} si ha:
+\[
+    \int dx \left[a \partial_{x}f +\frac{1}{2}b^2\partial^2_{x^2}f\right]P = \int dx f(x) \partial_{t}P 
+.\] 
+Integrando per parti a destra dell'uguale e supponendo che la $P\left(x,t|x_0,t_0\right)$ non diverga al bordo:
+\[
+    \int dx f(x) \partial_{t}P = 
+\int dx f(x) \left[-\partial_{x}(aP) + \partial^2_{x^2}\left(\frac{1}{2}b^2P\right)\right]
+.\] 
+Visto che si è isolata la $f$ a destra e sinistra l'equazione per $P$ che si ottiene ha la forma di una CK come anticipato:
+\begin{redbox}{Chapman-Kolmogorov per SDE}
+\[
+    \partial_{t}P(x,t) = \left(-\partial_{x}a + \frac{1}{2}\partial^2_{x^2}b^2\right)P(x,t) 
+.\]    
+\end{redbox}
+\noindent
+\begin{exmp}[]
+    Prendiamo i seguenti valori per i parametri della SDE:
+    \begin{itemize}
+        \item $a(x,t) = a(t)$
+	\item $b(x,t) = b(t)$
+    \end{itemize}
+    \[
+	dx = a(t)dt + b(t) d\omega
+    .\] 
+    Integrando si ha: 
+    \[
+	x(t) = x_0 + \int_{0}^{t} a(s) ds + \int_{0}^{t} b(s) d\omega_s 
+    .\] 
+    Mediando sulle realizzazioni di $\omega$ l'ultimo termine va via:
+    \[
+	\left<x(t) \right>_\omega = \left<x_0\right>+\int_{0}^{t} a(s) ds 
+    .\] 
+    Calcoliamo anche la varianza:
+    \[\begin{aligned}
+	\left<x(t) x(s) \right> =& \left<\left(x(t) - \left<x(t)\right>\left(x(s) - \left<x(s)\right>\right)\right)\right> = \\
+				 & = \left<\int_{0}^{t} b(t') d\omega(t') \int_{0}^{s} b(s') d\omega (s')\right>
+    .\end{aligned}\]
+    Sfruttando le proprietà della varianza per un processo di Wiener:
+    \[
+	\left<x(t) x(s) \right> = \int_{}^{\text{min}(t,s)} b^2(t') dt'
+    .\] 
+    Nel caso più semplice in cui $a, b$ costanti:
+    \begin{itemize}
+	\item $\left<x(t)\right>=x_0+at$ 
+	\item $\left<x(t) x(s)\right> = b^2 \text{min}(t,s)$ 
+    \end{itemize}
+\end{exmp}
+\noindent
+\begin{exmp}[]
+    \[
+	dx = cxd\omega (t) 
+    .\] 
+    Potremmo procedere con l'approccio di Stratonovich:
+    \[
+	\frac{dx}{x} = dy = cd\omega (t) 
+    .\] 
+    Il problema è che non è detto che l'oggetto a sinistra sia mordibo, quindi questo approccio è in generare sbagliato (non è rispettata la seconda uguaglianza).\\
+    Dobbiamo utilizzare la formula di $\hat{\text{I}}$to per effettuare il cambio di variabili. Prendiamo il seguente:
+    \[
+        f = y = \ln x
+    .\] 
+    La formula ci dice che:
+    \[
+        df = \left(af'+ \frac{1}{2}b^2f''\right)dt + bf'd\omega
+    .\] 
+    Nel nostro caso: 
+    \begin{itemize}
+        \item $a=0$ 
+	\item $b = cx$
+	\item $f = 1 /x$ 
+	\item $f'' = - 1/x^2$ 
+    \end{itemize}
+    Quindi in conclusione si ha una equazione differenziale per $y$ che non è quella che ci saremmo aspettati:
+    \[
+        dy = -\frac{c^2}{2}dt + cd\omega
+    .\] 
+    Abbiamo in più il primo termine. Integrando:
+    \[
+	y(t) = y_0 + cd\omega(t) - \frac{c^2}{2}t
+    .\] 
+    A questo punto il problema è risolto per $x$:
+    \[
+	x(t) = \exp\left(y\right) = x_0\exp\left(c\omega (t) - \frac{c^2}{2}t\right)
+    .\] 
+    Possiamo calcolare $\left<x\right>$ sfruttando il fatto che il valor medio di un processo gaussiano è nullo.
+    \[
+	z \in G(0, 1) \implies  \left<z\right> = 0
+    .\] 
+    Nella nostra equazione abbiamo una espressione del tipo $\left<\exp (z)\right>$, sfruttando le proprietà dei momenti di un processo Gaussiano si ha che:
+    \begin{equation}
+	\left<\exp\left(z\right)\right> = \exp\left(\frac{\left<z^2\right>}{2}\right) \label{eq:8_gauss}
+    \end{equation}
+    Per dimostrarlo è necessario utilizzare lo sviluppo dell'esponenziale, i momenti maggiori del secondo si annullano e rimane soltanto quello.\\
+    Otteniamo in conclusione che:
+    \[\begin{aligned}
+	\left<x(t)\right>=& \left<x_0\right>\exp\left(-\frac{c^2}{2}t\right)\left<\exp\left(c\omega (t) \right)\right> = \\
+			  & =\left<x_0\right>\exp\left(-\frac{c^2}{2}t\right) \exp\left(\frac{c^2}{2}t\right) = \left<x_0\right>
+    .\end{aligned}\]
+    Analogamente si può fare con la correlazione:
+    \[\begin{aligned}
+	\left<x(t) x(s)\right> = & \left<x_0^2\right>e^{-\frac{c^2}{2}\left(t+s\right)} \left<e^{c(\omega (t) + \omega (s) )}\right> = \\
+				 & =\left<x_0^2\right>e^{-\frac{c^2}{2}\left(t+s\right)} e^{\frac{c^2}{2}(\omega^2(t) +\omega^2(s))} =\\
+				 & = \left<x_0^2\right>e^{c^2\text{min}(t,s)}
+    .\end{aligned}\]
+    Se avessimo fatto il conto con Stratonovich avremmo ottenuto delle quantità divergenti:
+    \[\begin{aligned}
+	&\left<x(t) \right> = \left<x_0\right>\exp\left(\frac{1}{2}c^2t\right)\\
+	&\left<x_tx_s\right> = \left<x_0^2\right>\exp\left(\frac{1}{2}c^2\left(t+s+2\text{min}(t,s) \right)\right)
+    .\end{aligned}\]
+    Quindi i due metodi di integrazione portano a dinamiche completamente differenti, è necessario stare attenti ad usare di volta in volta il metodo più opportuno.
+\end{exmp}
+
+\begin{exmp}[Oscillatore Kubo]
+Si studia la precessione di uno spin attorno ad un campo magnetico $\omega$:
+\[
+    dz = i\left(\omega dt + \sqrt{2\gamma} d\omega_t\right)z
+.\] 
+Il secondo termine indica che il campo magnetico non è costante, contiene fluttuazioni $d\omega$. Come conseguenza vedremo che il pacchetto di spin inizierà a sparpagliarsi.\\
+Visto che le fluttuazioni del campo devono avere un Cut-Off ad alte frequenze è opportuno usare l'integrazione "fisica" di Stratonovich.\\
+Possiamo valutare il valor medio di $z$ integrando nel modo a noi noto:
+\[
+    \frac{dz}{z}=i\omega t + i\sqrt{2\gamma} d\omega_t
+.\] 
+La soluzione per $z$ è ovviamente l'esponenziale del termine di destra, facendo il valor medio e sfruttando la \ref{eq:8_gauss} si ottiene:
+\[
+    \frac{\text{d} }{\text{d} t} \left<z\right> = \left(i\omega-\gamma\right)\left<z\right>
+.\] 
+Come accennato il primo termine fa girare lo spin, il secondo lo sparpaglia.
+\[
+    \left<z_t\right> = \left<z_0\right>\exp\left(\left(i\omega-\gamma\right)t\right)
+.\] 
+Essendo in questo caso $z$ una quantità complessa possiamo calcolare una correlazione del tipo:
+\[
+    \left<z_tz^*_s\right> =\ldots= \left<z_0^2\right>e^{i\omega\left(t-s\right)-\gamma\left|t-s\right|}
+.\] 
+La funzione di correlazione decade esponenzialmente con un tempo $1 /\gamma$, legato alla fluttuazione del campo magnetico.
+\end{exmp}
+\noindent
+\begin{exmp}[]
+    \[
+        dx = -kx dt + \sqrt{D} d\omega_t
+    .\] 
+    Questa è "parente" del processo di Ornstein-Uhlenback:
+    \[
+	dx = f(x) dt + \sqrt{D} d\omega_t 
+    .\] 
+    Per risolverla si parte dalla omogenea:
+    \[
+        dx = fdt = -kxdt
+    .\] 
+    Visto che il termine di rumore è costante:
+    \[
+        g = \sqrt{D} \implies  
+	\begin{cases}
+	    g = \text{cost}\\
+	    g' = 0
+	\end{cases}
+    .\] 
+    Allora in questo caso $\hat{\text{I}}$to e Stratonovich conducono allo stesso risultato.\\
+    Utilizziamo il calcolo di $\hat{\text{I}}$to, la prima cosa da fare è cercare il giusto cambio di variabile. Scegliamo:
+    \[
+        y = x e^{kt}
+    .\] 
+    La formula di $\hat{\text{I}}$to per funzioni dipendenti dal tempo si scrive come:
+    \[
+        df = \left[a\partial_{x}f + \frac{b^2}{2}\partial^2_{x^2}f + \partial_{t}f\right]dt + b\partial_{x}fd\omega
+    .\] 
+    Sviluppando le derivate si ottiene che:
+    \[
+        dy = \sqrt{D} e^{kt}d\omega
+    .\] 
+    E quindi tornando indietro abbiamo anche la $x$:
+    \[
+	x(t)  = x_0 e^{-kt}+\sqrt{D} \int_{0}^{t} e^{-k(t-t')}d\omega_{t'} 
+    .\] 
+    Mediando nel tempo nuovamente i termini con $d\omega$ si cancellano:
+    \[
+	\left<x(t) \right> = \left<x_0\right>e^{-kt}
+    .\] 
+    Per la varianza il calcolo è più elaborato, riportiamo la conclusione:
+    \[\begin{aligned}
+	&\text{var}\left\{x(t) \right\} =\\ 
+	& =\left<\left[(x_0-\left<x_0\right>)e^{-kt} + \sqrt{D} \int_{}^{t} e^{-k(t-t') }d\omega_{t'}\right]^2 \right> =\\
+	& =e^{-2kt}\left[\text{var}\left\{x_0\right\}-\frac{D}{2k}\right]+ \frac{D}{2k}
+    .\end{aligned}\]
+    Quindi la varianza ha un valore stazionario ed un termine che decade esponenzialmente.
+\end{exmp}
+\noindent
+\subsection{Ornstein-Uhlenback dipendente dal tempo}%
+\label{sub:Ornstein-Uhlenback dipendente dal tempo}
+Prendiamo la seguente SDE:
+\[
+    dx = -a(t) x dt + b(t) d\omega
+.\] 
+L'algebra da seguire è simile a quella dell'esempio precedente, risolviamo l'omogenea (senza $\omega$):
+\[
+    x(t) = \exp\left(-\int_{0}^{t} a(s) ds \right)x_0
+.\] 
+Si inserisce adesso la parte disomogenea:
+\[\begin{aligned}
+    x(t) =& x_0 \exp\left(-\int_{0}^{t} a_sds \right) + \\
+	  & + \int_{0}^{t} \exp\left(-\int_{t'}^{t} a(s) ds  \right)b(t') d\omega_{t'} 
+.\end{aligned}\]
+Al solito si può mediare in $\omega$ per mandare via il secondo integrale:
+\[
+    \left<x(t)\right> = \left<x_0\right> \exp\left(-\int_{0}^{t} a(s) ds \right)
+.\] 
+Mentre per la covarianza si ha che:
+\[\begin{aligned}
+    \left<x(t),x(t) \right> = & \exp\left(-2  \int_{0}^{t} a(s) ds \right)\left<x_0,x_0\right> + \\
+			      & + \int_{0}^{t} dt'  \exp\left(-2\int_{t'}^{t} a(s) ds \right) b^2(t') 
+.\end{aligned}\]
+\clearpage

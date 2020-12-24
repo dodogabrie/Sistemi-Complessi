@@ -1,0 +1,328 @@
+\section{Lezione 9}%
+\label{sub:Lezione 9}
+\subsection{Oltre il teorema del limite centrale}%
+\label{sub:Distribuzioni fisiche che non rispettano il teorema del limite centrale}
+Abbiamo visto che, per variabili stocastiche con media e deviazione standard definite, vale:
+\[
+    S_n = \sum_{i}^{} x_i \to G
+.\] 
+Ci chiediamo se esista solo questa possibilità, ovvero se non esistano altre distribuzioni che possono far da limite per le variabili stocastiche.\\
+Vediamo che succede se prendiamo una somma di variabili stocastiche estratte da una qualunque distribuzione:
+\[
+    S_2 = x_1 + x_2 \implies P_2(S_2) = \sum_{x_1}^{} P_1(x_1) P_1(x_2) 
+.\] 
+Si somma solo su $x_1$ poiché $x_2 = S_2-x_1$:
+\[
+    P_2(S_2) = \int P_1(x_1) P_1(S_2-x_1) dx_1
+.\] 
+Quindi si ha che:
+\begin{redbox}{}
+    \[
+	P_2(S_2) = P_1(x_1) * P_1(x_2) 
+    .\] 
+\end{redbox}
+\noindent
+L'idea è che una distribuzione per essere stabile non deve cambiare sotto questa trasformazione (convoluzione).
+\begin{exmp}[Distribuzione di Lorentz - Bright - Wigner]
+\[
+    P_L(x) = \frac{1}{\pi\left(1+x^2\right)}
+.\] 
+Le proprietà di questa distribuzione sono:
+\[\begin{aligned}
+    &\int P_L dx = 1\\
+    & \int xP_L dx = 0\\
+    & \int  x^2P_L dx \to \infty
+.\end{aligned}\]
+Per via della terza equazione non sono soddisfatte le condizioni del teorema del limite centrale.\\
+Sviluppando la convoluzione si ha:
+\[\begin{aligned}
+    P_2(S_2) = \int P_1(x_1) P_1(S_2-x_1) dx_1 = \frac{1}{2\pi\left[1 + \left(\frac{S_2}{2}\right)^2\right]}
+.\end{aligned}\]
+La forma della distribuzione è rimasta invariata, l'unica differenza rispetto alla distribuzione di singola variabile è il fattore di scala $1 /2$.
+\end{exmp}
+\noindent
+\begin{exmp}[Gaussiana]
+\[
+    P_1(x) = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{x^2}{2}\right)
+.\]  
+Valutando l'integrale per la $P_2$ si ha:
+\[
+    P_2(S_2) =\frac{1}{\sqrt{4\pi}}\exp\left(-\frac{(S_2)^2}{4}\right) 
+.\] 
+Abbiamo una struttura nuovamente Gaussiana con la $\sigma^2$ raddoppiata.
+\end{exmp}
+\noindent
+\begin{exmp}[Distribuzione uniforme]
+\[
+    P_1(x) = 
+    \begin{cases}
+	1 & x \in \left[-\frac{1}{2}, \frac{1}{2}\right]\\
+	0 & \text{Fuori}
+    \end{cases}
+\] 
+In questo caso la forma della distribuzione cambia:
+\[
+    P_2(S_2) = \ldots = 1 - \left|S_2\right| 
+.\] 
+\end{exmp}
+\noindent
+Prendiamo adesso la somma di $n$ variabili sotto una certa distribuzione:
+\[
+    S_n = \sum_{i}^{n} x_i \implies  P(S_n) = P_1(x_1) * \ldots * P_n(x_n) 
+.\] 
+Nel caso di Lorentz e Gauss la procedura è generalizzabile:
+\[\begin{aligned}
+    &\text{Gauss}: \quad S_n = \frac{1}{\sqrt{n}} \sum_{i}^{n} x_i \implies  P_n(S_n) \in G\\
+    &\text{Lorentz}: \quad S_n = \frac{1}{n} \sum_{i}^{n} x_i \implies  P_n(S_n) \in L
+.\end{aligned}\]
+\subsection{Distribuzioni stabili}%
+\label{sub:Distribuzioni stabili}
+\begin{bluebox}{Definizione di Distrib. Stabile}
+    Una distribuzione si dice stabile se è invariante sotto convoluzione.
+    \[\begin{aligned}
+	P&(a_1z+b_1)*P(a_2z+b_2) =\\
+	&=\int\limits_{-\infty}^{\infty} dy P(a_1(z-y) +b_1) P(a_2y + b_2)  = \\
+	& = P(az + b) 
+    .\end{aligned}\]
+    con $a_i >0$, $b_i \in R$.
+\end{bluebox}
+\noindent
+Andiamo in trasformata, chiamiamo la funzione caratteristica $P(k)$:
+\[
+    P(k) = \mathcal{F}\left[P(x) \right] = \int_{-\infty}^{\infty} e^{ikx}P(x) dx 
+.\] 
+\'E noto che per convoluzione si ha:
+\[
+    \mathcal{F}\left[P_1*P_2\right] = \mathcal{F}\left[P_1\right]\cdot \mathcal{F}\left[P_2\right]
+.\] 
+Quindi nel caso visto sopra:
+\[
+    S_n = \sum_{i}^{n} x_i \implies  P_n(k) = \left[P_1(k)\right]^{n}
+.\] 
+Nei due casi interessanti discussi nella sezione precedente la trasformata diventa:
+\[\begin{aligned}
+    &P_G(k) \sim e^{-\frac{k^2}{2}}\\
+    &P_L(k) \sim e^{-\left|k\right|}
+.\end{aligned}\]
+In particolare nel caso della lorenziana:
+\[
+    P_2(k) = e^{-2\left|k\right|} \xrightarrow[]{\mathcal{F}^{-1}} \frac{1}{2\pi}\frac{1}{1+\left(\frac{x}{2}\right)^2}
+.\] 
+\subsection{Teorema di Levy-Kintchine}%
+\label{sub:Distribuzioni limite}
+\begin{bluebox}{Teorema limite$\iff$stabile}
+    Una distribuzione di probabilità $L(x)$ può essere la distribuzione limite di $S_n = \sum_{i}^{} x_i$ se e solo se $L(x)$ è stabile.
+\end{bluebox}
+\noindent
+Abbiamo dimostrato l'esistenza di due distribuzioni limite: Gauss e Lorentz.\\
+Il teorema di Levy-Kintchine ( o della rappresentazione canonica ) serve a generalizzare la forma di una distribuzione limite.
+\subsubsection{Il teorema LK}%
+\label{subsub:Il teorema LK}
+Data una distribuzione di probabilità $L_{\alpha,\beta}(x)$ con $\alpha,\beta$ parametri. Tale distribuzione è stabile se e solo se il logaritmo della sua funzione caratteristica
+\[
+    L_{\alpha,\beta  }(k) = \left<e^{ikx}\right> = \int_{-\infty}^{\infty} dx e^{ikx}L_{\alpha,\beta  }(x)  
+.\] 
+ha la forma generale:
+\begin{redbox}{}
+\[\begin{aligned}
+    \ln&(L_{\alpha,\beta}(k)) =\\
+       &=\begin{cases}
+	   i\mu k-\gamma \left|k\right|^\alpha\left[1-i\beta  \frac{k}{\left|k\right|}\tan\left(\frac{\pi\alpha}{2}\right)\right]; & \alpha\neq 1\\
+																   &\\
+	   i\mu k-\gamma \left|k\right|\left[1+i\beta  \frac{k}{\left|k\right|} \frac{2}{\pi}\ln\left|k\right|\right]; &\alpha = 1
+       \end{cases}
+\end{aligned}\]    
+Con $\alpha, \mu, \beta,\gamma  \in R$ e
+\begin{itemize}
+    \item $0\le \alpha\le 2$
+    \item $-1\le \beta\le 1$ 
+    \item $\gamma\ge 0$ 
+\end{itemize}
+\end{redbox}
+\noindent
+Il motivo dei vincoli per $\alpha$ e $\beta$ e che, antitrasformando per la distribuzione nello spazio reale, devono essere rispettate le proprietà delle distribuzioni.
+\begin{exmp}[Gaussiana]
+    Ritroviamo la Gaussiana se
+    \begin{itemize}
+        \item $\alpha =2$ 
+	\item $\beta$ qualunque
+	\item $\mu$ qualunque
+	\item $\gamma  =1$ 
+    \end{itemize}
+\end{exmp}
+\begin{exmp}[Lorentz]
+    Ritroviamo la distribuzione di Lorentz se
+    \begin{itemize}
+        \item $\alpha =1$ 
+	\item $\beta  = 0$ 
+	\item $\mu  = 0$ 
+	\item $\gamma  = 1$ 
+    \end{itemize}
+\end{exmp}
+\noindent
+\noindent
+Gli indici $\alpha$ e $\beta$ definiscono la forma e le proprietà della distribuzione mentre $\mu$ e $\gamma$ sono fattori di scala.
+\subsubsection{Caratteristiche del funzionale di LK}%
+\label{subsub:Caratteristiche del funzionale di LK}
+\paragraph{Il ruolo di $\alpha$}%
+\label{par:Il ruolo di alpha }
+
+Il parametro $\alpha$ controlla la forma della $L_{\alpha,\beta  }$ per valori $\left|x\right|\to \infty$. Ipotizziamo infatti di avere solo il termine:
+\[
+    \ln (L_{\alpha,\beta  }(k) ) \sim -\left|k\right|^\alpha \implies  L_{\alpha, \beta  }(k) \sim e^{-\left|k\right|^\alpha}
+.\] 
+Antitrasformando si ottiene che:
+\[
+    \int_{}^{} dk e^{-\left|k\right|^\alpha} e^{-kx} \xrightarrow[]{\left|x\right|\to \infty} \sim \frac{1}{\left|x\right|^{\alpha +1}}
+.\] 
+Quindi si ha che:
+\begin{bluebox}{Andamento asintotico di $L_{\alpha,\beta  }(x)$}
+   \[
+       L_{\alpha,\beta  }(x) \sim \frac{1}{\left|x\right|^{\alpha +1}} \quad \left|x\right|\to \infty
+   .\]  
+   Con $0\le  \alpha \le 2$ 
+\end{bluebox}
+\noindent
+Sfruttando questo andamento asintotico possiamo vedere per quali $\alpha$ convergono i momenti di ordine $\delta$ con $0<\delta <\alpha$:
+\[\begin{aligned}
+    \left<\left|x\right|^\delta\right> = & \int dx \left|x\right|^\delta L_{\alpha,\beta  }(x) =\\
+					 & = \int  dx \frac{\left|x\right|^\delta}{\left|x\right|^{\alpha +1}}
+.\end{aligned}\]
+Per avere un momento di ordien $\delta$ finito l'integrale deve convergere.
+Se ne conclude che 
+\begin{itemize}
+    \item per $\alpha <2$ la varianza non è definita
+    \item per $\alpha <1$ non è definita nemmeno la media.
+\end{itemize}
+Studiando un fenomeno fisico quello che abbiamo sempre fatto è stato cercare una scala del problema, quindi il momento secondo. \\
+Per tutte le distribuzioni di Levy (tranne la Gaussiana) il momento secondo non è definito, questo le rende distribuzioni controintuitive.
+\paragraph{Il ruolo di $\beta  $}%
+\label{par:Il ruolo di beta}
+Il parametro $\beta  $   controlla la simmetria della distribuzione:
+\begin{itemize}
+    \item $\beta =0$ $\implies$ $L_{\alpha,\beta  }(x) $ simmetrica
+    \item $\beta  = \pm 1$ $\implies$ $L_{\alpha,\beta  }$ molto asimmetrica al variare del parametro $\alpha$. 
+\end{itemize}
+Se $0<\alpha <1$ e $\beta =1$ allora il supporto della distribuzione è $\left[\mu,\infty\right)$.
+\begin{exmp}[Lorentziana]
+    $\beta =0$, $\alpha =1$ 
+    \input{lezioni/tikz/lez_9_lore.tex}
+\end{exmp}
+\noindent
+\begin{exmp}[Levy-Smirnov]
+    $\beta =1$, $\alpha =1 /2$, si ha in tal caso:
+    \[
+	L_{\alpha,\beta  }(x) \sim \left(\frac{\gamma^{1 /\alpha}}{2\pi}\right) 
+	\frac{1}{\left(x-\mu\right)^{3 /2}} e^{-\frac{\gamma^{1 /\alpha}}{2\left(x-\mu\right)}} \Theta (\mu) 
+    .\] 
+    Con $\Theta (\mu) $ funzione di Heayside.
+    \input{lezioni/tikz/lez_9_levy.tex}
+\end{exmp}
+\noindent
+\subsection{Bacino di attrazione di una distribuzione}%
+\label{sub:Bacino di attrazione di una distribuzione}
+Data una $P(x) $ possiamo vedere a quale $L_{\alpha,\beta  }(x)$ converge con il seguente teorema:
+\begin{greenbox}{Teorema del bacino di attrazione}
+    $P(x)$ appartiene al bacino di attrazione di una distribuzione stabile $L_{\alpha,\beta  }(x)$ con $0<\alpha <2$ se e solo se:
+    \[
+	P(x) \sim \frac{\alpha a^\alpha c_{\pm}}{\left|x\right|^{1+\alpha}} \qquad  x\to \pm\infty
+    .\] 
+\end{greenbox}
+\noindent
+Le costanti $c_{\pm}\ge 0$, $a>0$ sono legate ai coefficienti di $L_{\alpha,\beta  }(x)$ da relazioni semplici (che non si riescono a leggere negli appunti).\\
+Notiamo che anche i momenti di $P(x)$ sono definiti per $\delta <\alpha$ esattamente come quelli di $L_{\alpha,\beta  }(x)$.  
+\subsection{Cambio di scala}%
+\label{sub:Cambio di scala}
+\begin{redbox}{}
+    Le distribuzioni di Levy sono Self-similari.
+\end{redbox}
+\noindent
+Consideriamo una distribuzione di Levy e prendiamo nuovamente:
+\[
+    S_n = \sum_{i}^{n} x_i
+.\] 
+Un cambio di scala che lascia invariata la forma della distribuzione mandando $n\to \infty$ è:
+\[
+    \tilde{S}_N = \frac{1}{B_N}\sum_{i}^{N}x_i - A_N	
+.\] 
+Con
+\[
+    B_N = aN^{1 /\alpha} \qquad 
+    A_N = 
+    \begin{cases}
+	0 & 0<\alpha <1\\
+	\dfrac{N\left<x\right>}{B_N} & 1 \le \alpha\le 2
+    \end{cases}
+.\] 
+Questo cambio di scala può essere utilizzato come riprova una volta individuata una espressione per la distribuzione di Levy: 
+se aumentando i termini della sommatoria si ha che $\tilde{S}_N$ va in se stessa allora abbiamo indovinato i coefficienti.
+\begin{exmp}[Gaussiana]
+    \[
+        B_N = N^{1 /2}\sigma \qquad A_N = \frac{N\left<x\right>}{B_N} 
+    .\] 
+\end{exmp}
+\noindent
+\subsubsection{"Perché troviamo sempre Gaussiane?"}%
+\label{subsub:"Perché troviamo sempre Gaussiane?"}
+Possiamo chiederci perché le Gaussiane spiccano in fama e diffusione nei processi fisici, la risposta arriva dal fatto che:
+\[
+    P(x) \sim \frac{1}{x^{3+\epsilon}} \implies P(x) \to G \quad \forall \epsilon >0
+.\] 
+Quindi tutte le distribuzioni aventi questa proprietà tendono a delle gaussiane. Quando questa condizione non è rispettata si ottiene una distribuzione di Levy.
+\subsubsection{Probabilità di tornare nell'origine}%
+\label{subsub:Probabilità di tornare nell'origine}
+Possiamo estrarre informazioni sulla distribuzione di Levy di un processo andando a cercare la probabilità di tornare nell'origine. Prendiamo ad esempio:
+\[
+    L_{\alpha,0}(x) \implies  L_{\alpha,0}(k) \sim e^{-\gamma\left|k\right|^\alpha}
+.\] 
+Considerando l'ennesima iterata abbiamo visto che:
+\[
+    S_n \sim e^{-n\gamma\left|k\right|^\alpha}
+.\] 
+Adesso possiamo trovare la probabilità di rientrare in $x=0$  all'ennesima iterata semplicemente antitrasformando:
+\[
+    L^n_{\alpha,0}(0) = \frac{1}{\pi}\int_0^{\infty}\cos (0) e^{-n\gamma\left|k\right|^\alpha}dk = 
+    \frac{\Gamma (1 / \alpha) }{\pi\alpha\left(\gamma n\right)^{1 / \alpha}}
+.\] 
+Quindi la probabilità di tornare nell'origine in funzione di $n$  scala come una potenza di $\alpha$. Questo ci permette di determinare il valore di $\alpha$.
+\[
+    L^n_{\alpha,0}(0) = \frac{P(S_n)}{n^{1 / \alpha}} 
+.\] 
+\subsection{SDE con variabili stocastiche con distrib. di Levy}%
+\label{sub:SDE con variabili stocastiche con distrib. di Levy}
+Prendiamo una SDE del tipo:
+\[
+    dx(s)  = dL_{\alpha,\beta  }(s) 
+.\] 
+\subsubsection{Integrale un processo di Levy}%
+\label{subsub:Integrale un processo di Levy}
+Definiamo l'integrale di una funzione $f(s)$ secondo un processo di Levy come:
+\[\begin{aligned}
+    &\int_{t_0}^{t} f(s) dL_{\alpha,\beta  }(s) = \\
+    &=\lim_{N \to \infty} \sum_{i=1}^{N} f(\Delta s(i-1) ) M_{\alpha,\beta  }\left(\left[\Delta s(i-1), \Delta s(i)\right]\right)
+.\end{aligned}\]
+In cui si è usata l'abbreviazione:
+\[
+M_{\alpha,\beta}(x,y) = L_{\alpha,\beta}(x)-L_{\alpha,\beta}(y)
+.\] 
+Sostanzialmente è l'integrale di Ito.
+\subsubsection{Algoritmo di Weron}%
+\label{subsub:Algoritmo di Weron}
+Per risolvere è necessario inventare una tecnologia per valutare le variabili stocastiche secondo una distribuzione di Levy generale. \\
+L'algoritmo di Weron si occupa proprio di come generare questi numeri casuali $\xi$ (Vedi appendice), secondo tale algoritmo l'integrale di una funzione si può scrivere come:
+\[
+    \int_{t_0}^{t} f(s) dL_{\alpha,\beta  }(s) = \sum_{i}^{N} f(\Delta s(i-1)) \left(\Delta s\right)^{1 /\alpha}\xi_i
+.\] 
+Con $\Delta s = (t-t_0) /N$, ovvero l'ampiezza di ogni intervallo temporale, facendo una integrazione elementare si prende ad esempio $N=1$.\\
+Come anticipato il numero $\xi_i$ è generato tramite una distribuzione di Levy con alcuni parametri:
+\[
+    \xi_i \in L_{\alpha,\beta  }\left(Z,\gamma =\frac{1}{\left(2\right)^{1 /2\alpha}}, \mu =0\right)
+.\] 
+Quindi operativamente si ha:
+\[
+    x_{n+1} = x_n + h ^{1 /\alpha}\xi_n
+.\] 
+\subsubsection{Che devo fare per generare la $\xi$?}%
+Mentre per generare numeri gaussiani possiamo utilizzare una infinità di librerie per generare un numero secondo una distribuzione di Levy non è detto che vi sia un qualche pacchetto. \\
+Quindi se non conosci Python devi riscrivere una funzione di 2 pagine per generare un set di numeri random, se conosci python invece esiste una libreria di Scipy che si occupa di generare numeri secondo una qualunque distribuzione di Levy.
+\clearpage

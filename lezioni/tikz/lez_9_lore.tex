@@ -1,0 +1,24 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+	\begin{axis}[
+	    width=7cm,
+	    height=4cm,
+	    xmin= -3, xmax= 3,
+	    ymin= 0, ymax = 0.4,
+	    axis lines = middle,
+	    x label style={at={(axis description cs:1,-0.01)},anchor=north},
+	    y label style={at={(axis description cs:0.5,1)},anchor=south},
+	    xlabel={$x$},
+	    ylabel={$L_{1,0}(x) $ },
+	    xtick={0},
+	    ytick={0},
+	    xticklabel={},
+	    yticklabel={},
+	    ]
+	    \addplot[domain=-3:3, samples=500]{1/(pi*(1+x^2))};
+	\end{axis}
+    \end{tikzpicture}
+    \caption{\scriptsize Distribuzione di Lorentz-Bright-Wigner.}
+    \label{fig:lore}
+\end{figure}
