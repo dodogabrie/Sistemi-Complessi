@@ -1,0 +1,11 @@
+\begin{center}
+\begin{circuitikz}[american, scale = 1.5][americanvoltages]
+    \draw (0,0)
+    to[] (0,2) 
+    to[L, v^<=$L$] (1.5,2) %Inductor One  
+    to[R, v^<=$R$] (3,2) % The resistor
+    to[C, v^<=$C$] (3,0) %Capacitor Two
+    to[V=$V \sim V_0 + \xi$] (0,0); % The voltage source
+    \draw[thin, <-, >=triangle 45] (1.5,1)node{$i$}  ++(-60:0.5) arc (-60:170:0.5);
+\end{circuitikz}
+\end{center}

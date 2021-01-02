@@ -1,0 +1,25 @@
+\tikzmath{\s = 1;}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+	\begin{axis}[
+	    width=7cm,
+	    height=4cm,
+	    xmin= -1, xmax= 7,
+	    ymin= 0, ymax = 0.5,
+	    axis lines = middle,
+	    x label style={at={(axis description cs:1,-0.01)},anchor=north},
+	    y label style={at={(axis description cs:0.15,1)},anchor=south},
+	    xlabel={$x$},
+	    ylabel={$P(x, t=0)$ },
+	    xtick={-1, 0, 6},
+	    xticklabels={$b$, $0$, $a$},
+	    ytick={0},
+	    yticklabel={$0$},
+	    ]
+	    \addplot[domain=-1:7, samples=500]{(1/(sqrt(2*pi*\s))*e^(-((x-2)/\s)^2)};
+	\end{axis}
+    \end{tikzpicture}
+    \caption{\scriptsize Distribuzione iniziale di camminatori.}
+    \label{fig:lore}
+\end{figure}

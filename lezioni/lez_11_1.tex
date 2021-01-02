@@ -1,0 +1,709 @@
+\section{Lezione 11}%
+\label{sub:Lezione 11-1}
+\section*{Parte 1}%
+\label{sub:Parte 1}
+
+\subsection{Equazione di Fokker-Plank: soluzione analitica.}%
+\label{sub:Equazione di Fokker-Plank: soluzione analitica.}
+Questa lezione è una lunga nota storica su come facevano i nostri antenati a risolvere l'equazione di FK negli anni 80-90 con le mani. L'utilità sta nel fatto che ci da gli strumenti per affrontare la prossima lezione che è invece concettualmente molto interessante.\\
+Abbiamo visto nella Lezione \ref{sub:Lezione 4} la forma differenziale di Chapman-Kolmogorov (equazione \ref{eq:4_CK}). La parte di tale equazione che conteneva termini di derivate prime e seconde (quindi quella riguardante la parte continua del processo) è nota come 
+\begin{redbox}{Equazione di Fokker-Plank.}
+   \[\begin{aligned}
+       \partial_{t}P(\vect{x}, t) = &
+      				      -\partial_{x_i}A_i(\vect{x}, t) P(\vect{x}, t) + \\
+				    & + \frac{1}{2}\partial_{x_i}\partial_{x_J}B_{iJ}(\vect{x},t) P(\vect{x},t) 
+   .\end{aligned}\]	 
+\end{redbox}
+\noindent
+In qui il termine $B_{iJ}$ ricordiamo essere il termine di diffusione.\\
+Modernamente questa equazione viene risolta numericamente per quasi tutti i casi "interessanti". Tuttavia ci sono alcune situazioni in cui si riesce a risolvere analiticamente, concentriamo questa lezione su quelle.\\
+Definiamo una corrente $\vect{J}$:
+\[
+    J_i = \left(A_i - \frac{1}{2}\partial_{x_J}B_{iJ}\right)P(\vect{x},t) 
+.\] 
+Quindi l'equazione di FK si scrive come:
+\[
+    \partial_{t}P + \nabla \vect{J} = 0
+.\] 
+Quindi possiamo integrare $P$ su un volume $V$ e sfruttare il teorema di Gauss:
+\[\begin{aligned}
+    \partial_{t}\int\limits_{V} PdV = - \int\limits_{V}  \nabla \vect{J} dV = - \int\limits_{\partial V} d\vect{s}\cdot \vect{J}
+.\end{aligned}\]
+Dove $\partial V$ è il bordo del volume $V$ (e l'ultima espressione dopo l'uguale è il flusso di $\vect{J}$ sul bordo di $V$). 
+\begin{greenbox}{}
+    La variazione della probabilità in un volume $V$ è legata al flusso della corrente di probabilità.
+\end{greenbox}
+\noindent
+Quindi la soluzione di questa equazione alle derivate parziali dipende fortemente dall'andamento della corrente lungo la superficie di $V$.
+\subsection{Condizioni al bordo per la soluzione della FK.}%
+\label{sub:Condizioni al bordo per la soluzione della FK.}
+\paragraph{Condizioni al bordo riflettenti.}%
+Questo è il caso in cui la corrente di probabilità rispetta la seguente:
+\[
+    \hat{S}\vect{J} (\vect{z}, t) = 0
+.\] 
+Con $\hat{S}$ versore del bordo di $V$. Questa condizione implica che la $\vect{J}$ è parallela alla superficie.
+\paragraph{Condizioni al bordo assorbenti.}%
+\[
+    \text{Se }\vect{z}  \in \partial S \implies  J(\vect{z}, t) = 0
+.\] 
+\paragraph{Condizioni al bordo discontinue}%
+La corrente può essere discontinua sul bordo, in queste condizioni il moto resta possibile, la corrente deve soddisfare l'equazione:
+\[
+    \hat{S}\left(\vect{J} (\vect{z}^+) - \vect{J} (\vect{z}^-) \right) = 0
+.\] 
+\paragraph{Condizioni al bordo periodiche.}%
+Mettiamoci in una dimensione ad esempio, nel segmento $\left[a, b\right]$, allora le condizioni al contorno periodiche implicano che:
+\[\begin{aligned}
+    & P(a^+) = P(b^-) \\
+    & \vect{J} (a^+) = \vect{J} (b^-) 
+.\end{aligned}\]
+\paragraph{Condizioni al bordo all'infinito.}%
+Tipicamente si lavora con oggetti che possono trovarsi a distanze finite, in tal caso le condizioni all'infinito vengono prese come:
+\[\begin{aligned}
+    & P(\vect{x}, t) \to 0 \quad \left|x\right|\to \infty\\
+    & \vect{J} (\vect{x}, t) \to 0 \quad \left|x\right|\to \infty
+.\end{aligned}\]
+Se così non fosse allora una delle due quantità dovrebbe divergere.
+\paragraph{Diffusione nulla al bordo.}%
+Se $B_{iJ} = 0$ sul bordo del volume abbiamo una situazione totalmente deterministica. In tal caso tale zona potrebbe essere: 
+\begin{itemize}
+    \item Un ingresso dei camminatori
+    \item Una uscita dei camminatori
+\end{itemize}
+In questo caso possono esistere delle situazioni ancor più esoteriche in cui oltre che ad avere $B_{iJ} = 0$ sul bordo si ha anche $A(\vect{z}) = 0$. In questo caso speciale i camminatori che raggiungono il bordo si fermano.
+\begin{exmp}[]
+    \[
+        dx = -\alpha xdt + xd\omega
+    .\] 
+    In questo caso il camminatore che arriva nell'origine si ferma. L'equazione di FK in questo caso può esser scritta riprendendo la formula \ref{eq:8_CK-SDE}:
+    \[
+        \partial_{t}P = \left[\partial_{x}\alpha x + \frac{1}{2}\partial^2_{x^2} x^2\right] P
+    .\] 
+\end{exmp}
+\noindent
+\subsection{Distribuzione di equilibrio del processo}%
+\label{sub:Distribuzione di equilibrio del processo}
+Riscriviamo la corrente esplicitando la derivata $\partial_{x_J}$:
+\begin{equation}
+    J_i = \left[A_i-\frac{1}{2}\left(\partial_{x_J}B_{iJ}\right)\right]P - \frac{1}{2} B_{iJ}\partial_{x_J}P
+    \label{eq:11_J}
+\end{equation}
+Cerchiamo una distribuzione di equilibrio con le seguenti ipotesi:
+\begin{itemize}
+    \item $\vect{J}$ si conserva e all'equilibrio $J=0$ .
+    \item All'infinito la distribuzione di probabilità si annulla.
+    \item $B_{iJ}$ invertibile.
+\end{itemize}
+Vogliamo allora capire con queste supposizioni quanto vale $\partial_{x_J}P$.
+Si procede invertendo l'espressione \ref{11_J}:
+\[
+    \partial_{x_J}P = 2B^{-1}_{iJ}\left[A_i-\frac{1}{2}\partial_{x_k}B_{ik}\right]P
+.\] 
+Quindi portando a sinistra la $P$ si ha anche:
+\[
+    \frac{\partial }{\partial x_J} \ln (P) = 2B_{iJ}^{-1}\left[A_i-\partial_{x_k}B_{ik}\right]
+.\] 
+Quindi abbiamo a sinistra un gradiente, come conseguenza anche la quantità a destra deve essere un gradiente.
+Per le proprietà del gradiente deve essere vero che:
+\[
+    \text{rot}(\nabla f)  = 0
+.\] 
+Quindi:
+\[
+    Z_J\left[A,B, \vect{x}\right] \equiv 2B_{iJ}^{-1}\left[A_i - \partial_{x_k}B_{ik}\right]
+.\] 
+\[
+    \text{rot}(Z_J) = 0
+.\] 
+Di fatto questa condizione si traduce in:
+\[
+  \frac{\partial }{\partial x_i} Z_J = \frac{\partial }{\partial x_J} Z_i  
+.\] 
+Se vale questa condizione possiamo allora integrare lungo una curva generica, si ottiene che:
+\[
+    P_{st}(\vect{x}) = \exp\left(\int\limits^{x} d\vect{s}\vect{Z}\left[A,B, \vect{s}\right]\right)
+\] 
+In cui si definisce 
+\begin{redbox}{Forma potenziale}
+    \begin{equation}
+	P(\vect{x})  = \exp (-\phi (\vect{x})) 
+	\label{eq:11_forma_pot}
+    \end{equation}
+    con 
+     \[
+	\phi (\vect{x}) = - \int\limits^{x} d\vect{s}\vect{Z} 
+    .\] 
+\end{redbox}
+\noindent
+Tutto questo metodo funziona se si verifica il fatto che $\text{rot}(\vect{Z}) = 0$. Nei casi in cui questa condizione non si avvera non è possibile integrare l'equazione ed ottenere il risultato stazionario \ref{eq:11_forma_pot}.
+\begin{exmp}[Processo di Wiener]
+    \[
+	dx = f(x) dt + Bd\omega
+    .\] 
+    La FK si scrive come:
+    \[
+        \partial_{t}P = \left(- \partial_{x}f + \frac{1}{2} B^2\partial^2_{x^2}\right)P; \qquad
+	Z = \frac{2f}{B^2}
+    .\] 
+    Con $Z$  valutato come sopra (tramite la corrente stazionaria). Quindi si ha che:
+    \[
+	P_{st}\sim \exp\left(\int\limits^{x} \frac{2f}{B^2}dx \right) 
+    .\] 
+    \begin{greenbox}{}
+        I processi di Wiener hanno una distribuzione di equilibrio.
+    \end{greenbox}
+    \noindent
+    Ovviamente è necessario avere una $f$ che si comporti bene asintoticamente (se ho $f=x$ rompo il metodo).
+\end{exmp}
+\noindent
+
+\begin{exmp}[Processo di OU]
+    Prendiamo la stessa equazione dell'esempio precedente
+    \[
+	dx = f(x) dt + Bd\omega
+    .\] 
+    tuttavia adesso il termine $Bd\omega$ anziché essere un processo di Wiener (come si sottointende di solito) lo ipotizziamo di Ornstein-Ulhenback:
+    \[
+	\begin{cases}
+	    Bd\omega  = Bydt\\
+	    dy = -\dfrac{1}{\tau}ydt + d\omega
+	\end{cases}
+    \] 
+    Dove il $d\omega$ nel sistema è adesso un processo di Wiener.\\
+    Ricordiamo che questo processo è caratterizzato da avere un taglio in frequenza di $\frac{1}{\tau}$.\\
+    Per semplificare ancora i conti inseriamo all'interno della SDE un secondo processo di Wiener $d\omega_2$ (si capirà meglio sotto), si ottiene allora il sistema:
+    \[
+        \begin{cases}
+	    dx = \left(f(x) + By\right)dt + d\omega_2\\
+	    dy = -\dfrac{1}{\tau}y dt + d\omega_1
+        \end{cases}
+    .\] 
+    In questo caso è evidente che i termini della FK in due dimensioni
+    \footnote{Si tratta di due dimensioni perché abbiamo una coppia di variabili stocastiche: $x$ e $y$.}
+     corrispondono alle quantità:
+    \[\begin{aligned}
+	&A_x = f+By & \quad B_{xx} = 1\\
+	&A_y = -\frac{1}{\tau}y &\quad B_{yy}=1
+    .\end{aligned}\]
+    Possiamo scrivere la matrice del rumore $B$ considerando i coefficienti a moltiplicare i due processi di Wiener $d\omega_1, d\omega_2$ nelle equazioni. Visto che i due processi sono indipendenti e compaiono uno per l'equazione di $x$ e l'altro per l'equazione di $y$ si ha:
+    \[
+        B = 
+	\begin{pmatrix}
+	    B_{xx} & B_{xy}\\
+	    B_{yx} & B_{yy}
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+	    1 & 0\\
+	    0 & 1
+        \end{pmatrix}
+    .\] 
+    In conclusione possiamo scrivere l'equazione di FK:
+    \[\begin{aligned}
+	\partial_{t}P(x,y) = \left[-\partial_{x}A_x - \partial_{y}A_y + \frac{1}{2}(\partial^2_{x^2}+\partial^2_{y^2}) \right]P(x,y) 
+    .\end{aligned}\]
+    Possiamo allora calcolare $Z_x$ e $Z_y$ ($B$ è l'identità quindi $B^{-1} = B$):
+    \[
+	 Z_x = 2(f+By) \qquad
+	 Z_y = -\frac{2y}{\tau}
+    .\] 
+    Per essere una divergenza $\vect{Z}$ deve rispettare la condizione del rotore:
+    \[
+	\text{rot}(\vect{Z}) = 0
+    .\] 
+    Tuttavia questa condizione non è soddisfatta:
+    \[
+        \partial_{y}Z_x = 2B \neq \partial_{x}Z_y = 0
+    .\] 
+    Quindi questo processo non soddisfa la condizione di potenziale.
+    \begin{greenbox}{}
+        I processi di Ornstein-Ulhenback non hanno una distribuzione di equilibrio.
+    \end{greenbox}
+    \noindent
+    Questo non significa che integrando questa equazione numericamente non si possa ottenere niente, questo tipo di processi presenta una \textbf{distribuzione di quasi equilibrio} (approfondiremo più avanti).
+\end{exmp}
+\noindent
+\begin{exmp}[OU modificato]
+Prendiamo lo stesso moto analizzato nell'esempio precedente ed aggiungiamo il termine $Bxdt$ all'equazione per $y$:
+    \[
+        \begin{cases}
+	    dx = \left(f(x) + By\right)dt + d\omega_2\\
+	    dy = -\dfrac{1}{\tau} y dt + Bxdt + d\omega_1
+        \end{cases}
+    .\] 
+In questo caso abbiamo che:
+\[\begin{aligned}
+	&A_x = f+By & \quad B_{xx} = 1\\
+	&A_y = -\frac{1}{\tau}y + Bx &\quad B_{yy}=1
+.\end{aligned}\]
+Mentre la matrice $B$ non cambia:
+    \[
+        B = 
+	\begin{pmatrix}
+	    B_{xx} & B_{xy}\\
+	    B_{yx} & B_{yy}
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+	    1 & 0\\
+	    0 & 1
+        \end{pmatrix}
+    .\] 
+    Ed anche l'equazione di FP resta della stessa forma:
+    \[\begin{aligned}
+	\partial_{t}P(x,y) = \left[-\partial_{x}A_x - \partial_{y}A_y + \frac{1}{2}(\partial^2_{x^2}+\partial^2_{y^2}) \right]P(x,y) 
+    .\end{aligned}\]
+    Quello che cambia è la forma di $A_y$, che contiene il termine $Bx$ in più rispetto a prima. Questo comporta anche dei valori delle componenti di $\vect{Z}$ diversi:
+    \[
+	Z_x = 2(f+By) \qquad Z_y = -\frac{2y}{\tau}+2Bx
+    .\] 
+    Il rotore di $\vect{Z}$ è nullo grazie al termine aggiuntivo.\\
+    Il termine aggiunto è quindi un termine ad-hoc per rendere il metodo visto sopra applicabile, infatti in questo modo è possibile avere una soluzione potenziale.
+    \[
+        P_{st}\sim \exp(\phi )
+    .\] 
+    con 
+    \[\begin{aligned}
+	\phi =& - \int\limits^{\vect{x}} d\vect{s}\vect{Z}  = \\
+	      &= - \int\limits^{\vect{x}} (f+By)dx + \left(-\frac{y}{\tau} + Bx\right)dy = \\
+	      &= \left(-\int\limits^{\vect{x}} fdx \right)-Bxy + \frac{y^2}{2\tau}
+    .\end{aligned}\]
+    Ricordiamo che gli integrali con pedice $\vect{x}$ sono integrali di linea, sul percorso $\vect{x}$ ad intervalli $d\vect{s}$.\\
+    Questa cosa ha anche un senso fisico, infatti le equazioni differenziali per $x$ e $y$ possono essere riscritte come:
+    \[\begin{aligned}
+	&\frac{\text{d} x}{\text{d} t} = - \partial_{x}\left(-\int\limits^{\vect{x}} fdx - Bxy + \frac{y^2}{2\tau}\right) + \xi_x\\
+	&\frac{\text{d} y}{\text{d} t} = - \partial_{y}\left(-\int\limits^{\vect{x}} fdx - Bxy + \frac{y^2}{2\tau}\right) + \xi_y
+    .\end{aligned}\]
+    Poiché svolgendo le derivate alcuni termini si annullano e tornano le due equazioni sopra ($xi = d\omega /dt$).\\
+    Quindi le due equazioni si presentano in termini di equazioni del moto classiche, nella quale il termine che viene derivato rispetto alla coordinata in ciascuna equazione funge da potenziale.
+\end{exmp}
+\noindent
+\subsection{Bilancio dettagliato}%
+\label{sub:Bilancio dettagliato}
+Il principio del bilancio dettagliato detta la struttura della equazione di FP e permetterà di risolverla in certe condizioni.\\
+Il fatto che la corrente sia nulla e che si possa costruire un potenziale equivale a dire che il sistema presenta il bilancio dettagliato.
+\subsubsection{Sistema di particelle in moto}%
+\label{subsub:Sistema di particelle in moto}
+Supponiamo di avere un sistema di oggetti caratterizzati da una posizione ed una  velocità ad un certo istante $(r,v,t)$.
+La probabilità di trovarsi in $(r,v,t)$ e ad un altro istante in $(r',v',t')$ può essere scritta come probabilità congiunta:
+\[
+    P(r',v',t+\tau; r,v,t) \qquad t' = t+\tau
+.\] 
+Per trovare questa quantità possiamo ragionare in termini di propagatore (come abbiamo fatto nelle lezioni precedenti).
+\[
+    (r,v,t) \to (r',v',t+\tau) 
+.\] 
+\subsubsection{Metodo "Nolandiano"}%
+\label{subsub:Metodo "Nolandiano"}
+Possiamo chiederci quale sia la probabilità del processo inverso.
+\[
+    (r',v',t+\tau) \to (r,v,t') 
+.\] 
+Anziché pensare ad una inversione temporale per risalire ad un istante precedente possiamo decidere di invertire puntualmente la velocità. In questo modo manteniamo l'ordine temporale mentre gli oggetti si muovono all'indietro (vedi Tenet)
+\[
+    (r',-v',t) \to (r,-v,t+\tau) 
+.\] 
+\begin{redbox}{Conseguenza del Bilancio dettagliato}
+    Se il sistema presenta bilancio dettagliato allora vale che:
+    \[
+    P(r',v',t+\tau; r,v,t) = P(r,-v,t+\tau; r',-v',t)
+    .\] 
+\end{redbox}
+\noindent
+Ovviamente in un caso stazionario avviamo anche l'invarianza per traslazione temporale, quindi possiamo considerare l'istante $t=0$:
+\[
+    P_s(r',v',\tau; r,v,0) = P_s(r,-v,\tau; r',-v',0)
+.\] 
+Ipotizziamo adesso che il processo sia Markoviano. In tal caso la probabilità composta si può esprimere in termini della distribuzione stazionaria $P_s(r,v)$ e del propagatore:
+\[\begin{aligned}
+    P&(r',v',\tau|r,v,0) P_s(r,v) =\\
+     & =P(r,-v,\tau|r',-v',0) P_s(r',-v')
+.\end{aligned}\]
+Possiamo manipolare questa espressione valutando quali variabili cambiano segno sotto inversione temporale, in generale è vero che:
+\begin{itemize}
+    \item Le variabili di tipo "coordinate" non cambiano segno
+	\[
+	    t\to -t \implies  x \to x
+	.\] 
+    \item Le variabili di tipo velocità cambiano segno
+	\[
+	    t\to -t \implies  v_x \to -v_x
+	.\] 
+\end{itemize}
+Prendendo delle coordinate generalizzate $x_i$ abbiamo che per inversione temporale:
+\[
+    x_i \xrightarrow[]{t\to -t} \epsilon_i x_i \qquad \epsilon_i = \pm 1
+.\] 
+Quindi ragionando in termini vettoriali:
+\[
+    \vect{x}  = (x,y,z,v_x,v_y,v_z) 
+.\] 
+La notazione usata allude alle coordinate di una singola particella, si può generalizzare una vettore $\vect{x}$ a $n$ particelle mettendo tutte le coordinate delle particelle $1,\ldots,n$ all'interno del vettore.\\
+Possiamo riscrivere in modo generale i passaggi precedenti\footnote{Si è invertita la notazione degli indici primati\ldots}
+:
+\[
+    P(\vect{x}, t+\tau ; \vect{x}', t) = 
+    P(\vect{\epsilon}\cdot \vect{x}', t+\tau ; \vect{\epsilon}\cdot \vect{x}, t) 
+.\] 
+Prendiamo le condizioni "iniziali" per $\tau=0$:
+\[\begin{aligned}
+    \tau & = 0 :\\
+	     &\implies  \delta (\vect{x}-\vect{x}') P_s(\vect{x}') = \delta (\vect{\epsilon} (\vect{x}'-\vect{x})) P_s(\vect{\epsilon}\vect{x}) 
+.\end{aligned}\]
+Sfruttando il fatto che la $\delta$ è pari e che la $\delta$ di una quantità vettoriale può essere vista come il prodotto di $\delta$ se ne conclude che:
+\begin{redbox}{}
+    \[\begin{aligned}
+	P_s(\vect{x}') &= P_s(\vect{\epsilon}\cdot \vect{x}) \\
+		       & \Downarrow\\
+	P(\vect{x},t|\vect{x}', 0) P_s(\vect{x}') &=
+        P\left(\vect{\epsilon}\vect{x}',\tau|\vect{\epsilon}\vect{x},0\right)P_s(\vect{x}') 
+    .\end{aligned}\]
+\end{redbox}
+\noindent
+La prima comporta che $P_s$ dovrà essere una potenza pari delle $v$ poiché queste ultime cambiano di segno quando si applica $\epsilon$.
+\subsubsection{Conseguenze del bilancio dettagliato applicato ad una Chapman-Kolmogorov}%
+\label{subsub:Conseguenze del bilancio dettagliato applicato ad una Chapman-Kolmogorov}
+Si può dimostrare che (libro di Van Kampen) il bilancio dettagliato permette di descrivere la struttura generale dei vari termini della equazione di CK (equazione \ref{eq:4_CK}), le seguenti formule sono pura referenza ma ne faremo uso\ldots
+\begin{equation} 
+\begin{aligned}
+    &\omega (\vect{x}|\vect{x}') P_s(\vect{x}') = \omega (\vect{\epsilon} \vect{x}'|\vect{\epsilon} \vect{x}) P_s(\vect{x}) \\
+    &\epsilon_i A_i(\vect{\epsilon}\vect{x}) P_s(\vect{x}) =\left[-A_i(\vect{x}) + \frac{\partial }{\partial x_J} B_{iJ}(\vect{x})\right]P_s(\vect{x}) \\
+    & \epsilon_i \epsilon_J B_{iJ}(\epsilon x) = B_{iJ}(\vect{x}) 
+    \label{eq:11_ref}
+.\end{aligned}\end{equation}
+\subsubsection{Nota storica sul Bilancio dettagliato}%
+\label{subsub:Nota storica sul Bilancio dettagliato}
+Storicamente si sono introdotte due quantità per capire se il sistema presenta il bilancio dettagliato:
+\[\begin{aligned}
+    & D^{\text{irr}}_i = \frac{1}{2}\left(A_i(x) + \epsilon_i A_i(\epsilon_ix)\right)\\
+    & D^{\text{rev}}_i = \frac{1}{2}\left(A_i(x) - \epsilon_iA_i(\epsilon_ix) \right)
+.\end{aligned}\]
+Infatti se la $D^{\text{irr}}_i\neq 0$ allora il sistema non presenta il bilancio dettagliato.
+
+\begin{exmp}[]
+    \[
+        \begin{cases}
+            dx = vdt\\
+	    mdv = -V'(x) dt - \gamma v dt + \sqrt{2\gamma  k_B T} d\omega
+        \end{cases}
+    .\] 
+    In cui si ha un termine di attrito alla Stokes:
+    \[
+        \gamma = 6\pi  \eta r
+    .\] 
+   L'equazione di FK che ne emerge è la seguente:
+   \[\begin{aligned}
+       &\partial_{t}P =\\
+       &=-\partial_{x}v + \frac{1}{m}\partial_{v}\left[\left(V'(x) + \gamma v\right)P\right] + 
+		      +\frac{\gamma k_b T}{m^2}\partial^2_{v^2}P
+   .\end{aligned}\]
+   Quindi abbiamo che:
+   \[
+       A = \begin{pmatrix} v \\ - \frac{\gamma  v}{m} - \frac{V'}{m}\end{pmatrix} 
+       \qquad 
+       B = \begin{pmatrix} 
+	   0 & 0 \\
+	   0 & \frac{2\gamma k_BT}{m^2}
+           \end{pmatrix} 
+   .\] 
+   Visto che il termine di inversione $\vect{\epsilon}$ ci da:
+   \[
+       \vect{\epsilon}\cdot \begin{pmatrix} x \\ v \end{pmatrix} = \begin{pmatrix} x \\ -v \end{pmatrix} 
+   .\] 
+   Si ha anche che (si applica $\epsilon$ due volte, quindi dove opportuno c'è un doppio cambio di segno):
+   \[
+       \vect{\epsilon}\vect{ A}(\vect{\epsilon}\vect{x})   = \begin{pmatrix} -v \\ -\frac{\gamma v}{m} + \frac{V'}{m} \end{pmatrix} 
+   .\] 
+   Applicando adesso la seconda delle \ref{eq:11_ref}:
+   \[\begin{aligned}
+       \epsilon A(\epsilon x) P_s(x) &= - A(x) P_(x) + \partial_{J}B_{iJ}P_s(x) \\
+				   & \Downarrow\\
+       \begin{pmatrix} -v \\ -\frac{\gamma v}{m} + \frac{V'}{m} \end{pmatrix} P_s &= 
+       \begin{pmatrix} -v \\ \frac{\gamma v}{m}+\frac{V'}{m} \end{pmatrix} P_s + 
+       \begin{pmatrix} 0 \\ \partial_{v}\left(\frac{2\gamma k_BT}{m^2}\right) \end{pmatrix} P_s
+   .\end{aligned}\]
+   Notiamo che la derivata $J$ in questo caso indica la derivata sulla seconda componente: la velocità.\\
+   La prima riga è una identità, la seconda riga invece è meno ovvia:
+   \[
+       -\frac{2\gamma v}{m}P_s = \frac{2\gamma k_BT}{m^2}\partial_{v}P_s
+   .\] 
+   Se risolviamo si ha una forma per la $P_s(x, v)$:
+   \[
+       P_s(x,v) = \exp\left(-\frac{v^2m}{2k_BT}\right)f(x) 
+   .\] 
+   Notiamo come la distribuzione stazionaria $P_s(x,v) $ sia quadratica in $v$.
+   Questo, a conferma di quanto accennato prima, è dovuto all'invarianza di tale distribuzione quando si applica $\vect{\epsilon }$. \\
+   Per trovare la $f(x) $ basta reinserire la $P_s$ nella equazione di FK,  si impone che il processo sia stazionario ($\partial_{t}P_s = 0$) e si ottiene:
+   \[\begin{aligned}
+       v\partial_{x}f(x) &= - \frac{v}{k_BT}V'(x) f(x) \\
+			 &\Downarrow\\
+       f(x) &\propto \exp\left(-\frac{V(x)}{k_BT}\right)
+   .\end{aligned}\]
+   In conclusione la distribuzione di equilibrio è la seguente:
+   \[
+       P_{s} = N \exp\left(-\frac{1}{k_BT}\left(\frac{mv^2}{2}+V(x)\right)\right)
+   .\] 
+   Notiamo come la forma sia esattamente quella che ci si aspetta da un caso fisico:
+   \[
+       P\sim \exp\left(-\beta H\right)
+   .\] 
+\end{exmp}
+\noindent
+Nell'esempio precedente si è legato il termine di dissipazione al termine stocastico (nelle SDE) nella formula:
+\[
+	    mdv = -V'(x) dt - \gamma v dt + \sqrt{2\gamma  k_B T} d\omega
+.\] 
+Notiamo infatti che $\gamma$ compare sia nel termine per $dt$ che in quello per $d\omega$.\\
+Il motivo per il quale lo abbiamo fatto è dovuto ad un importante teorema.
+\subsection{Relazione di Onsager e Teorema di Fluttuazione Dissipazione.}%
+\label{sub:Relazione di Onsager e Teorema di Fluttuazione Dissipazione.}
+Prendiamo un processo di OU nel quale all'interno della FK il termine $A$ è lineare ed il termine $B$ è costante
+\[
+    A_i(x) = A_{iJ}x_J \qquad
+    B_{iJ}(x) = B_{iJ}
+.\] 
+Questa linearizzazione valuta le piccole oscillazioni attorno al punto di equilibrio per un processo di OU.\\
+Se un processo ha le seguenti proprietà sotto inversione temporale
+\footnote{Riscrivo le \ref{eq:11_ref} in un'altra forma, esplicitando il fatto che $B_{iJ}$ è costante.}
+:
+\begin{equation}
+\begin{aligned}
+    &\epsilon_i\epsilon_J B_{iJ}=B_{iJ}\\
+    &\left(\epsilon_i\epsilon_JA_{iJ} + A_{iJ}\right)x_J = B_{iJ}\partial_{J}\ln P_s \label{eq:11_B}
+\end{aligned}
+\end{equation}
+Allora è sempre vero che:
+\[
+    P_s = N \exp\left(-\frac{1}{2}x^tD^{-1}x\right)
+.\] 
+Con $D^{-1}$ simmetrica.\\
+Se vale il principio del bilancio dettagliato allora esistono delle relazioni che legano la matrice $D^{-1}$ (che contiene l'equivalente della temperatura del sistema) ai vettori $A$:
+\begin{equation}
+\begin{aligned}
+    &\epsilon A\epsilon  = D A^tD^{-1} \\
+    &\epsilon A\epsilon D = D A^t \\
+    &\epsilon (AD) = (AD)^t\epsilon\\
+    & B = -\left(AD + DA^t\right) \label{eq:11_B1}
+.\end{aligned}
+\end{equation}
+Per arrivare a queste conclusioni si è saltata una paccata di algebra noiosa.
+\begin{exmp}[Circuito RLC]
+    Prendiamo il seguente circuito
+    \input{lezioni/tikz/lez_11_RLC.tex}
+    Dove la sorgente di potenziale è una soluzione ionica (presenta delle fluttuazioni $\xi$).\\
+    L'equazione che determina la corrente nel circuito è:
+    \[
+        \frac{\text{d} i}{\text{d} t} = \frac{1}{L}\left(-\frac{Q}{C}-iR +V_\xi\right)
+    .\] 
+    Supponendo che anche la carica sul condensatore senta delle fluttuazioni si ha che:
+    \[
+	\frac{\text{d} Q}{\text{d} t} = i - \gamma Q + Q_\xi(t) 
+    .\] 
+    Possiamo scrivere le SDE del processo stocastico come:
+    \[
+       \begin{cases}
+ 	 di = - \dfrac{Q}{LC}dt -\dfrac{R}{L}idt +\dfrac{V_\xi}{L}dt\\
+	 dQ = idt - \gamma Q dt + Q_\xi dt          
+       \end{cases} 
+    .\] 
+    La matrice $A$ si esprime come:
+    \[
+        A = 
+	\begin{pmatrix} 
+	    -\frac{R}{L} & -\frac{1}{LC}\\
+	    1            & - \gamma
+	\end{pmatrix} 
+    .\] 
+    Mi aspetto che la distribuzione stazionaria abbia una forma del tipo:
+    \[
+        P_s \sim \exp\left(-\frac{H}{k_BT}\right)
+    .\] 
+    L'energia del sistema sappiamo che vale:
+    \[
+        E = \frac{Li^2}{2} + \frac{Q^2}{2C}
+    .\] 
+    Guardando i termini dell'energia $\sim H$ ci aspettiamo una matrice $D$ della seguente forma
+    \footnote{Dobbiamo considerare che l'inversa entrerà nella espressione per $P_s$}
+    :
+    \[
+        D = 
+	\begin{pmatrix}
+	    \frac{k_BT}{L} & 0 \\
+	    0              & k_BT C
+	\end{pmatrix} 
+    .\] 
+    Mentre per quanto riguarda la matrice di inversione basta considerare l'analogia $(x,v) \to (Q,i)$:
+    \[
+	\epsilon  = \text{diag}(-1,1) 
+    .\] 
+    Possiamo verificare che siano rispettate le relazioni sulle matrici $A$ e $D$:
+    \[
+	AD = 
+	\begin{pmatrix} 
+	    \dfrac{Rk_BT}{L^2} & &  \dfrac{k_BT}{L}   \\
+	     &&\\
+	    - \dfrac{k_BT}{L} & & \gamma k_BTC 
+	\end{pmatrix} 
+    .\] 
+    \[
+	(AD)_{12} = -(DA)_{21} 
+    .\] 
+    Inoltre troviamo la matrice $B$ sfruttando l'ultima delle equazioni \ref{eq:11_B1}:
+    \[
+        B = -\left(AD+DA^t\right) = 2k_BT 
+	\begin{pmatrix} 
+	    R/L^2 & 0\\
+	    0    & \gamma C
+	\end{pmatrix} 
+    .\] 
+    Troviamo allora che tutto il meccanismo delle equazioni esposte sopra funziona in questo esempio.\\
+    Quello che cerchiamo adesso è la relazione tra i termini stocastici nelle equazioni ($V_\xi$ e $Q_\xi$) e la temperatura. \\
+    Si nota intanto che i due processi stocastici potrebbero essere legati tra loro, ipotizziamo che le variabili stocastiche che descrivono $V_\xi$ e $Q_\xi$ siano $\xi_1$ e $\xi_2$ tali che:
+    \[
+        \begin{cases}
+            V_\xi /L \sim  b_{11} \xi_1 + b_{12}\xi_2\\
+	    Q_\xi \sim b_{21}\xi_1 + b_{22}\xi_2
+        \end{cases}
+    .\] 
+    Per avere tutte le formule di equilibrio che abbiamo ottenuto in precedenza la struttura della matrice $b$ deve essere (non ben spiegato perché): 
+    \[
+        b = 
+	\begin{pmatrix} 
+	    \sqrt{2k_BTR /L^2} & 0 \\
+	    0             & \sqrt{2k_BT\gamma C} 
+	\end{pmatrix} 
+    .\] 
+    Se ricordiamo bene le equazioni di partenza avevano le proprietà:
+    \[
+        \begin{cases}
+            di \sim -\dfrac{R}{L}idt \\
+	    dQ \sim - \gamma Qdt
+        \end{cases}
+    .\] 
+    I due termini a moltiplicare $i$ e $Q$ sono proprio i termini che ritroviamo in $b_{11}$ e $b_{22}$.
+\end{exmp}
+\noindent
+\begin{redbox}{Sunto del teorema Flutt. Diss.}
+    Dato un processo con 
+    \begin{itemize}
+        \item Un termine di dissipazione $\gamma$
+	\item Un processo stocastico $\xi$.
+    \end{itemize}
+    Allora l'intensità del processo stocastico vale $\sim \sqrt{2k_BT \gamma}$ (con normalizzazioni opportune)
+\end{redbox}
+\noindent
+\subsection{Fokker-Plank dipendente dal tempo}%
+\label{sub:Fokker-Plank dipendente dal tempo}
+L'argomento di questa sezione è un pò fumoso, operativamente si capirà meglio il significato con degli esempi pratici\ldots\\
+Riprendiamo l'equazione FK e cerchiamo una soluzione non stazionaria.
+\begin{equation}
+    \partial_{t}P = \left(-\partial_{x}A + \frac{1}{2}\partial^2_{x^2} B\right)P 
+    \label{eq:11_FK_t}
+\end{equation}
+Possiamo vedere il termine nella parentesi di destra come un operatore: $\mathcal{L}$.
+\[
+    \partial_{t}P = \mathcal{L}P
+.\] 
+Possiamo vedere questa come una equazione agli autovalori, in tal caso possiamo scrivere la $P$ come una sovrapposizione lineare di autovalori ed autovettori:
+\[
+    P = P_\lambda (x) e^{-\lambda t}
+.\] 
+Per poi sostituire nella equazione \ref{eq:11_FK_t} per trovare le soluzioni $P_\lambda, \lambda$:
+\begin{equation}
+    -\lambda P_\lambda  e^{-\lambda t} = \mathcal{L}P_\lambda  e^{-\lambda t}
+    \label{eq:11_FK_auto}
+\end{equation}
+Possiamo utilizzare la notazione della meccanica quantistica pensando ai $P_\lambda$ nella equazione \ref{eq:11_FK_auto} come dei "ket". \\
+Dobbiamo notare che l'equazione che agisce sui ket è nota, mentre quella che agisce sui bra no. Questo perché, a differenza del caso quantistico, qui c'è di mezzo la distribuzione stazionaria. \\
+Quindi quando si cerca di applicare l'operatore $\mathcal{L}$ a sinistra si deve tener di conto che va ad agire anche sulla distribuzione stazionaria.\\
+Dobbiamo quindi scrivere la $P(x,t)$ come:
+\[
+    P(x,t) = P_s(x) q(x,t) 
+.\] 
+Possiamo reinserire questa nella FK dipendente dal tempo e isolare i termini con $P_s$  tramite integrazione par parti. Ne emerge una equazione per $q(x,t)$, che rappresentano i bra, del tipo:
+\begin{redbox}{Backward FK}
+\[
+    \partial_{t}q = A\partial_{x}q + \frac{1}{2}B\partial^2_{x^2}q
+.\]     
+\end{redbox}
+\noindent
+Che differisce dalla equazione per il ket dal solo segno del primo termine dopo l'uguale. \\
+Abbiamo quindi il set di equazioni agli autovalori:
+\begin{equation}
+    \begin{cases}
+	-\partial_{x}(AP_\lambda) + \dfrac{1}{2}\partial^2_{x^2}(BP_\lambda) = -\lambda P_\lambda\\
+	\\
+	A\partial_{x}Q_{\lambda'} + \dfrac{1}{2}B\partial^2_{x^2}Q_{\lambda'} = - \lambda'Q_{\lambda'}
+    \end{cases}
+\end{equation}
+A questo punto si tratta di fare fare algebra sulle espressioni, possiamo moltiplicare la prima per $Q_{\lambda'}$, integrarla su un certo intervallo $(a,b)$  ed applicare l'integrazione per parti.\\
+Il risultato al quale si arriva è il seguente:
+\[\begin{aligned}
+    (\lambda'&-\lambda) \int_{a}^{b} Q_{\lambda'}P_{\lambda}dx = \\
+             &= \left\{Q_{\lambda'}\left[-AP_\lambda  + \frac{1}{2}\partial_{x}(BP_\lambda) \right] -
+		       \frac{1}{2}BP_{\lambda}\partial_{x}Q_{\lambda'}\right\}_{a}^{b}
+.\end{aligned}\]
+Notiamo ancora l'importanza delle condizioni al contorno su $(a,b)$. 
+\begin{exmp}[Condizioni al contorno assorbenti]
+    In tal caso il lato destro della equazione si annulla in quanto:
+    \[
+	Q_{\lambda'}(a) = Q_{\lambda'}(b) = 0
+    .\] 
+    Quindi il sistema è "bi-ortogonale":
+    \[
+        \int Q_{\lambda'}P_{\lambda}dx = \delta_{\lambda\lambda'}
+    .\] 
+\end{exmp}
+\noindent
+\begin{exmp}[Processo di Wiener con condizioni al bordo ($0,1$) assorbenti.]
+    Per via delle condizioni assorbenti in $0$ e $1$ abbiamo che:
+    \[
+	P(0,t) = P(1,t) = 0
+    .\] 
+    La FK che descrive il processo di Wiener è:
+    \[
+        \partial_{t}P = \frac{1}{2}\partial^2_{x^2}P
+    .\] 
+    Possiamo scegliere la base più semplice per lo sviluppo nell'intervallo che rispetti le condizioni al bordo:
+    \[
+	P_\lambda =\sin (\pi n x) 
+    .\] 
+    Quindi ogni $P$ si scrive come sovrapposizione:
+    \[
+	P(x,t) = \sum_{n=1}^{} b_n e^{-\lambda n t}\sin (\pi n x) 
+    .\] 
+    Inserendo nell'equazione per $P$  si ottengono gli autovalori:
+    \[
+        \lambda_n = \frac{n^2\pi^2}{2}
+    .\] 
+    Per quanto riguarda i coefficienti $b_n$  dobbiamo imporre delle condizioni iniziali:
+    \[
+	P(x,0) = \delta (x-x_0) 
+    .\] 
+    Quindi
+    \[
+	b_n = b_n(0) = \int_{0}^{1} \delta (x-x_0) \sin (n\pi x)  dx = \sin (n\pi x_0) 
+    .\] 
+    E con questo il problema è risolto, infatti si ha:
+    \[
+	P(x,t|x_0, 0) = \sum_{n=1}^{\infty} \sin (\pi nx_0) \sin (n\pi x) \exp\left(-\frac{n^2\pi^2 }{2}t\right)
+    .\] 
+\end{exmp}
+\noindent
+\begin{exmp}[Processo di Wiener in $(0,1)$ con condizioni riflettenti]
+    Le condizioni riflettenti al bordo implicano che la corrente $J$ si annulla al bordo, vista l'espressione di $J$ (e ricordando che $A=0$ per il processo di Wiener) si ha:
+    \[
+	\frac{\partial P(0,t) }{\partial x} = \frac{\partial P(1,t) }{\partial x} = 0
+    .\] 
+    Quindi una base opportuna per le soluzioni è quella del coseno. Otteniamo quindi gli stessi autovalori del caso precedente:
+    \[
+        \lambda_n = \frac{n^2\pi^2}{2}
+    .\] 
+    Ma le autofunzioni sono adesso dei coseni, la soluzione finale è:
+    \[
+	P(x,t|x_0, 0) = \sum_{n=-\infty}^{\infty} \cos (\pi nx_0) \cos (n\pi x) \exp\left(-\frac{n^2\pi^2 }{2}t\right)
+    .\] 
+\end{exmp}
+\noindent
+\clearpage

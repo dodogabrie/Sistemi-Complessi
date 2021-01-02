@@ -1,0 +1,30 @@
+\tikzmath{\a = 1; \b = 3;}
+\usetikzlibrary{patterns}
+\usepgfplotslibrary{fillbetween}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+	\begin{axis}[
+	    width=7cm,
+	    height=4cm,
+	    xmin= -1, xmax= 5,
+	    ymin= 0, ymax = 1.8,
+	    axis lines = middle,
+	    x label style={at={(axis description cs:1,-0.01)},anchor=north},
+	    y label style={at={(axis description cs:0.15,1)},anchor=south},
+	    xlabel={$x$},
+	    ylabel={$P_s(x)$ },
+	    xtick={ 0, \a+0.1, 1.9},
+	    xticklabels={$0$, $a$, $b$},
+	    ytick={0},
+	    yticklabel={$0$},
+	    ]
+	    \addplot[domain=0.2:5, samples=500]{e^(-((x-\a)^2+0.2)*(x-\b)^2 + 0.3)};
+	    \addplot[densely dotted, samples=50, smooth,domain=0:6, name path=one] coordinates {(\a+0.1,0)(\a+0.1,0.65)};
+	    \addplot[densely dotted, samples=50, smooth,domain=0:6, name path=two] coordinates {(1.9,0)(1.9,0.4)};
+	\end{axis}
+    \end{tikzpicture}
+    \caption{\scriptsize Distribuzione di probabilità stazionaria.}
+    \label{fig:lore}
+\end{figure}
