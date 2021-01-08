@@ -4,10 +4,13 @@
 \label{sub:Simulazione dei camminatori.}
 Riprendiamo l'ultimo argomento della lezione \ref{sub:Parte 2}, ovvero il calcolo del tempo di primo passaggio con un metodo più potente. \\
 Prendiamo un sistema di camminatori che seguono la seguente SDE:
-\[\begin{aligned}
+\begin{equation}
+\begin{aligned}
     dx = & f(x) dt + \sqrt{\epsilon} dW = \\
     = & \left(x-x^3\right)dt + \sqrt{\epsilon} dW
-.\end{aligned}\]
+.\end{aligned}
+\label{eq:12_beg}
+\end{equation}
 In cui $f(x)$ è la forza che sente il camminatore in un potenziale a doppia buca della forma:
 \input{lezioni/tikz/lez_12_pot.tex}
 \noindent
@@ -23,7 +26,7 @@ Effettuando una simulazione multipla seguendo questo procedimento si ottiene:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/lez_12_walker_t_path.png}
-    \caption{\scriptsize 70 camminatori che raggiungono il punto C.}
+    \caption{\scriptsize 70 camminatori che raggiungono il punto C (\href{https://github.com/dodogabrie/Sistemi-Complessi/blob/master/python-project/lezione12/MFPT_simulation_py.ipynb}{Link al codice in python}).}
     \label{fig:figures-lez_12_walker_t_path-png}
 \end{figure}
 \noindent 
@@ -32,7 +35,7 @@ Questa cosa appare evidente se andiamo a vedere la densità dei punti in cui nei
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/lez_12_walker_t.png}
-    \caption{\scriptsize Densità dei camminatori che riescono a fare il salto nel tempo, si nota che si addensano attorno ad un tubo di flusso}
+    \caption{\scriptsize Densità dei camminatori che riescono a fare il salto nel tempo, si nota che si addensano attorno ad un tubo di flusso (\href{https://github.com/dodogabrie/Sistemi-Complessi/blob/master/python-project/lezione12/MFPT_simulation_py.ipynb}{Link al codice in python})}
     \label{fig:figures-lez_12_walker_t-png-}
 \end{figure}
 \noindent 
@@ -42,7 +45,7 @@ Si possono prendere tutte le sequenze di $dW$ che hanno permesso ai $70$ cammina
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/lez_12_dist.png}
-    \caption{\scriptsize Distribuzione del processo stocastico per i camminatori che riescono a fare il salto, notiamo che la media del processo (curva arancione) deve essere diversa da zero.}
+    \caption{\scriptsize Distribuzione del processo stocastico per i camminatori che riescono a fare il salto, notiamo che la media del processo (curva arancione) deve essere diversa da zero (\href{https://github.com/dodogabrie/Sistemi-Complessi/blob/master/python-project/lezione12/MFPT_simulation_py.ipynb}{Link al codice in python}).}
     \label{fig:figures-lez_12_dist-png}
 \end{figure}
 \noindent
@@ -84,7 +87,7 @@ Sia $\gamma$ una fluttuazione ottimale che permette il passaggio da $a$ a $b$.
 \[
 	\gamma \to \left[\zeta_1, \ldots, \zeta_n\right]
 .\] 
-La probabilità che tale fluttuazione avvenga avrà la forma:
+La probabilità che tale fluttuazione avvenga avrà la forma (vedi ad esempio la soluzione stazionaria della Lezione \ref{eq:5_staz}):
 \[
     P(\gamma) \sim \exp\left(-\frac{S\left[x_1,\ldots,x_n\right]}{\epsilon}\right)
 .\] 
@@ -155,7 +158,10 @@ Prendiamo l'equazione per l'incremento di $x$:
 \[
     dx = - U' dt + \sqrt{\epsilon} d\omega
 .\] 
-In cui si ha che, come già accennato $-U' = f$.\\
+In cui si ha che, come già accennato $-U' = f$:
+\[
+    H = \frac{p^2}{2}-pU'
+.\] 
 Risolviamo le equazioni di Hamilton:
 \[
     \begin{cases}
@@ -163,4 +169,231 @@ Risolviamo le equazioni di Hamilton:
 	\dot{p} = U''p
     \end{cases}
 .\] 
+Possiamo derivare la prima e sostituire $\dot{p}$ dalla seconda:
+\[\begin{aligned}
+    \ddot{x} &= -U'' \dot{x} + \dot{p} =\\
+	      & = - U'' \dot{x} + U'' p = \\
+	      & = U''\left(- \dot{x} + p\right) = U'U''
+.\end{aligned}\]
+Quindi ne emerge che $U'U''$ ha la struttura di una "forza"
+\footnote{Per unità di massa eventualmente\ldots}, 
+vediamo qual'è la forma grafica di tutte le quantità in gioco.
+\input{lezioni/tikz/lez_12_pot_der.tex}
+\noindent
+Il potenziale efficace che mi genera la forza $U'U''$ è 
+\[
+    U_{\text{eff}} = -\frac{1}{2}\left(U'(x)\right)^2
+.\] 
+Questo perché effettuando tale derivata si riottiene l'equazione sopra ai grafici, si ha quindi:
+\[
+    \ddot{x} = \frac{\text{d} }{\text{d} x} \left(-\frac{1}{2}(U'(x) ) ^2\right)
+.\] 
+Quindi se integriamo questa equazione in $x$ si scopre che il moto avviene ad una energia costante $E$, di fatto si trova la conservazione della energia meccanica:
+\[
+    \frac{1}{2} \dot{x}^2 - \frac{1}{2} U'^2 = E
+.\] 
+Notiamo che il grafico che conta ai fini del moto (della velocità del camminatore) è il terzo in Figura \ref{fig:12_pot_der}.\\
+Poniamoci nel caso di energia nulla, si ottiene che
+\begin{equation}
+    \dot{x} = \pm U'
+    \label{eq:12_moto}
+\end{equation}
+Fisicamente nel sistema	si ha che nel tratto di salita sul potenziale l'equazione del moto è 
+\[
+    \dot{x} =  + U'
+.\] 
+Mentre nel tratto di successiva discesa vale l'equazione con il meno. In conclusione si ha per l'esempio discusso in questa lezione:
+\[
+    \begin{cases}
+	\dot{x} = + U' & x<0\\
+	\dot{x} = -U' & x\ge 0
+    \end{cases}
+\] 
+Adesso possiamo confrontare questa equazione con quella di partenza di questa lezione (è la \ref{eq:12_beg} riscritta):
+\[
+    \dot{x} = -U' + \xi
+.\] 
+Quindi notiamo che nella parte di discesa il moto stocastico $\xi$ è irrilevante, infatti abbiamo l'equazione di partenza con $\xi=0$. Nella parte di salita invece il moto stocastico è tale da invertire di segno all'equazione per $ \dot{x}$.\\
+Proprio per questo motivo le sequenze che permettono il passaggio sopra la barriera sono difficili da generare.
+Possiamo allora confrontare questa soluzione con le simulazioni mostrate sopra, generando la traiettoria di Equazione \ref{eq:12_moto} si ottiene:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/lez_12_walker_t_theory.png}
+    \caption{\scriptsize Confronto tra simulazione dei camminatori e curva teorica di un camminatore che minimizza l'azione (\href{https://github.com/dodogabrie/Sistemi-Complessi/blob/master/python-project/lezione12/MFPT_simulation_py.ipynb}{Link al codice in python}).}
+    \label{fig:figures-lez_12_walker_t_theory-png}
+\end{figure}
+\noindent
+Notiamo che la curva teorica è compatibile con il flusso di camminatori
+\footnote{Sul plot è necessario precisare che il camminatore con la legge $\dot{x} = \pm U'$ raggiunge i punti interessanti $x=0$, $x=+1$ in un tempo infinito. Il moto è stato tagliato per renderlo ragionevolmente simile all'andamento delle simulazioni. Guardando il file del professore suppongo abbia fatto lo stesso. Questo falsifica parzialmente la validità del risultato.
+}
+.\\
+Risolvendo le equazioni di Hamilton per $p (=\lambda)$ si ottiene anche il seguente andamento teorico:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/lez_12_dist_theory.png}
+    \caption{\scriptsize Confronto tra media predetta del processo di Wiener e media ottenuta dalle simulazioni, tutto in funzione di $x$ (\href{https://github.com/dodogabrie/Sistemi-Complessi/blob/master/python-project/lezione12/MFPT_simulation_py.ipynb}{Link al codice in python}).}
+    \label{fig:figures-lez_12_dist_theory-png}
+\end{figure}
+\noindent
+Per ottenere questo risultato è stato necessario, a livello computazionale, di moltiplicare la soluzione $p$ per il fattore $dt / \sqrt{\epsilon}$. 
+Senza far questo il rumore ottenuto verrà fuori scala rispetto a quello simulato.\\
+Possiamo notare una non conformità nei pressi di $x=0$, questo può essere dovuto al campione statistico di simulazioni
+\footnote{Noto che il campione può essere ampliato scrivendo una funzione e chiamandola più volte. In questo modo si risolve il problema della memoria occupata in eccesso a causa della matrice di numeri random e di quella delle posizioni iniziali.}.\\
+Possiamo adesso utilizzare questo modello per confrontarlo con le simulazioni. In figura \ldots si mostra una simulazione di camminatori che raggiungono $x= 0.2$ per poi rilassare.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/lez_12_walker_t_cutted.png}
+    \includegraphics[width=0.5\textwidth]{figures/lez_12_walker_t_cutted_theory.png}
+    \caption{\scriptsize Camminatori selezionati che arrivano a $x = 0.2$ per poi rilassare e distribuzione in densità dei camminatori con la curva teorica in blu (\href{https://github.com/dodogabrie/Sistemi-Complessi/blob/master/python-project/lezione12/MFPT_simulation_py.ipynb}{Link al codice in python}).}
+    \label{fig:figures-lez_12_walker_t_cutted_theory-png}
+\end{figure}
+\noindent
+Si nota come i camminatori si distribuiscono lungo due cammini che corrispondono a $\dot{x} = \pm U'$.
+\subsection{Da cammino ottimale a MFPT}%
+\label{sub:Da cammino ottimale a MFPT}
+Abbiamo detto che il contributo stocastico arriva solo nella parte di salita, possiamo usare questo per calcolare la derivata della azione:
+\begin{equation}
+\begin{aligned}
+    \dot{S} =& \frac{\partial H}{\partial p} p - H = \\
+            =& \left(p-U'\right)p - \frac{1}{2}p^2+pU' = \\
+	    =& \frac{1}{2}p^2 = \\
+	    =& \frac{1}{2}\left(\dot{x}+U'\right)^2
+.\end{aligned}
+\label{eq:12_action}
+\end{equation}
+Sostituendo la soluzione per $\dot{x}$ ottenuta prima si ha che:
+\[
+    \dot{S} = 
+    \begin{cases}
+	2(U') ^2 & \text{ Salita}\\
+	0        & \text{ Discesa}
+    \end{cases}
+    = 2 \dot{x}^2 = 2\dot{x}U'
+.\] 
+A questo punto possiamo integrare per ottenere l'azione:
+\[\begin{aligned}
+    S_{min} =& \int\dot{S}dt = 
+             2\cdot \int_{a}^{b} \dot{x}U'dt = \\
+            =& 2  \int_{a}^{b} \left(\frac{\text{d} U}{\text{d} t} \right)dt =
+	     2(U_b-U_a)  
+.\end{aligned}\]
+Quindi il tempo di primo passaggio, come già accennato, sarà proporzionale a:
+\[\begin{aligned}
+    \text{MFPT} \sim& \exp\left(-\frac{S_{\text{min}}}{\epsilon}\right) =
+    \exp\left(-\frac{2(U_b-U_a)}{2D}\right) =\\
+    =&\exp\left(-\frac{U_b-U_a}{D}\right)
+.\end{aligned}\]
+Che è proprio la legge di Harrenius trovata nella lezione precedente.\\
+Il metodo esposto per il tempo di primo passaggio è molto generale, possiamo applicarlo anche a casi N-dimensionali.
+\subsection{Calcolo del MFPT in 2D: Oscillatore di Van Der Pol invertito}%
+\label{sub:Calcolo del MFPT in 2D}
+Prendiamo un sistema bidimensionale con le seguenti SDE per il moto dei camminatori:
+\[\begin{aligned}
+    & dx = ydt\\
+    & dy = \left(-2\eta (1-x^2) y - x\right)dt + \sqrt{ 4\eta T} d\omega
+.\end{aligned}\]
+Questo sistema è un famoso oscillatore, studiato per descrivere l'andamento della corrente nelle valvole.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{figures/lez_12_Van_Der_Pol_oscillator.png}
+    \caption{\scriptsize Oscillatore di Van Der Pole nello spazio $x, y$.}
+    \label{fig:figures-lez_12_Van_Der_Pol_oscillator-png}
+\end{figure}
+\noindent
+La linea scura in figura è un \texttt{Ciclo limite instabile}, inserendo un camminatore in questa traiettoria ( con le condizioni iniziali opportune e rimuovendo la parte stocastica della equazione ) questo rimarrebbe eternamente su di essa. Un camminatore che parte all'interno collassa sull'origine $S$, all'esterno invece i punti scappano via verso $r\to \infty$.\\
+Possiamo immaginare quindi questo sistema come un potenziale dalla forma "vulcanica", in cui il ciclo limite instabile corrisponde al cratere.\\
+Possiamo chiederci quanto impieghi un camminatore inizializzato all'interno ad arrivare sul bordo del cratere ( come risalire un potenziale bidimensionale ).\\
+Potremmo tentare di risolvere il problema come fatto in precedenza:
+\begin{itemize}
+    \item Trovare l'equazione di FK.
+    \item Scrivere l'equazione del tempo di primo passaggio.
+    \item Risolvere l'equazione alle derivate parziali.
+\end{itemize}
+Il problema è che, anche se si riuscisse a risolvere l'equazione alle derivate parziali, non è affatto banale inserire le condizioni al contorno (ne analiticamente ne numericamente).\\
+Il vantaggio del metodo è che possiamo scrivere una Hamiltoniana per il sistema:
+\[
+    H = yp_x + \left[-2\eta (1-x^2) y - x\right]p_y + \frac{1}{2}(4\eta T) p_y^2
+.\] 
+Possiamo dire che i camminatori partono dal fondo del cratere $S$, si risolve il problema trovando i cammini che arrivano al bordo del cratere e poi si minimizzano questi cammini (si minimizza l'azione). \\
+Le traiettorie $a$, $b$ in figura \ref{fig:figures-lez_12_Van_Der_Pol_oscillator-png} sono state trovate dal professore ed arrivano tangenti al ciclo limite.\\
+Possiamo cercare di capire se il sistema ha una distribuzione di equilibrio, questo equivale a capire se il sistema presenta il bilancio dettagliato.\\
+La condizione del bilancio dettagliato è soddisfatta se vale la \ref{eq:11_rot}. Esplicitando tale conto si ha:
+\[
+    f_x = y \qquad f_y = -2\eta (1-x^2) y - x
+.\] 
+\[
+    \frac{\partial f_x}{\partial y} = 1 \neq \frac{\partial f_y}{\partial x} = 4\eta xy - 1
+.\] 
+L'equazione al rotore nullo non è soddisfatta, quindi il sistema non presenta il bilancio dettagliato.\\
+L'assenza del bilancio dettagliato non influisce sul calcolo del MFPT, tuttavia la traiettoria di fuga ottimale non è univoca (come invece si avrebbe con il bilancio dettagliato) e di conseguenza si sviluppa una cuspide all'interno del ciclo limite instabile (nello spazio delle fasi vediamo più di un cammino partendo dallo stesso punto).
+\begin{exmp}[]
+    Prendiamo la seguente SDE:
+    \[
+	 dx = (-U'(x) + A\sin (wt) ) dt + \sqrt{\epsilon} d\omega    
+    .\] 
+    La possiamo spezzare in due termini:
+    \[
+	\begin{cases}
+	 dx_1 = w dt\\
+	 dx_2 = (-U'(x_2) + A\sin (x_1) ) dt + \sqrt{\epsilon} d\omega    
+	\end{cases}
+    \] 
+    Le equazioni di Hamilton-Jacobi ricordiamo essere:
+    \[
+        \begin{cases}
+            \dot{x}= -U' + p\\
+	    \dot{p} = U'' p
+        \end{cases}
+    \] 
+    Essendo in due dimensioni non abbiamo quantità scalari, ad esempio:
+    \[
+        -U' = 
+	\begin{pmatrix} 
+	    w  \\
+	    A\sin (x_1) -U'(x_2) 
+	\end{pmatrix} 
+    \] 
+    Quindi esisterà anche un tensore delle derivate seconde, le cui componenti non nulle sono:
+    \[\begin{aligned}
+	& U''_{x_1, 2} = -\partial_{x_1}w + \partial_{x_1}(A\sin (x_1)) = -A\cos (x_1) \\
+	& U_{x_2,2} = -\partial_{x_2} (-U'(x_2) ) 
+    \end{aligned}\]
+    In cui si è cambiato segno perché avevamo $-U'$. Alla fine si ottiene un oggetto del tipo:
+    \[
+        U'' = 
+	\begin{pmatrix} 
+	    0  &  -A\cos (x_1) \\
+	    0  &  d^2U/d(x_2)^2
+	\end{pmatrix} 
+    .\] 
+    In conclusione abbiamo il seguente set di equazioni per il moto:
+    \[\begin{aligned}
+	&\dot{x}_1 = w\\
+	&\dot{x}_2 = -U'(x_2) + A \sin (x_1) + p_2 \\
+	& \dot{p}_1 = -A\cos (x_1) \cdot p_2\\
+	& \dot{p}_2 = \frac{\text{d}^2}{\text{d} (x_2)^2 }(U) \cdot  p_2
+    .\end{aligned}\]
+    L'Hamiltoniana si scrive come:
+    \[
+	H = w p_1 + \frac{(p_2)^2}{2} + p_2(A\sin (x_1) - U'(x_2) ) 
+    .\] 
+    Ricordiamo che di ha questa forma perché dev'essere:
+    \[
+        \frac{\text{d} p}{\text{d} t} = - \frac{\partial H}{\partial q}  
+	\qquad \qquad
+	\frac{\text{d} q}{\text{d} t} = \frac{\partial H}{\partial p} 
+    .\] 
+    Possiamo estrarre l'azione dalla \ref{eq:12_action}, si ottiene:
+    \[\begin{aligned}
+	\dot{S} = p\partial_{p}H-H=\ldots=\frac{(p_2)^2}{2}
+    .\end{aligned}\]
+    Simulando il moto con le equazioni di Hamilton si possono ottenere delle traiettorie come quelle in Figura \ref{fig:figures-lez_12_strange_motion-png}.
+    \begin{figure}[H]
+        \centering
+	\includegraphics[width=0.5\textwidth]{figures/lez_12_strange_motion.png}
+	\caption{\scriptsize Traiettorie di fuga generate con le equazioni del moto. Notiamo per arrivare in un punto nei pressi della cuspide ci siano più traiettorie possibili, questo è tipico dei sistemi che non hanno il bilancio dettagliato.}
+        \label{fig:figures-lez_12_strange_motion-png}
+    \end{figure}
+\end{exmp}
+\noindent
 
