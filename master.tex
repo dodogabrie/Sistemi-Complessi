@@ -28,7 +28,7 @@
 
 \newsavebox{\mybox}
 
-
+\pgfplotsset{compat=1.16}
 \definecolor{myblue}{RGB}{0,163,243}
 \renewcommand{\footrulewidth}{0.4pt}% default is 0pt
 
@@ -99,6 +99,11 @@
 \chapter*{MindMap del corso}
 \input{lezioni/tikz/lez_1_mindmap.tex}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%  PROCESSI STOCASTICI  %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \chapter{Processi stocastici}
 \input{lezioni/lez_1.tex}
 \input{lezioni/lez_2.tex}
@@ -113,10 +118,17 @@
 \input{lezioni/lez_11_1.tex}
 \input{lezioni/lez_11_2.tex}
 \input{lezioni/lez_12.tex}
+\input{lezioni/lez_13.tex}
+\input{lezioni/lez_14.tex}
 
+%%%%%%%%%%%%%%%%%%%%%
+%  SISTEMI CAOTICI  %
+%%%%%%%%%%%%%%%%%%%%%
 
-\addtocounter{Sec}{\value{section}}%Mantengo il numero delle sezioni
+\setcounter{Sec}{\value{section}} %Mantengo il numero delle sezioni
 \chapter{Sistemi caotici}
-\setcounter{section}{\theSec}%Applico numero sezioni
+\setcounter{section}{\value{Sec}} %Applico numero sezioni
+\input{lezioni/lez_15.tex}
+\input{lezioni/lez_16.tex}
 
 \end{document}

@@ -1,0 +1,264 @@
+\section{Lezione 13}%
+\label{sub:Lezione 13}
+Prendiamo di nuovo l'equazione differenziale CK (\ref{eq:4_CK}) e concentriamoci sulla parte che abbiamo trascurato fino a questo punto: il processo a salti. Per trattarlo prendiamo l'esempio del processo di nascita-morte.
+\subsection{Processo di nascita e morte}%
+\label{sub:Processo di nascita e morte}
+Prendiamo un processo con la probabilità di transizione $\omega$:
+\[
+    \omega (x|x',t) = t^+(x') \delta_{x,x'+1} + t^-(x') \delta_{x,x+1}
+.\] 
+In cui $t^{\pm}(x')$ sono le probabilità di nascita o di morte per un individuo in $x$, quindi per la popolazione $x$ si ha:
+\[
+    \begin{cases}
+	x\to x+1  \text{ con prob. } t^+(x) \\
+	x\to x-1 \text{ con prob. } t^-(x) 
+    \end{cases}
+.\] 
+Stiamo valutando come variabile $x$ l'andamento del numero degli individui della popolazione.
+La probabilità di trovarsi in un certo punto $x$ è quindi data dalla parte discontinua della equazione di Chapman-Kolmogorov:
+\[\begin{aligned}
+    \partial_{t}P\left(x,t|x',t'\right) =& t^+(x-1) P\left(x-1, t|x',t'\right) +\\
+					 & + t^-(x+1)P(x+1, t| x',t') +\\
+					 & - \left(t^+(x) + t^-(x) \right)P\left(x,t|x',t'\right)
+.\end{aligned}\]
+Proviamo a risolvere questa equazione in modo analogo a quanto fatto per la Fokker-Plank. Cerchiamo la distribuzione di equilibrio:
+\[
+    \partial_{t}P_s(x) = 0
+.\] 
+\[\begin{aligned}
+    0 =& t^+(x-1) P_s\left(x-1, t|x',t'\right) +\\
+       & + t^-(x+1)P_s(x+1, t| x',t') +\\
+       & - \left(t^+(x) + t^-(x) \right)P_s\left(x,t|x',t'\right)
+.\end{aligned}\]
+Quindi possiamo scrivere una equazione per la conservazione della corrente:
+\begin{equation}
+    J(x+1) - J(x) = 0 \label{eq:13_curr}
+\end{equation}
+In cui la corrente è definita come:
+\begin{equation}
+    J(x) = t^-(x) P_s(x) - t^+(x-1) P_s(x-1) \label{eq:13_def_curr}
+\end{equation}
+Scegliamo le condizioni al contorno: identifichiamo con $x=0$ il primo sito, in questo modo la transizione $(x=0)\to (x=-1) $ deve essere posta nulla (non c'è nessuno da uccidere\ldots):
+\[
+    t^-(0) = 0
+.\] 
+La condizione sul propagatore diventa:
+\[
+    P\left(x,t|x',t'\right) = 0 \quad \text{ se } x < 0 \ || \ x' < 0
+.\] 
+Si hanno quindi delle conseguenze su $J(0)$:
+\begin{equation}
+    J(0) = t^-(0) P_s(0) - t^{-1}P_s(-1) = 0 \label{eq:13_staz}
+\end{equation}
+Sfruttando l'identità \ref{eq:13_curr} applicata a $(x+1,x),(x,x-1),\ldots$ fino a $(1,0)$ si arriva a dimostrare che, per via della \ref{eq:13_staz}:
+\[
+    J(x) - J(0) = 0 \implies  J(x) = 0
+.\] 
+Questo risultato (oltre a dirci che il sistema presenta il bilancio dettagliato) ci permette di trovare la distribuzione di equilibrio utilizzando la definizione di $J(x)$ (\ref{eq:13_def_curr}): 
+\[
+    P_s(x) = \frac{t^+(x-1)}{t^-(x)}P_s(x-1) 
+.\] 
+Risolvendo tale equazione definita per ricorrenza:
+\[
+    P_s(x) = P_s(0) \prod_{z=1}^{x} \frac{t^+(z-1)}{t^-(z)} 
+.\] 
+\subsection{Applicazione a processo con Rate di passaggio}%
+\label{sub:Applicazione a processo con Rate di passaggio}
+Immaginiamo un processo in cui i rate di passaggio $t^{\pm}$ possono essere scritti come:
+\[
+    \begin{cases}
+	t^+(x) = k_2a\\
+	t^-(x) = k_1 x
+    \end{cases}
+.\] 
+Stiamo studiando un sistema di popolazioni in cui ho l'equilibrio tra la popolazione $X$ e la popolazione $A$ che ha un rate di nascita fissato $k_2a$. \\
+La master equation si esprime come:
+\[\begin{aligned}
+    \partial_{t}P(x,t) = & k_2aP(x-1, t) +\\
+			 &+k_1(x+1) P(x+1,t) + \\
+			 & - (k_1x+k_2a) P(x,t) 
+.\end{aligned}\]
+Per trovare la distribuzione di equilibrio utilizziamo la funzione generatrice:
+\[
+    G(s,t) = \sum_{x=0}^{\infty} s^{x}P(x,t) 
+.\] 
+Notiamo che vale la seguente:
+\[
+    xs^xP(x,t) = s\partial_{s}s^xP(x,t) 
+.\] 
+Quindi otteniamo una equazione per $G(s,t)$:
+\[\begin{aligned}
+    \partial_{t} G(s,t) =& k_2asG(s,t) + k_1\partial_{s}G(s,t) + \\
+			 &- k_1s\partial_{s}G(s,t) - k_2aG(s,t) = \\
+                        =& k_2a(s-1) G(s,t) + k_1(1-s) \partial_{s}G(s,t) 
+.\end{aligned}\]
+Questa equazione alle derivate parziali può essere risolta con il metodo delle caratteristiche. Prima di applicare il metodo è necessario effettuare il cambio di variabile:
+\[
+    \phi = \ln G
+.\] 
+\[
+    \implies  \phi_t +k_1(s-1) \phi_s - k_2a(s-1) =0 
+.\] 
+A questo punto si ottengono le due equazioni differenziali che ci portano alla soluzione:
+\[\begin{aligned}
+    &dt = \frac{ds}{k_1(s-1)}\\
+    & \frac{ds}{k_1} = \frac{d\phi}{k_2a}
+.\end{aligned}\]
+Dalla prima si ottiene:
+\[
+    u_1=t-\frac{\ln (s-1) }{k_1}
+.\] 
+dalla seconda invece:
+\[
+    u_2 = \frac{s}{k_1} - \frac{\phi}{k_2a} = f(e^{-k_1t}(s-1) ) = f(e^{-k_1u_1})
+.\] 
+Se ne conclude che 
+\[
+    \phi  = f(e^{-k_1u_1}(s-1)) + \frac{sk_2a}{k_1}
+.\] 
+E quindi abbiamo la $G$:
+\[
+    G = \exp\left(\frac{k_2as}{k_1}\right)f(e^{-k_1u_1}(s-1) ) 
+.\] 
+Notiamo che all'interno dell'esponenziale abbiamo $s$ mentre nella funzione $f$ compare il termine $(s-1)$. Possiamo allora moltiplicare la $G$ per una costante (essendo $f$ arbitraria) e riscrivere il tutto come:
+\begin{equation}
+    G = \exp\left(\frac{k_2a(s-1) }{k_1}\right)f(e^{-k_1u_1}(s-1) ) \label{eq:13_G}
+\end{equation}
+Non sarebbe possibile sostituire $s-1 \to s$ all'interno di $f$ perché così facendo si sbaglierebbe la dipendenza dal tempo della funzione $u_1$ ($t$ e $\ln (s-1)$ hanno lo stesso andamento poiché $u_1$ costante).\\
+Prima di procedere possiamo notare che, per la proprietà di completezza di $P(x,t)$ si ha:
+\[
+    G(1,t) = \sum_{}^{} P(x,t) = 1
+.\] 
+Questo implica nella \ref{eq:13_G} che:
+\[
+    f(0) = 1
+.\] 
+Nel metodo delle caratteristiche per trovare la forma della $f$ dobbiamo inserire le condizioni iniziali. 
+\subsubsection{Condizioni iniziali a $\delta$.}%
+\label{subsub:Condizioni iniziali delta}
+supponiamo che nello stato iniziale la popolazione sia $N$ (vuol dire che la probabilità diventa una $\delta$ in $N$):
+\[
+    P(x,0|N,0) = \delta_{x,N}  \ \implies  \  G(s,0) = s^N
+.\] 
+In cui $N$ è un numero arbitrario. Sostituendo nella \ref{eq:13_G} con $t=0$ si ottiene:
+\[
+    f(s-1) \exp\left(\frac{k_2a}{k_1}(s-1)\right) = s^N
+.\] 
+Invertendo l'espressione si ha la $f$:
+\[\begin{aligned}
+    f(s-1) =& s^N\exp\left((s-1) \frac{k_2a}{k_1}\right) =\\
+    =& \exp\left(-(s-1) \frac{k_2a}{k_1}\right)(s-1 + 1) ^N
+.\end{aligned}\]
+Adesso reintroduciamo questa sempre nella \ref{eq:13_G} ricordando di sostituire, nella $f$ il termine $s-1$ con $(s-1) e^{-k_1t}$.
+\[\begin{aligned}
+    G(s,t) = \exp\left(\frac{k_2a}{k_1}(s-1)\right)& ((s-1) e^{-k_1t} + 1)^N \cdot  \\ 
+	    &\cdot \exp\left(-(s-1)e^{-k_1t} \frac{k_2a}{k_1}\right)
+.\end{aligned}\]
+Il problema è formalmente risolto, tuttavia non si risale analiticamente al propagatore $P$ tramite questa funzione caratteristica. \\
+La funzione $G$  ci permette comunque di trovare il valor medio della popolazione:
+\[\begin{aligned}
+    &\left<x\right>_t = \left.\partial_{s}G(s,t)\right|_{s=1} =\frac{k_2a}{k_1}(1-e^{-k_1t}) + Ne^{-k_1t}\\
+    &\left<x^2\right>_t = \left.\partial^2_{s^2}G(s,t)\right|_{s=1} = \left<x\right>_t^2 - Ne^{-2k_1t}
+.\end{aligned}\]
+\subsubsection{Condizioni iniziali Poissoniane}%
+\label{subsub:Condizioni iniziali Poissoniane}
+Supponiamo che la popolazione iniziale avesse una distribuzione di probabilità poissoniana del tipo:
+\[
+    P(x,0) = e^{-a_0}\frac{a_0^x}{x!}
+.\] 
+In tal caso la funzione caratteristica all'istante iniziale si può riscrivere tramite lo sviluppo dell'esponenziale:
+\[\begin{aligned}
+    G(s,0) =& \sum_{}^{} s^xP(x,0) =\\
+	    & = \sum_{x}^{} (sa_0) ^x \frac{e^{-a_0}}{x!} =\\
+	    & = e^{-a_0}e^{sa_0} = e^{a_0(s-1) }
+.\end{aligned}\]
+Con passaggi analoghi a quelli per il caso precedente siamo in grado di trovare la $f$  e reinserirla in $G(s,t)$  ottenendo:
+\[\begin{aligned}
+    G(s,t) =& \exp\left((s-1) \frac{k_2a}{k_1}\right)\times  \\
+	    &\times  \exp\left((s-1)e^{-k_1t}\left(a_0- \frac{k_2a}{k_1}\right)\right)=\\
+           =& \exp\left((s-1) \left[a_0 e^{-k_1t} + \frac{k_2a}{k_1}(1-e^{-k_1t})\right]\right)
+.\end{aligned}\]
+Notiamo che la struttura della trasformata di una poissoniana è rimasta anche nella $G(s,t)$, solo che a differenza della $G(s,0)$  il termine $a_0$  è stato sostituito da un termine $\alpha (t) $  tale che:
+\[
+    \alpha (t) = a_0 e^{-k_1t} + \frac{k_2a}{k_1}(1-e^{-k_1t})
+.\] 
+Quindi:
+\[
+    G(s,t) = \exp\left((s-1) \alpha (t) \right)
+.\] 
+Applicando un'antitrasformata possiamo risolvere nello spazio reale:
+\[
+    P(x,t) = \frac{e^{-\alpha (t)}}{x!}\left[\alpha (t) \right]^x
+.\] 
+Quindi la soluzione con queste condizioni iniziali è una poissoniana "traslata".\\
+Vediamo quindi in generale che lavorare con la Master Equation è generalmente complicato, ci chiediamo se ci sia un modo per passare da questa equazione a quella di Fokker Plank.
+\subsection{Da Master Equation a Fokker Plank}%
+\label{sub:Da Master Equation a Fokker Plank}
+Abbiamo visto in precedenza che a stazionarietà (o mandando a zero il passo del reticolo) un processo a salti poteva esser scritto con una FK. Il passaggio in generale può esser fatto sotto alcune condioni, prendiamo la ME:
+\begin{equation}
+    \frac{\partial P}{\partial t} = \int dx' \left[\omega (x|x') P(x') - \omega (x'|x) P(x) \right]
+    \label{eq:13-ME_gen}
+\end{equation}
+Possiamo scrivere una FK per questo processo della seguente forma:
+\[
+    \frac{\partial P}{\partial t} = \left[-\partial_{x}A_1(x) + \frac{1}{2}\partial^2_{x^2} A_2(x) \right]P(x) 
+.\] 
+Se vale che
+\footnote{scrivendo l'equazione per un processo di Wiener appare naturalmente una forma di questo tipo per $\omega$}
+:
+\[
+    \omega_\delta (x'|x) = \phi	\left( \frac{x'-x - A(x)\delta}{\sqrt{\delta}}, x\right)
+.\] 
+Ed inoltre, definito l'integrale:
+\[
+    Q = \int dy \phi (y, x) 
+.\] 
+Si deve avere che i 3 seguenti integrali rimangono finiti ($A_1$ e $A_2$ entrano nella FK):
+\[\begin{aligned}
+    A_0(x)  &= \int dx'\omega_\delta (x'|x) = \frac{Q}{\delta}\\
+    A_1(x) &= \int dx' (x'-x) \omega_\delta\left(x'|x\right) = A(x) Q\\
+    A_2(x) &= \int dx'(x'-x)^2 \omega_\delta\left(x'|x\right) = \int dy y^2\phi (y,x) 
+.\end{aligned}\]
+\begin{exmp}[Random Walk]
+    Nel caso del random walk si aveva:
+    \[
+        x = nl
+    .\]
+    \[
+	\omega (x,x') = d(\delta_{x',x-1} + \delta_{x',x+1}) 
+    .\] 
+    Risolvendo per i momenti $Q_i$ si ha:
+    \[\begin{aligned}
+	&A_0(x) = 2d\\
+	&A_1(x) = 0\\
+	&A_2(x) = 2l^2d
+    .\end{aligned}\]
+    Se assumiamo $\delta =l^2$ e $D = l^2d$ e mandiamo $l\to 0$ e $\delta\to 0$ si ha che
+    \begin{itemize}
+        \item $\omega\to \infty$.
+	\item $A_1$ e $A_2$ rimangono finiti.
+    \end{itemize}
+    Di conseguenza come avevamo visto questo esempio si esprime tramite una FK:
+    \[
+        \frac{\partial P}{\partial t} = D\frac{\partial ^2P}{\partial x^2} 
+    .\] 
+\end{exmp}
+\noindent
+\begin{exmp}[Distribuzione di Poisson]
+    Nel caso della distribuzione di Poisson invece (lo sharp noise) quello che si ha è:
+    \[
+        x = nl
+    .\] 
+    \[
+	\omega (x|x') = d\delta_{x,x'+1}
+    .\] 
+    Quindi i momenti sono:
+    \[\begin{aligned}
+	&A_0(x) = d\\
+	&A_1(x) = ld\\
+	&A_2(x) = l^2d
+    .\end{aligned}\]
+    Quindi non è possibile fissare finita ne la quantità $ld$ ne la quantità $l^2d$, in entrambi i casi uno tra $Q_1$ e $Q_2$ non è definito.\\
+    In questo secondo esempio non è possibile scrivere una Fokker Plank per il sistema. In precedenza infatti per risolvere questo caso abbiamo inserito il rumore $\omega$ sopra ad una funzione, tuttavia così facendo si risolve un altro problema e non quello in questione.
+\end{exmp}
+\clearpage

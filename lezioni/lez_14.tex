@@ -1,0 +1,119 @@
+\section{Lezione 14}%
+\label{sub:Lezione 14}
+\subsection{Derivazione classica del passaggio ME$\to $FK: Kramers Moyal}%
+Partiamo dalla ME di equazione \ref{eq:13-ME_gen}:
+\[
+    \frac{\partial P}{\partial t} = \int dx' \left[\omega (x|x') P(x') - \omega (x'|x) P(x) \right]
+.\] 
+Prendiamo il primo termine nella quadra e interpretiamolo come una funzione di $x'$:
+\[
+    \omega (x|x') P(x') = f(x') 
+.\] 
+Ipotizziamo che la $\omega$ sia un oggetto "stretto"
+\footnote{questo è garantito dalla presenza di un momento secondo}
+, ovvero che la probabilità di fare salti "grandi" sia trascurabile. In questo modo possiamo espandere la $f(x')$ per piccoli $x'$ (intorno a $x$):
+\[
+    f(x')  = f(x) + (x'-x) \left.\partial_{x}f(x) \right|_{x} \ \ldots
+.\] 
+Effettuiamo adesso un cambio di variabili: 
+\[
+    x' = x-y \qquad x = x'+y
+.\] 
+e riscriviamo l'espansione di $f(x')$ in funzione delle nuove:
+\[\begin{aligned}
+    \omega (x|x') P(x') =& \omega\left(x+y|x\right)P(x) +\\
+			 & - y \partial_{x}\omega\left(x+y|x\right)P(x) + \\
+			 & + \frac{1}{2}(-y) ^2\partial^2_{x^2}\omega (x+y|x) P(x) \ldots
+.\end{aligned}\]
+Il vantaggio di questa scrittura è che il primo termine della somma cancella il secondo termine in quadra nella equazione \ref{eq:13-ME_gen}.
+Quindi reinserendo all'interno dell'integrale si ottiene:
+\begin{redbox}{Espansione di Kramer-Moyal}
+ \[
+    \partial_{t}P = \sum_{n=1}^{\infty} \partial^n_{x^n} \frac{(-1)^n}{n!} A_n(x) P(x) 
+.\]    
+in cui:
+\[
+    A_n(x) = \int  y^n \omega (x+y|x) dy
+.\] 
+\end{redbox}
+\noindent
+Se ci fermiamo al secondo ordine otteniamo proprio la Fokker Plank citata nella scorsa lezione:
+\[
+    \frac{\partial P}{\partial t} = \left[-\partial_{x}A_1(x) + \frac{1}{2}\partial^2_{x^2} A_2(x) \right]P(x) 
+.\] 
+Con questa derivazione non si capisce molto bene perché ci si debba fermare proprio al secondo ordine. Vediamo un modo più elegante per giungere alle stesse conclusioni.
+\subsection{Derivazione di Van Kampen}%
+\label{sub:Derivazione di Van Kampen}
+Riprendiamo un sistema unidimensionale che può fare salti discreti (tipo posizioni fisse su retiocolo), l'idea di Van Kampen è quella di assumere che i salti che la variabile può fare siano molto più piccoli della dimensione caratteristica del sistema.
+\begin{exmp}[Reazione chimica]
+    Sia la variabilie $a$ il numero di atomi che partecipano ad una determinata reazione in un sistema all'istante $t$. In un istante successivo $t+\Delta t$ l'incremento di $a$ sarà discreto. Van Kampen assume che questo incremento debba essere molto minore del numero di Avogadro, la grandezza tipica di un sistema molecolare macroscopico.
+\end{exmp}
+\noindent
+Dovrà esistere in questo tipo di sistemi una variabile intensiva $x$ che "governa" il moto, nel caso della reazione chimica questa sarà la concentrazione di atomi.
+\[
+    x = \frac{a}{\Omega}
+.\] 
+Nell'esempio della reazione $\Omega$ sarà il volume del sistema mentre $a$ sarà il numero delle molecole. La probabilità che la reazione chimica avvenga sarà legata alla concentrazione $x$.\\
+Quello che cerca di fare VK è di scrivere la $\omega$ in funzione, anziché del numero di molecole $a$, della concentrazione $x$.\\
+Se il sistema ha un volume molto grande allora possiamo assumere che la concentrazione diventi un numero reale. L'idea chiave è quindi che i termini successivi al secondo nella equazione di KM spariscono perché c'è un termine al denominatore divergente che li divide (come il volume $\Omega$ in questo esempio).\\
+Scriviamo la probabilità di transizione $\omega$ come una quantità dipendente non dai due stati $a$ e $a'$ ($a$ è sempre il numero di atomi nell'esempio) ma dallo stato iniziale $a'$ e dall'incremento $\Delta a = a-a'$.
+\[
+    \omega\left(a|a'\right) = \omega(a'; \Delta a) 
+.\] 
+A questo punto possiamo riscrivere la $\omega$ in funzione della concentrazione, dobbiamo tuttavia assumere una proporzionalità tra questa probabilità ed il volume. L'assunzione è fisicamente ragionevole: aumentando il volume aumenta anche la probabilità che avvenga la reazione:
+\[
+    \omega (a', \Delta  a) = \Omega  \psi\left(\frac{a'}{\Omega}, \Delta a\right)
+.\] 
+A questo punto cambiamo variabili definendo la $z$ tramite:
+\[
+    a = \Omega\varphi (t) + \sqrt{\Omega} z
+.\] 
+Questo cambio di variabili ha lo scopo di far tendere a zero le fluttuazioni della concentrazione\footnote{che la variabile $z$ ha in pancia} quando il volume diverge:
+\[
+    x = \frac{a}{\Omega} = \varphi(t) + \frac{z}{\sqrt{\Omega}}
+.\] 
+In termini di $x$ i momenti scritti in precedenza diventano
+\footnote{La notazione è un pò infelice: gli esempi precedenti parlavano di variabile del sistema come $x$, adesso $x$ è la variabile intensiva del problema, l'analogia con le cose precedenti sta tra $a$ di questo esempio ed $x$ degli esempi precedenti.}:
+\[
+    A_n(a)  = \Omega \tilde{A}_n(x) 
+.\] 
+Sostituendo tutto nella equazione di Kramers Moyal si ottiene: 
+\[\begin{aligned}
+    \frac{\partial }{\partial t} &P(z, t) - \sqrt{\Omega} \dot{\varphi}\frac{\partial }{\partial z} P(z,t) = \\
+					  &= \sum_{n=1}^{\infty} \frac{\Omega^{1-n /2}}{n!} \left(-\frac{\partial }{\partial z}\right)^n \tilde{A}_n
+					  \left[\varphi (t) + \frac{z}{\sqrt{\Omega} }\right]P(z, t)
+.\end{aligned}\]
+Visto che $\dot{\varphi}$ è ancora "libera", ovvero non è stata definita, possiamo sceglierla come:
+\[
+    \dot{\varphi  } = \tilde{A}_1(\varphi) 
+.\] 
+Questa scelta permette di cancellare il primo termine della sommatoria che va come $\sim \sqrt{\Omega} $. La sommatoria parte adesso da $m=2$.\\
+A questo punto si procede espandendo in serie di $1 /\sqrt{\Omega} $  la quantità:
+\[
+    \tilde{A}_n (\varphi + \frac{z}{\sqrt{\Omega}})
+.\] 
+reintroducendo l'espansione nella equazione di KM si ha:
+\[\begin{aligned}
+    \partial_{t}P(z,t) = & \sum_{m=2}^{\infty} \frac{\Omega^{-(m-2) /2}}{m!} \cdot \sum_{n=1}^{\infty} \frac{m!}{n!(m-n)!} \times \\
+			 &\times \tilde{A}_n^{(m-n)}\left[\varphi\right]\left(-\frac{\partial }{\partial z}\right)^nz^{m-n}P(z,t) 
+.\end{aligned}\]
+A questo punto quando il volume diverge l'unico termine che sopravvive è quello con $m = 2$:
+\[\begin{aligned}
+    \partial_{t}P(z,t) =& - \tilde{A}_1\left[\varphi\right] \frac{\partial }{\partial z} (z,P(z,t)) +\\
+		       & + \frac{1}{2}\tilde{A}_2\left[\varphi (t) \right] \frac{\partial ^2}{\partial z^2} P(z,t) 
+.\end{aligned}\]
+\begin{redbox}{KM vs VK}
+    L'espansione di Kramers Moyal di se per se è "brutta", inserita in un contesto fisico nel quale può esser definita una variabile intensiva come la concentrazione acquista di significato e permette di riscrivere una equazione di Fokker Plank anche per un processo a salti (sotto le opportune ipotesi).
+\end{redbox}
+\noindent
+Notiamo anche che l'espansione nella visione di Von Kampen, una volta riportata nella variabile originale $x$ contiene un termine di volume in più rispetto alla equazione di Kramers Moyal al secondo ordine:
+\[
+    \partial_{t}P(x) = - \partial_{x} \left[\tilde{A}_1(x) P(x) \right] + \frac{1}{2\Omega} \partial^2_{x^2} \left[\tilde{A}_2(x) P(x)\right]
+.\] 
+\subsection{Differenze fisiche tra Kramers Moyal e Van Kampen}%
+\label{sub:Differenze fisiche tra Kramers Moyal e Van Kampen}
+Le due visioni sono identiche all'ordine $1 /\sqrt{\Omega}$, per ordini successivi invece è necessario fare una distinzione tra il tipo di passaggio al continuo del sistema:
+\begin{itemize}
+    \item Se $\delta\to 0$ (il salto) allora i termini nella KM superiori al secondo ordine diventano piccoli di conseguenza la Fokker-Plank generata da Kramers Moyal va più che bene, in questo caso i termini di tale equazione sono non lineari.
+    \item Se $\Omega\to \infty$ allora serve la Fokker Plank generata dalla trattazione di Van Kampen, l'equazione in questo caso resta lineare.
+\end{itemize}

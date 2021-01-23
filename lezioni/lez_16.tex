@@ -1,0 +1,26 @@
+\section{Lezione 16}%
+\label{sub:Lezione 16}
+\subsection{Trasformazioni canoniche}%
+\label{sub:Trasformazioni canoniche}
+Spesso nello studio dei sistemi Hamiltoninani è necessario trovare delle trasformazioni che permettano di integrare H. A tale scopo ci vengono incontro le trasformazioni canoniche.
+\[
+    H(p_i, q_i) = H'(P_i(p_i,q_i), Q_i(p_i, q_i) ) 
+.\] 
+Le nuove variabili rispettano le regole di commutazione canoniche:
+\[
+    \dot{Q}_i = - \left[ Q_i,H\right] \qquad \dot{P}_i = \left[P_i, H\right]
+.\] 
+Integrare l'Hamiltoniana significa trovare le $P_i, Q_i$  tali che:
+\[
+    H(p_i, q_i) \to H'(P_i) 
+.\] 
+Quindi per le equazioni di Hamilton-Jacoby anche:
+\[\begin{aligned}
+    & \dot{P}_i = - \frac{\partial H'}{\partial Q_i} =0\\
+    & \dot{Q}_i = \frac{\partial H'}{\partial P_i} = f_i(P_i) 
+.\end{aligned}\]
+Questo ci permette di trovare una equazione del moto come:
+\[
+    \dot{Q}_i = f_i(P_i) t + Q_i(0) 
+.\] 
+Per ottenere una trasformazione canonica è necessario passare dalle \textbf{Funzioni generatrici}.

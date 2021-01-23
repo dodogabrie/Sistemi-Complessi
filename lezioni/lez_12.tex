@@ -94,7 +94,9 @@ La probabilità che tale fluttuazione avvenga avrà la forma (vedi ad esempio la
 \[
     S = \frac{1}{2}\sum_{}^{} \zeta^2_i
 .\] 
-Quindi il tempo di primo passaggio può essere ricavato dal fatto che:
+Quindi il tempo di primo passaggio può essere ricavato dal fatto che
+\footnote{La dimostrazione che questa probabilità ed il MFPT sono legati è nel PDF del professore (pathintegral).}
+:
 \[
     P\left(x_n,t_n = T|x_0,t_0\right) \sim k \exp\left(-\frac{S_{\text{min}}}{\epsilon}\right)
 .\] 
@@ -391,9 +393,103 @@ L'assenza del bilancio dettagliato non influisce sul calcolo del MFPT, tuttavia 
     \begin{figure}[H]
         \centering
 	\includegraphics[width=0.5\textwidth]{figures/lez_12_strange_motion.png}
-	\caption{\scriptsize Traiettorie di fuga generate con le equazioni del moto. Notiamo per arrivare in un punto nei pressi della cuspide ci siano più traiettorie possibili, questo è tipico dei sistemi che non hanno il bilancio dettagliato.}
+	\caption{\scriptsize Traiettorie di fuga generate con le equazioni del moto. La traiettoria che minimizza l'azione (tra le condizioni iniziali testate) è evidenziata in rosso. Notiamo per arrivare in un punto nei pressi della cuspide ci siano più traiettorie possibili, questo è tipico dei sistemi che non hanno il bilancio dettagliato.}
         \label{fig:figures-lez_12_strange_motion-png}
     \end{figure}
+    \noindent
+    Per generare tali traiettorie c'è bisogno di un "delicato" lavoro computazionale.
+    Creare la routine per i camminatori è semplice, meno semplice è la scelta delle condizioni iniziali.
+    Il sistema è estremamente sensibile alla scelta di $w, A$ e tutte le variabili del moto $p_i, x_i$. \\
+    Alcune traiettorie in figura sembrano rilassare, questa è solo una "illusione", infatti nelle oscillazioni successive le traiettorie fuggono tutte, d'altronde il modello scelto serve "solo" a descrivere le traiettorie di fuga.\\ 
+    Avendo la sequenza dei $p_2$ è possibile calcolare anche l'azione complessiva su ogni percorso, il risultato che si ottiene è il seguente:
+    \begin{figure}[H]
+        \centering
+	\includegraphics[width=0.5\textwidth]{figures/lez_12_strange_motion_action.png}
+	\caption{\scriptsize Azione al variare del camminatore i-esimo. Notiamo l'evidenza di un minimo corrispondente alla curva rossa in figura \ref{fig:figures-lez_12_strange_motion-png}. La possibilità di stimare l'azione minima permette il calcolo del tempo di primo passaggio.}
+        \label{fig:figures-lez_12_strange_motion_action-png}
+    \end{figure}
+    \noindent 
+    Il grafico precedente non rispecchia a pieno la vera azione di tutti i camminatori in quanto tutti i moti che scappano dal sistema sono stati troncati per evitare l'overflow, tuttavia possiamo affermare che l'azione di questi camminatori fuggenti è stata sicuramente sottostimata osservando le equazioni di Hamilton.
 \end{exmp}
 \noindent
-
+Il metodo per trovare le traiettorie di fuga (e quindi il MFPT) è molto potente quando il sistema presenta un "contorno" complicato, può essere applicato addirittura ad un bordo frattale come il set di Julia.
+\begin{ex}[Camminatore con bordo dato dal set di Julia]
+    Il set di Julia è un bordo frattale, le equazioni agli incrementi per il set sono:
+    \[\begin{aligned}
+	&x_{n+1} = x^2_n - y^2_n + ax_n + \xi_{x_n}\\
+	& y_{n+1}= 2x_ny_n + ax_n + by_n + \xi_{y_n}
+    .\end{aligned}\]
+    In cui si inserisce un rumore per entrambi gli assi tale che:
+    \[
+        \left<\xi_{i_n}\xi_{j_n}\right> = \epsilon\delta_{ij}\delta_{nm}
+    .\] 
+    Il metodo si applica anche a questo bordo senza problemi, se si prova a fare il calcolo si ottiene:
+    \begin{figure}[H]
+        \centering
+	\includegraphics[width=0.4\textwidth]{figures/lez_12_Julia_set.png}
+	\caption{\scriptsize Set di Julia con cammino di fuga teorico (tratteggiato) e simulato (nero sottile).}
+        \label{fig:figures-lez_12_Julia_set-png}
+    \end{figure}
+    \noindent
+\end{ex}
+\noindent
+\begin{exmp}[Processo di Ornstein-Ulhenback]
+   Se prendiamo un processo di OU possiamo fare gli stessi ragionamenti dell'esempio precedente, partiamo dalle equazioni del processo:
+   \[\begin{aligned}
+       & dx = f(x) dt + y dt \\
+       & dy = - \gamma  y dt + \gamma\epsilon dW
+   .\end{aligned}\]
+   Risolvendo si arriva alle equazioni di Hamilton-Jacoby:
+   \[\begin{aligned}
+       & \dot{x}=f(x) + y\\
+       & \dot{y}= -\gamma y + p_y\\
+       & \dot{p}_x = -f'(x) p_x\\
+       & \dot{p}_y=p_x - \gamma p_y
+   .\end{aligned}\]
+   Ed il problema è risolto.
+\end{exmp}
+\noindent
+\subsection{MFPT applicato allo studio delle glaciazioni}%
+\label{sub:MFPT applicato allo studio delle glaciazioni}
+Si è notato che l'alternanza tra glaciazioni e periodi caldi ha lo stesso periodo della variazione dell'eccentricità dell'orbita terrestre.\\
+Possiamo fare una premessa: la temperatura della terra subisce un feedback negativo per le variazioni di temperatura.
+\begin{itemize}
+    \item Se la temperatura diminuisce cade la neve ed aumenta il potere riflettente della terra, quindi la temperatura diminuisce ancor di più.
+    \item Se la temperatura aumenta il ghiaccio si scioglie e si ha il viceversa.
+\end{itemize}
+Quindi possiamo immaginare la funzione che determina la temperatura sulla terra come un potenziale a doppia buca (sempre lui, Figura \ref{fig:double_hole_pot}) i quali minimi corrispondono al periodo di caldo e di freddo.\\
+Quello che potrebbe fare l'eccentricità è abbassare o alzare uno dei due minimi in funzione della distanza dal sole.\\
+Possiamo allora scrivere delle equazioni per la probabilità di essere nel caldo o nel freddo come:
+\[\begin{aligned}
+    &\dot{P}_f = - \omega_{fc}P_f + \omega_{cf}P_c\\
+    & \dot{P}_c =  +\omega_{fc}P_f - \omega_{cf}P_c
+.\end{aligned}\]
+In cui le $\omega_{ij}$ sono le probabilità di passare da $i$ a $j$.
+Visto che l'eccentricità è oscillante possiamo modellizzare questa probabilità con una oscillazione avente lo stesso periodo della eccentricità:
+\[
+    \omega_{fc /cf} \sim \exp\left(-\frac{U}{T}\mp \frac{A\cos (wt) }{T}\right)
+.\] 
+Con $T$ temperatura media.\\
+Adesso sfruttiamo la proprietà:
+\[
+    P_f + P_c = 1
+.\] 
+E approssimiamo l'esponenziale di $\omega$ per temperature grandi ($\gamma_0 = \exp (-U /T)$)
+\[
+    \omega_{fc/cf} = \gamma_0\left(1\mp \frac{A\cos wt}{T}\right)
+.\] 
+E si risolvono le equazioni differenziali (di un oscillatore smorzato con una forzante periodica)\ldots Si arriva alla conclusione che:
+\[
+    P_f = P_0 + \alpha_1 \cos (wt) + \alpha_2 \sin (wt) 
+.\] 
+Supponendo che in partenza la probabilità di esser caldo o freddo sia la stessa si ha $P_0 = 1 /2$, la cosa importante sono le costanti $\alpha_i$.\\
+Andando a calcolare queste \ldots se ne conclude che:
+\[
+    \left|P_f\right| \sim \sqrt{\alpha_1^2+\alpha_2^2} = \frac{A\gamma_0}{T}\frac{1}{\sqrt{ w^2 + 4\gamma_0^2} }
+.\] 
+Questa struttura è interessante perché, andando a vedere il rapporto segnale/rumore ($\sim \left|P_f\right| / T$):
+\[
+    \frac{S}{\text{noise}} \sim \frac{A\gamma_0}{T^2 }\frac{1}{\sqrt{ w^2 + 4\gamma_0^2} }
+.\] 
+L'andamento di questa funzione non è monotono ma presenta una temperatura ottimale, per tale temperatura si ha una massima probabilità di fare uno switch caldo/freddo in fase con l'eccentricità dell'orbita terrestre (\texttt{Risonanza stocastica}).
+\clearpage
