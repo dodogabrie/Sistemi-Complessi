@@ -1,2 +1,4 @@
 # Sistemi-Complessi by Edoardo Gabrielli
-![alt text](https://github.com/dodogabrie/Sistemi-Complessi/blob/master/figures/lez_10_Weier_M_30_b_2.png)
+Appunti raccolti nell'anno accademico 2020/2021, contengono la trascrizione delle dispense del professor ...
+![alt text](https://github.com/dodogabrie/Sistemi-Complessi/blob/master/figures/lez_10_Weier_M_30_b_2.png =100x20)
+
