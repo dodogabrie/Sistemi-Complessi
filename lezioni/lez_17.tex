@@ -1,0 +1,385 @@
+\section{Lezione 17}%
+\label{sub:Lezione 17}
+\subsection{Sistemi quasi integrabili: teoria delle perturbazioni}%
+\label{sub:Sistemi quasi integrabili: teoria delle perturbazioni}
+I sistemi studiati nelle ultime due lezioni sono tutti integrabili, possiamo domandarci cosa succede nel caso di sistemi che non presentano questa caratteristica. In particolare per poter studiare tali sistemi in modo perturbativo ci concentriamo su situazioni "quasi integrabili".\\
+Supponiamo di avere una Hamiltoniana del tipo:
+\[
+    H(I, \theta) = H_0(I) + \epsilon H_1(I, \theta  ) 
+.\] 
+La parte $H_0$ è integrabile, $H_1$ è la perturbazione.\\
+In questo caso le equazioni di HJ sono:
+\[\begin{aligned}
+     & \dot{I} = - \frac{\partial }{\partial \theta  } H(I,\theta  ) \\
+     & \dot{\theta} = \frac{\partial}{\partial I} H(I, \theta  ) 
+.\end{aligned}\]
+Vedremo che la $\dot{I}$  sarà proporzionale solo a $\epsilon$  perché la $\theta  $  compare solo nella Hamiltoniana di perturbazione.\\
+All'ordine zero in $\epsilon$ si ha l'Hamiltoniana imperturbata:
+\[\begin{aligned}
+    & \dot{I} = - \frac{\partial H_0(I)}{\partial \theta  } = 0\\
+    & \dot{\theta  }=\frac{\partial H_0(I) }{\partial I} = \omega_0(I) 
+.\end{aligned}\]
+Al primo ordine invece:
+\[\begin{aligned}
+    & \dot{I} = - \frac{\partial }{\partial \theta} H(I, \theta)= -\epsilon\frac{\partial }{\partial \theta  } H_1 + O(\epsilon^2) \\ 
+    & \dot{\theta  }=\frac{\partial  }{\partial I} H(I, \theta) = \omega_0(I) + \epsilon  \frac{\partial H_1}{\partial I} 
+.\end{aligned}\]
+Cerchiamo una trasformazione canonica che integra al primo ordine in $\epsilon$.
+\[
+    \theta, I \to \varphi, J
+.\] 
+\[
+    I = \frac{\partial }{\partial \theta  } S(\theta, J)  \qquad \varphi = \frac{\partial }{\partial J} S(\theta, J) 
+.\] 
+Visto che siamo al primo ordine supponiamo che la $S$  stessa sia formata dall'identità $S_0$  sommata ad un termine di perturbazione lineare in $\epsilon$.\\
+Riscriviamo in questo sistema trasformato le equazioni di Hamilton Jacoby (facendo la sostituzione $I = \partial_{\theta}S$):
+\begin{equation}
+    H_0(\frac{\partial S}{\partial \theta} ) + \epsilon H_1(\frac{\partial S}{\partial \theta} , \theta  ) \simeq K(J) 
+    \label{eq:17_H}
+\end{equation}
+Con $K(J)$ la nuova Hamiltoniana che, avendo fatto l'integrazione, non dipende da $\varphi$. Anche questa Hamiltoniana mi aspetto possa essere sviluppata in serie di $\epsilon$.
+\[
+    K(J) = K_0(J) + \epsilon  K_1(J) + \ldots
+.\] 
+Esplicitando l'equazione \ref{eq:17_H} all'ordine zero e uno:
+\[\begin{aligned}
+    & H_0(J) = K_0(J) \\
+    & \frac{\partial S_1}{\partial \theta  } \frac{\partial H_0}{\partial J} + H_1(J, \theta) = K_1(J) 
+.\end{aligned}\]
+Il primo termine della seconda equazione deriva dal fatto che abbiamo sviluppato in serie di $\epsilon$ anche la nostra trasformazione, gli ordini successivi al primo contengono ancora la variabile $\theta$.\\
+Possiamo riscrivere il primo ordine in modo da esplicitare la $K_1(J)$ introducendo anche la "frequenza" $\omega_0$:
+\begin{equation}
+    K_1(J) = \omega_0(J) \frac{\partial }{\partial \theta  } S_1(\theta, J) + H_1(J, \theta) 
+    \label{eq:16_K1}
+\end{equation}
+A questo punto dobbiamo trovare due cose:
+\begin{itemize}
+    \item $K_1 = K_1(J) $ 
+    \item $S_1$ 
+\end{itemize}
+Riprendendo l'equazione per $K_1(J)$ (eq \ref{eq:16_K1})  possiamo integrare in $\theta$ tra $0$ e $2\pi$, così facendo il termine $\partial_{\theta} S_1$  si annulla poiché la variabile $\theta$ è periodica (per definizione di variabili azione-angolo). \\
+Di conseguenza rimane soltanto:
+\[
+    K_1(J) = \frac{1}{2\pi}\overline{H}_1(J,\theta) =  \frac{1}{2\pi}\int_{0}^{2\pi} H_1(J,\theta  ) d\theta 
+.\] 
+Questa espressione risolve il problema per $K_1(J)$ poiché nei problemi l'Hamiltoniana di perturbazione è nota. \\
+Nota l'espressione di $K_1$ possiamo sostituirla nella equazione differenziale per $S_1$ (che si ottiene invertendo la \ref{eq:16_K1}):
+\begin{equation}
+\begin{aligned}
+    \frac{\partial }{\partial \theta  } S_1(J,\theta) = & \frac{1}{\omega_0(J)}(K_1(J) - H_1(J,\theta)) = \\
+							& = -\frac{1}{\omega_0(J) }(H_1(J,\theta  ) - \overline{H}_1(J,\theta) ) 
+    \label{eq:17_S_1_diff}
+.\end{aligned}
+\end{equation}
+Di conseguenza abbiamo trovato anche la $S_1$: basta integrare quest'ultima equazione in $\theta  $.\\
+Fino a qui sembra tutto relativamente semplice, in maniera astratta sembra che siamo in grado di risolvere al primo ordine il sistema, tuttavia questo procedimento presenta un problema di fondo che andremo ad analizzare tra poco...\\
+Proseguiamo andando in trasformata di Fourier:
+\[\begin{aligned}
+    & H_1 = \sum_{}^{} A_k e^{ik\theta}\\
+    & S_1 = \sum_{}^{} B_k e^{ik\theta}
+.\end{aligned}\]
+Inseriamo nella equazione per la $\partial_{\theta} S_1$:
+\[
+    \partial_{\theta  }S_1(J, \theta  ) = i \sum_{}^{} kB_ke^{ik\theta} = -\frac{1}{\omega_0(J)}\sum_{k=1}^{} A_ke^{ik\theta  }
+.\] 
+L'ultima sommatoria parte da $1$  poiché abbiamo rimosso il valor medio che era presente nella equazione a sottrarre.\\
+La struttura della $S_1$  è definita dai $B_k$, questi possiamo esplicitarli in funzione degli $A_k$:
+\begin{equation}
+    B_k = \frac{iA_k}{k\omega_0(J)}
+    \label{eq:17_esp_S_1}
+\end{equation}
+Quindi in conclusione:
+\[
+    S_1(J, \theta) = \sum_{k}^{} \frac{iA_ke^{ik\theta  }}{k\omega_0(J) }
+.\] 
+A questo punto noi sappiamo che la $S$ al primo ordine si scrive come:
+\[
+    S = J\theta +\epsilon S_1
+.\] 
+Quindi siamo in grado di trovare tutte le quantità utili allo studio del moto:
+\[\begin{aligned}
+    & \phi  = \theta +\epsilon\partial_{J}S_1(J,\theta  ) \\
+    & J = I - \epsilon\partial_{\theta  }S_1(J,\theta) \\
+    & \omega (J) = \omega_0(J) + \epsilon\partial_{J}K_1(J) 
+.\end{aligned}\]
+In una dimensione è quindi tutto integrabile e risolubile. 
+\begin{exmp}[Oscillatore armonico perturbato]
+    \[
+	H(p,q) = \frac{1}{2}p^2+\frac{1}{2}\omega_0^2q^2 + \epsilon H_1 
+    .\] 
+    \textbf{Caso }$H_1 = q^4$.\\
+    Possiamo partire dalla soluzione alla Hamiltoniana imperturbata (è stata risolta esplicitamente, vedi come si deriva la \ref{eq:16_q}):
+    \[
+	H_0=\omega_0I \qquad q = \sqrt{\frac{2I}{\omega_0}} \sin (\theta  ) \qquad
+        \theta =\omega_0t
+    .\] 
+    Quindi inserendo nel termine di perturbazione la $q$ si ha:
+    \[
+	H_1(I,\theta  ) = \left(\frac{2I}{\omega_0}\right)^{2}\sin^4(\theta) 
+    .\] 
+    A questo punto possiamo procedere con due metodi:
+    \begin{itemize}
+	\item Calcolare la trasformata di $H_1$, i coefficienti di tale espansione in serie di Fourier saranno legati a quelli della $S_1$ dalla relazione \ref{eq:17_esp_S_1}.
+	\item Trovare la $K_1$, esprimere la $S_1$ tramite l'equazione differenziale \ref{eq:17_S_1_diff}.
+    \end{itemize}
+    In entrambi i casi si raggiunge il medesimo risultato, proviamo ad applicare il secondo metodo "più esplicito".\\
+    Procediamo con l'espansione della $H$ al primo ordine effettuando la trasformazione:
+    \[
+	H_0(\partial_{\theta}S)+\epsilon H_1(\partial_{\theta}S,\theta) = K(J)
+    .\] 
+    La trasformazione può anch'essa essere sviluppata, esplicitiamo anche la derivata (ricordando che il termine perturbato dipende da $\theta$):
+    \[
+        S = \theta J + \epsilon S_1 \implies  \partial_{\theta}S = J + \epsilon\partial_{\theta}S_1
+    .\] 
+    Reinseriamo il tutto nella $H$ al primo ordine:
+    \[
+	\omega_0\partial_{\theta}S + \epsilon\left(\frac{2\partial_{\theta}S}{\omega_0}\right)^2\sin^4\theta =K(J)
+    .\] 
+    \[
+	\omega_0(J + \epsilon\partial_{\theta}S_1)+ \epsilon\left(\frac{2J}{\omega_0}\right)^2\sin^4\theta =K(J)
+    .\] 
+    Visto che ci interessa soltanto il primo ordine in $\epsilon$ si butta il termine dipendente da $\epsilon$ nella parentesi del secondo termine.\\
+    Possiamo riscrivere quest'ultima equazione in termini della $H_1$:
+    \[
+	\omega_0\partial_{\theta}S_1(\theta,J) = K_1(J)-H_1(J,\theta)
+    .\]
+    Quindi si trova la $K_1$ come valor medio di $H_1$ su un periodo:
+    \[\begin{aligned}
+	K_1&(J)= \frac{1}{2\pi} \int_{0}^{2\pi} H_1(\theta,J)d\theta =\\
+	       & = \frac{1}{2\pi}\int_{0}^{2\pi} \left(\frac{2J}{\omega_0}\right)^2 \sin^4(\theta)d\theta =\\
+	       & = \frac{1}{2\pi}\left(\frac{2J}{\omega_0^2}\right)\left[\frac{3}{8}\theta-\frac{1}{2}\sin(2\theta)  + \frac{1}{32}\sin (4\theta)\right]_{0}^{2\pi}=\\
+	       & = \frac{3}{8}\left(\frac{2J}{\omega_0}\right)^2
+    .\end{aligned}\]
+    Quindi inseriamo nella equazione differenziale per $S_1$:
+    \[
+	\omega_0\partial_{\theta}S_1(\theta,J) = \left(\frac{2J}{\omega_0}\right)^2 \left[\frac{3}{8}-\sin^4\theta\right]
+    .\] 
+    Effettuiamo un integrale indefinito:
+    \[\begin{aligned}
+	S_1&(\theta,J)=\\
+	&=\frac{4J^2}{\omega_0^3}\left[\frac{3}{8}\theta-\left(\frac{3}{8}\theta-\frac{1}{2}\sin(2\theta) +\frac{1}{32}\sin(4\theta)\right)\right]=\\
+		      &= \frac{4J^2}{\omega_0^3} \left(\frac{1}{2}\sin(2\theta) -\frac{1}{32}\sin(4\theta)\right)
+    .\end{aligned}\]
+    Notiamo che le due funzioni rimaste in $S_1$ sono entrambe periodiche in $\theta$.\\
+    A questo punto abbiamo tutto, la nuova Hamiltoniana ad esempio:
+    \[
+	K(J) = K_0 + \epsilon K_1 = \omega_0J + \epsilon \frac{3}{8}\left(\frac{2J}{\omega_0}\right)^2
+    .\] 
+    Il vecchio momento:
+    \[
+	I = \frac{\partial }{\partial \theta}(S_0 + \epsilon S_1)=J+\frac{\epsilon}{\omega_0}\left(\frac{2J}{\omega_0}\right)^2\left[\frac{3}{8}-\sin^4\theta\right]
+    .\] 
+    la frequenza:
+    \[
+	\omega (J)=\frac{\partial }{\partial J} K(J) = \omega_0 + \epsilon  \frac{3J}{\omega_0^2}
+    .\] 
+    La nuova variabile angolo:
+    \[\begin{aligned}
+	\phi =& \frac{\partial }{\partial J} (S_0+ \epsilon S_1) = \\
+	      & = \theta + \epsilon \frac{8J^2}{\omega_0^3}\left(\frac{1}{2}\sin(2\theta) - \frac{1}{32}\sin(4\theta)\right)
+    .\end{aligned}\]
+    Notiamo che la perturbazione in questo caso "irrigidisca" il potenziale che era in precedenza armonico, infatti la frequenza di oscillazione al primo ordine che abbiamo ottenuto aumenta all'aumentare dell'energia ($J$) linearmente.\\
+    \textbf{Caso $H_1 = q^3$}.\\
+    In questo caso, effettuando i medesimi passaggi, ci si rende conto che la correzione al primo ordine in $\epsilon$ si annulla ($K_1 \propto\overline{H}_1 = 0$ ). \\
+    Dobbiamo quindi espandere perturbativamente al secondo ordine, i risultati che si ottengono sono:
+    \[
+	K_2(J)= -\frac{15\pi J^2}{2\omega_0^4}
+    .\] 
+    \[
+	\omega (J)=\omega_0-\epsilon^2 \frac{15\pi J}{\omega_0^4}
+    .\] 
+\end{exmp}
+\noindent
+In una dimensione il problema è sempre risolubile perturbativamente. Sarà così anche in dimensioni maggiori?
+\subsection{Sviluppo perturbativo in due dimensioni}%
+\label{sub:Sviluppo perturbativo in due dimensioni}
+Prendiamo i due vettori per le variabili azione-angolo:
+\[
+    \vect{I} = (I_1,I_2) \qquad \vect{\theta} = (\theta_1, \theta_2)
+.\] 
+l'Hamiltoniana al primo ordine perturbativo è sempre:
+\[
+    H(\vect{I}, \vect{\theta}) = H_0(\vect{I}) + \epsilon V(\vect{I}, \vect{\theta})
+.\] 
+Con $V$ termine di perturbazione. Possiamo decomporre la perturbazione nella base dei $\vect{\theta}$ facendo una trasformata di Fourier:
+\[
+    H(\vect{I}, \vect{\theta}) = H_0(\vect{I}) + \epsilon \sum_{n_1}^{} \sum_{n_2}^{} V_{n_1,n_2}\cos (n_1\theta_1+n_2\theta_2)
+.\] 
+Con $n_1,n_2 \in \mathbb{Z}$. Scriviamo in notazione vettoriale anche $ (n_1,n_2)$:
+\[
+    \vect{n} =(n_1,n_2) \qquad n_1\theta_1+n_2\theta_2 = \vect{n}\cdot \vect{\theta}
+.\] 
+Chiamiamo questa volta la trasformazione $G$ anziché $S$:
+\[
+    G(\vect{J}, \vect{\theta})=\vect{J}\cdot \vect{\theta} + \epsilon\sum_{ n_1}^{} \sum_{n_2}^{} g_{n_1,n_2}(\vect{J})\sin (\vect{n}\cdot \vect{\theta})
+.\] 
+Con $g_{n_1,n_2}$ coefficienti non (ancora) fissati per la trasformazione.\\
+Possiamo esprimere anche la componente $i$-esima di $I$:
+\[
+    I_i = \frac{\partial G}{\partial \theta_i} =
+    J_i + \epsilon\sum_{ n_1}^{} \sum_{n_2}^{} n_ig_{n_1,n_2}(\vect{J})\cos (\vect{n}\cdot \vect{\theta})
+.\] 
+Allo stesso modo per il nuovo angolo $\vect{\varphi}$:
+\[
+    \varphi_i = \frac{\partial G}{\partial J_i} =
+    \theta_i + \epsilon  \sum_{n_1}^{} \sum_{n_2}^{} \frac{\partial }{\partial J_i} (g_{n_1,n_2}(\vect{J}))\sin (\vect{n}\cdot \vect{\theta})
+.\] 
+A questo punto si scrive la nuova Hamiltoniana $H'(\vect{J}, \vect{\varphi})$, per farlo sfruttiamo la scrittura del primo ordine perturbativo data dalla \ref{eq:16_K1} generalizzata in due dimensioni:
+\[
+    K_1(\vect{J})=\frac{\partial S_1}{\partial \vect{\theta}} \cdot \vect{\omega} + H_1(\vect{J,\vect{\theta}})
+.\] 
+Con la frequenza data da:
+\[
+    \vect{\omega} = \frac{\partial H_0(\vect{J})}{\partial \vect{J}} 
+.\] 
+Notiamo che si tratta proprio della Hamiltoniana $H_0$, per trovare queste frequenze operativamente (all'ordine 0) basta sostituire il simbolo $\vect{J}$ a quello $\vect{I}$ e derivare, deriva dalla definizione della trasformazione canonica che vogliamo fare!\\
+Quindi in conclusione:
+\[\begin{aligned}
+    H'(\vect{J},\vect{\varphi}) = & 
+    H_0(\vect{J}) + \epsilon  \sum_{}^{} \vect{n}\cdot \vect{\omega} g_{\vect{n}}(\vect{J})\cos (\vect{n}\cdot \vect{\theta}) +\\
+				  & + \epsilon  \sum_{}^{} V_{\vect{n}}(\vect{J})\cos (\vect{n}\cdot \vect{\theta}) + O(\epsilon^2)
+.\end{aligned}\]
+Salta all'occhio che possiamo far sparire il termine in $\epsilon$  scegliendo un set opportuno di $g_{\vect{n}}$:
+\[
+    g_{\vect{n}}= - \frac{V_{\vect{n}}(\vect{J})}{n_1\omega_1+n_2\omega_2}
+.\] 
+Se si scelgono questi $g$ si rende l'Hamiltoniana di partenza integrabile.
+\[
+    H'(\vect{J}, \vect{\varphi}) = H_0(\vect{J})
+.\] 
+Inoltre, per completezza, esplicitiamo anche la forma della vecchia variabile $\vect{I}$:
+\[
+    \vect{I}  = \vect{J}-\epsilon\sum_{}^{} \frac{\vect{n} V_{\vect{n}}\cos (\vect{n}\cdot \vect{\theta})}{\vect{n}\cdot \vect{\omega}}
+.\] 
+Notiamo che sorge subito un problema: se il prodotto scalare $\vect{n}\cdot \vect{\omega}$ si annulla la teoria perturbativa si rompe.\\
+Il fatto è che $g_{\vect{n}}$ è il coefficiente di uno sviluppo di Fourier bidimensionale, nel quale si somma sui numeri $n_1,n_2 \in \mathbb{Z}$.\\
+In generale quindi succederà che un termine della sommatoria romperà lo sviluppo se le due frequenze $\omega_1$ e $\omega_2$ sono numeri razionali.\\
+\subsection{Esempio di rottura della teoria perturbativa}%
+\label{sub:Esempio di rottura della teoria perturbativa}
+Prendiamo ad esempio una Hamiltoniana bidimensionale del tipo:
+\[
+    H = H_0(\vect{I})+\epsilon V_{\vect{n}}(\vect{I})\cos (n_1\theta_1-n_2\theta_2)=E
+.\] 
+Con $E$ costante. Per una $H$ di questo tipo abbiamo che esiste un integrale del moto $c_2$ tale che:
+\[
+    c_2=n_1I_2+n_2I_1
+.\] 
+Questo perché, dalle equazioni di Hamilton:
+\[\begin{aligned}
+    & \partial_{t}I_1 = -\partial_{\theta_1}H = \epsilon n_1 V_{\vect{n}}\sin (\vect{n}\cdot \vect{\theta})\\
+    & \partial_{t}I_2 = -\partial_{\theta_2}H = - \epsilon n_2 V_{\vect{n}}\sin (\vect{n}\cdot \vect{\theta})
+.\end{aligned}\]
+Quindi si ha banalmente che:
+\[
+    \dot{c}_2 = \partial_{t}(n_1I_2+n_2I_1) = 0
+.\] 
+Sfruttiamo questo integrale per studiare il caso con un esempio concreto.
+\paragraph{Caso particolare}%
+\label{par:Caso particolare_17}
+\begin{equation}
+    H = H_0(\vect{I})+ \alpha I_1I_2\cos (2\theta_1-2\theta_2) = E
+    \label{eq:Caso particolare_17}
+\end{equation}
+Con $E$ costante. In questo caso abbiamo $n_1 = -n_2 = 2$ per essere espliciti.
+L'Hamiltoniana imperturbata è definita da:
+\[
+    H_0(\vect{I}) = I_1 + I_2 - I_1^2 - 3I_1I_2 + I_2^2
+.\] 
+Per risolvere conviene prima fare un cambio di variabili: 
+\[
+    J_1=I_1+I_2 \qquad J_2 = I_2
+.\] 
+\[
+    \varphi_1 = \theta_2 \qquad \varphi_2 = \theta_2-\theta_1
+.\] 
+Le equazioni di Hamilton del sistema sono:
+\[\begin{aligned}
+    & \dot{J}_1 = 0\\
+    & \dot{J}_2 = 2\alpha J_2(J_1-J_2)\sin (2\varphi_2)\\
+    & \dot{\varphi}_1 = 1-2J_1-J_2+\alpha J_2\cos (2\varphi_2)\\
+    & \dot{\varphi }_2=-J_1+6J_2+\alpha (J_1-2J_2)\cos (2\varphi_2)
+.\end{aligned}\]
+Quindi partendo dalla prima equazione possiamo ricavare gli andamenti temporali di tutte le quantità: $J_1(t),\varphi_2(t), J_2(t), \varphi_1(t)$.\\
+Applichiamo adesso il meccanismo perturbativo per integrare l'Hamiltoniana. Sappiamo che la trasformazione dovrebbe essere della forma:
+\[
+    G(\vect{L}, \vect{\varphi}) = \vect{L}\cdot \vect{\varphi}  + \alpha g_{22}(\vect{ L})\sin (2\varphi_1-2\varphi_2)
+.\] 
+Il coefficiente dell sviluppo $g$ (anche detto termine di perturbazione):
+\[
+    g_{_{22}} = - \frac{L_1L_2}{2\omega_1-2\omega_2}
+.\] 
+Le vecchie variabili $\vect{J}$ possono essere ottenute dalle nuove come:
+\[\begin{aligned}
+    & J_1(\vect{\theta}) = L_1 - \frac{2\alpha L_1L_2 \cos (2\omega_1 t-2\omega_2 t)}{2\omega_1-2\omega_2}\\
+    & J_2(\vect{\theta}) = L_2 - \frac{2\alpha L_1L_2 \cos (2\omega_1 t-2\omega_2 t)}{2\omega_1-2\omega_2}
+.\end{aligned}\]
+Possiamo ottenere le frequenze nelle nuove variabili (all'ordine più basso) effettuando la derivata della Hamiltoniana imperturbata:
+\[
+    \vect{\omega} (\vect{L})= \frac{\partial H_0(\vect{L})}{\partial \vect{L}} 
+.\] 
+Dove $H_0(\vect{L})$ è l'Hamiltoniana di partenza (sostituendo $\vect{I}\to \vect{L}$).
+In componenti si ottiene:
+\[\begin{aligned}
+    & \omega_1( L_1,L_2) = 1-2L_1-3L_2\\
+    & \omega_2(L_1,L_2) = 1-3L_1+2L_2
+.\end{aligned}\]
+Non è ovvio quindi che, al variare di $L_1,L_2$, il denominatore del termine di perturbazione resti sempre molto maggiore di zero.\\
+Se tale termine dovesse diventare molto più piccolo del numeratore la teoria perturbativa si rompe. \\
+La condizione per il quale vale la teoria perturbativa è:
+\[
+    \left|2\omega_1-2\omega_2\right| = \left|2L_1-10L_2\right|\gg 2\alpha L_1L_2
+.\] 
+Con $\alpha$ coefficiente sul quale si sviluppa la teoria perturbativa. La domanda adesso è: visto che non possiamo sapere a priori come sono fatte le $\omega$ come facciamo a capire quando si applica la teoria perturbativa?
+\subsection{Teorema KAM}%
+\label{sub:Teorema KAM}
+Il teorema KAM ci dice quando è possibile costruire una teoria perturbativa per un sistema Hamiltoniano.\\
+Data una Hamiltoniana del tipo:
+\[
+    H(I,\theta)= H_0(I)+H_1(I,\theta)
+.\] 
+Con $H_1$ "piccola" e 
+\[
+    H_1(J,\theta +2\pi) = H_1(J,\theta)
+.\] 
+Consideriamo un Toro $T_0$ nello spazio delle fasi (per il problema senza perturbazione) caratterizzato da un set di frequenze $\vect{\omega}^*$ irrazionali:
+\[
+    \vect{k}\cdot \vect{\omega}^* \neq 0 \quad \forall \vect{k}
+.\] 
+Sappiamo che valgono le seguenti espressioni che caratterizzano il flusso sul toro $T_0$:
+\[\begin{aligned}
+    & I = I^* = \text{costante}\\
+    & \dot{\theta} = \omega^*
+.\end{aligned}\]
+Inoltre, sempre per ipotesi, assumiamo che l'Hessiano della trasformazione sia non nullo:
+\[
+    \frac{\partial ^2 H_0}{\partial J_i \partial J_j} \neq 0
+.\] 
+Se l'Hamiltoniana di perturbazione $H_1$ è sufficientemente piccola allora esiste un toro invariante $T(\omega^*)$ del sistema perturbato vicino al toro non perturbato $T_0(\omega^*)$, il Toro $T(\omega^*)$ è una piccola deformazione del toro precedente.\\
+Quindi, come già accennato, questo vale per frequenze di risonanza tra loro irrazionali.\\
+Nella dimostrazione del teorema si scopre che i tori, al variare delle costanti del moto, si spaccano uno dietro l'altro. I primi a rompersi sono proprio quelli con $\omega$ "più" razionali tra loro. \\
+Nella seguente sezione analizziamo cosa significa essere più meno razionali per un numero.
+\subsubsection{Frazioni continue e most irrational number}%
+\label{subsub:Frazioni continue e most irrational number}
+Un qualunque numero irrazionale può essere espresso come frazione continua:
+\[
+    \omega  = \left[a_0,a_1,\ldots\right] = a_0 + \frac{1}{a_1+\frac{1}{a_2+\frac{1}{\ldots}}}
+.\] 
+Un numero razionale $\overline{\omega}$ è un numero che tronca la serie ad un termine finito, troncare la serie al termine $j$-esimo implica che $a_j = \infty$:
+\[
+    \overline{\omega} = \left[a_1, \ldots, a_{j-1}, \infty\right]
+.\] 
+Possiamo chiederci quale sia il numero più irrazionale possibile, ovvero un numero composto da una infinita serie di $a_i$ tale che:
+\[
+    x = \frac{1}{1+\frac{1}{1+ \ldots}}
+.\] 
+I coefficienti sono tutti unitari, infatti se un termine $a_i$ ad un certo punto fosse maggiore degli altri allora sarebbe possibile troncare la serie approssimandola (come se fosse un $\infty$).\\
+Il numero $x$ presenta un comportamento di self similarità, quindi possiamo troncare il suo denominatore reintroducendo se stesso:
+\[
+    x \simeq \frac{1}{1+x} \implies  x^2+x-1=0
+.\] 
+La soluzione di questa equazione di secondo grado è il rapporto aureo:
+\[
+    x = \frac{-1 \pm \sqrt{5}}{2}
+.\] 
+Quindi il toro più duro, ovvero quello che si rompe per ultimo, è quello avente rapporto tra le frequenze dato dal rapporto aureo.
+\clearpage

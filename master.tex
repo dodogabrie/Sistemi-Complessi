@@ -25,10 +25,12 @@
 \usepackage{fancyhdr}
 \usepackage{witharrows}
 \usepackage{circuitikz}
-
+ 
+\pgfplotsset{
+    compat=1.16
+}
 \newsavebox{\mybox}
 
-\pgfplotsset{compat=1.16}
 \definecolor{myblue}{RGB}{0,163,243}
 \renewcommand{\footrulewidth}{0.4pt}% default is 0pt
 
@@ -105,21 +107,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Processi stocastici}
-\input{lezioni/lez_1.tex}
-\input{lezioni/lez_2.tex}
-\input{lezioni/lez_3.tex}
-\input{lezioni/lez_4.tex}
-\input{lezioni/lez_5.tex}
-\input{lezioni/lez_6.tex}
-\input{lezioni/lez_7.tex}
-\input{lezioni/lez_8.tex}
-\input{lezioni/lez_9.tex}
-\input{lezioni/lez_10.tex}
-\input{lezioni/lez_11_1.tex}
-\input{lezioni/lez_11_2.tex}
-\input{lezioni/lez_12.tex}
-\input{lezioni/lez_13.tex}
-\input{lezioni/lez_14.tex}
+% \input{lezioni/lez_1.tex}
+% \input{lezioni/lez_2.tex}
+% \input{lezioni/lez_3.tex}
+% \input{lezioni/lez_4.tex}
+% \input{lezioni/lez_5.tex}
+% \input{lezioni/lez_6.tex}
+% \input{lezioni/lez_7.tex}
+% \input{lezioni/lez_8.tex}
+% \input{lezioni/lez_9.tex}
+% \input{lezioni/lez_10.tex}
+% \input{lezioni/lez_11_1.tex}
+% \input{lezioni/lez_11_2.tex}
+% \input{lezioni/lez_12.tex}
+% \input{lezioni/lez_13.tex}
+% \input{lezioni/lez_14.tex}
 
 %%%%%%%%%%%%%%%%%%%%%
 %  SISTEMI CAOTICI  %
@@ -128,7 +130,9 @@
 \setcounter{Sec}{\value{section}} %Mantengo il numero delle sezioni
 \chapter{Sistemi caotici}
 \setcounter{section}{\value{Sec}} %Applico numero sezioni
-\input{lezioni/lez_15.tex}
+%\input{lezioni/lez_15.tex}
 \input{lezioni/lez_16.tex}
+\input{lezioni/lez_17.tex}
+\input{lezioni/lez_18.tex}
 
 \end{document}
