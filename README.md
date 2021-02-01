@@ -5,6 +5,6 @@ Appunti raccolti nell'anno accademico 2020/2021, contengono la trascrizione dell
 
 Gli appunti sono affiancati da codici in Python e Julia, contenuti nella cartella python-project.
 
-<img style="float: right;" src="https://github.com/dodogabrie/Sistemi-Complessi/blob/master/figures/15_pendolo.png" alt="drawing"/>
+<img style="float: right;" src="https://github.com/dodogabrie/Sistemi-Complessi/blob/master/figures/19_standard_map.png" alt="drawing"/>
 
 
