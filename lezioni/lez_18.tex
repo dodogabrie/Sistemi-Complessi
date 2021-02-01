@@ -83,7 +83,7 @@ Si elencano operativamente i passaggi da seguire per ottenere la mappa:
 	    & \quad \left[\left(\alpha\cos (2\phi_2)-1\right)J_1\right]J_2 + \left[J_1-J_1^2 - E\right] = 0
 	.\end{aligned}\]
 	Per trovare un intervallo dove le soluzioni esistono è necessario che il discriminante $\Delta$ di questa equazione sia positivo, imponendo $\Delta > 0$ si fissa quindi un possibile $\phi_2$.
-    \item Integrare le equazioni \ref{eq:18_H_22} con un metodo appropriato, io ho scelto un Eulero al secondo ordine come il professore.
+    \item Integrare le equazioni \ref{eq:18_H_22} con un metodo appropriato, io ho scelto integratore di Heun (senza parte stocastica) come il professore.
     \item Tornare nelle variabili $y, p_y$ con la trasformazione canonica.
     \item Plottare $p_y$ vs $y$.
 \end{enumerate}
@@ -106,7 +106,7 @@ Henon e Heiles ci riuscirono nell'intento modellizzando con una semplice Hamilto
 Quello che fecero è studiare la mappa: se si fosse presentata una terza costante del moto sarebbe apparsa nel numero di tori invarianti del sistema.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{figures/18_Henon-Heiles.png}
+    \includegraphics[width=0.45\textwidth]{figures/18_Henon-Heiles.png}
     \caption{\scriptsize Mappa di Poincare per il sistema di Henon-Heiles: notiamo come a bassa energia è evidente la presenza di tori invarianti: c'è un terzo integrale del moto.}
     \label{fig:}
 \end{figure}
@@ -139,7 +139,9 @@ In conclusione si dovrebbe trovare la trasformazione che integra la seguente H:
 \[
     H = H_0+H_I
 .\] 
-Il grosso problema è che possiamo trovarne una che elimini una delle due risonanze in $\theta_y\pm 2\theta_x$, non è tuttavia possibile eliminarle entrambe. La teoria perturbativa quindi fallisce in questo caso e vediamo i tori nello spazio delle fasi rompersi all'aumentare dell'energia.\\
+Il grosso problema è che possiamo trovarne una che elimini una delle due risonanze in $\theta_y\pm 2\theta_x$
+\footnote{Il problema di questi termini deriva dalla \textbf{interazione} delle due variabili angolo: tale interazione potrebbe distruggere la teoria perturbativa per la scelta di determinati valori iniziali ad esempio.}
+, non è tuttavia possibile eliminarle entrambe. La teoria perturbativa quindi fallisce in questo caso e vediamo i tori nello spazio delle fasi rompersi all'aumentare dell'energia.\\
 Nel seguito ci focalizzeremo su delle mappe che siano "\textbf{Area preserving}", ovvero quelle che derivano da sistemi Hamiltoniani.\\
 Una mappa, per essere area preserving deve avere uno Jacobiano unitario, in due dimensioni ad esempio dovrà essere:
 \[
@@ -185,8 +187,21 @@ Operativamente una twist map ha una struttura sulla superficie di Poincare del s
 	    r_{i+1}=r_i
         \end{cases}
     .\] 
-    Concentriamoci sullo spazio $r, \theta$. In questo caso, se $\alpha$ non dipendesse da $r$, iterando la mappa i punti giacerebbero tutti sulla stessa circonferenza: vedrei delle circonferenze nello spazio $r,\theta$.\\
-    Visto che in generale abbiamo una dipendenza da $\alpha$ allora i punti con $r$ maggiore potrebbero, ad esempio, ruotare di più o di meno rispetto a quelli con $r$ più piccolo, formando quindi una specie di rotazione-dilatazione dello spazio.
+    Possiamo visualizzare la mappa nello spazio $x, y$:
+    \[
+	x_i = r_i\cos (\theta_i) \qquad y_i = r_i\sin (\theta_i)
+    .\] 
+    \[
+        r = \sqrt{x^2+y^2} 
+    .\] 
+    In queste coordinate si ha che, se $\alpha$ non dipende da $r$, iterando la mappa i punti $x, y$ giacciono tutti sulla stessa circonferenza.
+    Visto che in generale abbiamo una dipendenza da $\alpha$ allora i punti con $r$ maggiore ruotano di più o di meno rispetto a quelli con $r$ minore, formando quindi una specie di rotazione-dilatazione dello spazio ($x, y$).
+    \begin{figure}[H]
+        \centering
+	\includegraphics[width=0.45\textwidth]{figures/18_twist_tetha_r.png}
+	\caption{\scriptsize Twist map nello spazio $x, y$, le condizioni iniziali utilizzate sono $\theta_0 = 0$. Per $r_0$ sono stati selezionati diversi valori tra $0$ e $0.3$ che danno origine alle curve rotanti (un colore corrisponde alla singola traiettoria, dopo il celeste la mappa di colori si ripete).}
+        \label{fig:-figures-18_twist_tetha_r-png}
+    \end{figure}
 \end{exmp}
 \noindent
 \begin{exmp}[Twist map in cartesiane]
@@ -196,7 +211,8 @@ Operativamente una twist map ha una struttura sulla superficie di Poincare del s
             x_{i+1}=x_i+y_i\\
 	    y_{i+1}=y_i
         \end{cases}
-    .\] 
+    \] 
+    Notiamo che la struttura delle equazioni è identica al caso precedente (in coordinate polari).\\
     Questa mappa è area preserving, infatti:
     \[
         \begin{pmatrix} x_{i+1} \\ y_{i+1} \end{pmatrix} =
@@ -207,6 +223,7 @@ Operativamente una twist map ha una struttura sulla superficie di Poincare del s
 	\begin{pmatrix} x_i \\ y_i \end{pmatrix} 
     .\] 
     Partendo con dei punti aventi tutti la stessa coordinata $x$ si osserva che, per iterate successive, i punti con la $y$ maggiore vengono mandati in $x$ maggiori rispetto a quelli con una $x$ minore. La coordinata $y$ resta invece inalterata.\\
-    Abbiamo quindi una rotazione nello spazio $x,y$: una Twist map.
+    Abbiamo quindi una rotazione $+$ dilatazione nello spazio $x,y$: una Twist map.
 \end{exmp}
 \noindent
+\clearpage
