@@ -19,13 +19,13 @@ $F(t-t_k)$ ha la forma di una scarica di condensatore:
 	q \exp\left(-\alpha t\right) 	&t \ge 0
     \end{cases}
 \] 
-Cerchiamo la Master equation per questo sistema:
+Cerchiamo la Master equation per questo sistema, partiamo dall'ipotesi:
 \[
-    P(n\to n+1, \text{in }\Delta  t) = \lambda \Delta tP_n(t) 
+    P(n\to n+1, \text{nell'intervallo }\Delta  t) = \lambda \Delta t
 .\] 
 Visto che possiamo riscrivere la probabilità di avere $n$ elettroni al tempo $t+\Delta t$ come: 
 \[
-    P_n(t+\Delta  t) = \left(1-\lambda\Delta t\right)P_n(t) + \lambda\Delta t  \implies 
+    P_n(t+\Delta  t) = \left(1-\lambda\Delta t\right)P_n(t) + \lambda\Delta t  P_n(t)\implies 
 \] 
 \[
 	\frac{P(n, t+\Delta  t) - P(n,t)}{\Delta t} = \lambda\left[P(n-1,t) -P(n,t)\right] 
