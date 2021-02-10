@@ -231,8 +231,8 @@ In conclusione le distribuzioni tendono ad una Gaussiana nelle ipotesi del teore
 \noindent
 \begin{exmp}[Poisson con $r=2$.]
    \[\begin{aligned}
-       \left<x\left(x-1\right)\right> =& \left<x\left(x-1\right)e^{-\lambda} \frac{\lambda^x}{x!\,}\right> = \\
-       =& \lambda^2\left<e^{-\lambda} \frac{\lambda^{x-2}}{\left(x-2\right)!}\right> = \lambda^2
+       \left<x\left(x-1\right)\right> =& \sum_{x = 0}^{\infty} x\left(x-1\right)e^{-\lambda} \frac{\lambda^x}{x!\,} = \\
+       =& \lambda^2 \sum_{x = 0}^{\infty}  e^{-\lambda} \frac{\lambda^{x-2}}{\left(x-2\right)!} = \lambda^2
    .\end{aligned}\]
 \end{exmp}
 \noindent

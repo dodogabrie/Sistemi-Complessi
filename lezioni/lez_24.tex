@@ -1,0 +1,217 @@
+\section{Lezione 24}%
+\label{sub:Lezione 24}
+\subsection{Nozioni di fluidodinamica}%
+\label{sub:Nozioni di fluidodinamica}
+\subsubsection{Equazione di diffusione}%
+\label{subsub:Equazione di diffusione}
+Prendiamo un sistema fluido in cui è presente un gradiente di temperatura $\Delta T$ in una distanza nella coordinata $z$ data da $h$:
+\[
+    \Delta T = \frac{T_1-T_0}{h}\Delta z
+.\] 
+Studiamo il processo di diffusione termica in un cubetto infinitesimo di materia tra il piano $z=0$ e $z=h$. Il calore entrante nel cubetto è $Q_d$, quello uscente è $Q_u$.
+\[\begin{aligned}
+    \Delta Q =& - Q_u+Q_d \propto\\
+    \propto & \ D_T (-T(\Delta z)+T(0) - T(-\Delta z)) \propto\\
+    \propto & \ D_T \nabla ^2T
+.\end{aligned}\]
+Quindi, visto che il gradiente di temperatura in $z$ per il cubetto è sempre $\Delta T$ abbiamo l'equazione di diffusione del calore nel materiale:
+\[
+    \frac{\text{d} T}{\text{d} t} = \frac{\partial T}{\partial t}  + \vect{v}\nabla T = D_T \nabla ^2T
+.\] 
+\subsubsection{Forze in gioco nel sistema}%
+\label{subsub:Forze in gioco nel sistema}
+Visto che il sistema è un fluido subirà la spinta di Archimede, questa spinta è dovuta al gradiente di temperatura che indurrà una dilatazione termica:
+\[
+    g\Delta V(\rho_0 + \alpha\rho_0\Delta T- \rho_0)
+.\] 
+In cui $\alpha$ è il coefficiente di dilatazione termica, $\Delta V$ è l'unità di volume (rappresentata dal volume del cubetto).
+\[
+    \frac{F_A}{\Delta V} = g\rho_0\alpha\frac{T_1-T_0}{h}\Delta z
+.\] 
+Sentirà anche le forze viscose. Per valutare immaginiamo di traslare il piano superiore del sistema di un fattore $\Delta z$ a velocità costante $\Delta v$ rispetto al piano inferiore. La forza necessaria per effettuare questa operazione può essere modellizzata come:
+\[
+    F(z + \Delta z) = \mu  \frac{\Delta v}{\Delta z}A
+.\] 
+In cui $\mu$ è il coefficiente di viscosità, $A$ la superficie da traslare.\\
+La velocità $\Delta v$ rappresenta la velocità relativa tra i due piani che stiamo considerando.\\
+Possiamo valutare un gradiente di forza per effettuare la traslazione calcolando $F(z+\Delta z)-F(z)$:
+\[
+    f = F(z+\Delta z)-F(z)= \frac{\partial F}{\partial z} \Delta z = \mu\frac{\partial^2v}{\partial z^2} A\Delta z
+.\] 
+In conclusione, come per Archimede, prendiamo la forza per unità di volume:
+\[
+    F_v = \frac{f}{\Delta V} \implies \frac{f_i}{A\Delta z} = \mu\nabla ^2v_i
+.\] 
+in cui $i$ sta ad indicare la coordinata $i$-esima della forza $(x,y,z)$.\\
+Visto che la distanza delle due piastre è $h$ possiamo approssimare il $\nabla ^2v$ come:
+\[
+    F_{v,z} = \mu \frac{v_z}{h^2}
+.\] 
+Notiamo che nelle equazioni delle forze e di diffusione vi sono delle importanti quantità intensive del fluido in considerazione
+\[
+    \left[\rho\right] = \frac{\left[M\right]}{\left[L\right]^3} \qquad
+    \left[D_T\right] = \frac{\left[L\right]^2}{\left[T\right]}\qquad
+    \left[\mu\right] = \frac{\left[M\right]}{\left[L\right]\left[T\right]}
+.\] 
+è utile introdurne altre, come la \textbf{Viscosità cinematica}:
+\[
+    \nu  = \frac{\mu}{\rho} = \frac{\left[L\right]^2}{\left[T\right]}
+.\] 
+Questa è legata alle forze tra le molecole del fluido (come è lecito aspettarsi avendo al denominatore la densità).\\
+In questo modo si ha una quantità che può essere sfruttata sia per studiare i fluidi che per studiare i gas.\\
+Introduciamo anche un numero puro, rilevante per il nostro sistema: il \textbf{Numero di Prandtl}.
+\[
+    P = \frac{\nu}{D_T}
+.\] 
+Questo misura l'importanza relativa tra viscosità e diffusione termica.\\
+\subsubsection{Equilibrio tra forze e scale tipiche temporali}%
+\label{subsub:Equilibrio tra forze}
+Uguagliando la forza di Archimede a quella viscosa:
+\begin{equation}
+    \alpha\rho_0g \frac{\Delta T}{h} \Delta z = \mu  \frac{v}{h^2}
+    \label{eq:24_eq}
+\end{equation}
+Se abbiamo un oggetto che rompe l'equilibrio (perché troppo caldo ad esempio) allora inizierà a salire lungo l'asse $z$ fino a raggiungere una velocità uniforme di salita: l'equilibrio tra Archimede e la forza viscosa.\\
+Questo fenomeno definisce una velocità limite che può essere ottenuto invertendo la relazione \ref{eq:24_eq}.
+\[
+    v_{lim} = \frac{\alpha\rho_0g\Delta T\Delta zh}{\mu}
+.\] 
+In presenza di questa velocità limite l'oggetto del moto percorre una distanza $\Delta z$ in un tempo critico $\tau_{v}$  determinato dall'equilibrio stesso:
+\[
+    \frac{\Delta z}{v_{lim}} = \frac{\mu}{\alpha\rho_0g\Delta T\Delta zh} = \tau_{v}
+.\] 
+Questo tempo è legato a quanto tempo impieghiamo a portare in equilibrio il sistema con il moto convettivo.\\
+L'equilibrio potrebbe essere raggiunto anche tramite un processo di diffusione.
+\[
+    \partial_{t}T\sim D_T\nabla ^2T \sim D_T \frac{T}{h^2} \implies  \tau_{T} = \frac{h^2}{D_T}
+.\] 
+Valutando il rapporto tra le scale temporali di diffusione e di convezione otteniamo un altro numero puro: il \textbf{numero di Rayleigh}.
+\[
+    R_a = \frac{\tau_T}{\tau_v} = \frac{h^3}{D_T} \frac{\alpha\rho_0g \Delta T}{\mu}
+.\] 
+Chiaramente questo numero dice se il sistema è dominato da convezione o da conduzione:
+\begin{itemize}
+    \item $\tau_T > \tau_v$: stato convettivo.
+    \item $\tau_T < \tau_v$: stato non conduttivo.
+\end{itemize}
+In conclusione abbiamo un ultimo numero puro importante per la dinamica del sistema: il \textbf{Numero di Reynolds}:
+\[
+    R_e = \frac{\rho vL}{\mu}	
+.\] 
+In cui $L$ può essere interpretato come il diametro del "tubo" in cui avviene il moto.\\
+Questo numero misura la transizione tra un fluido di tipo laminare ($R_e < 1000$ ) ed un fluido di tipo turbolento ($R_e > 1000$).
+\subsection{Modello di Lorenz della turbolenza}%
+\label{sub:Modello di Lorenz della turbolenza}
+\begin{figure}[H]
+    \centering
+    \incfig{24_lorenz_turbo}
+    \caption{\scriptsize Superfici a temperature $T_{0,1}$ tra le quali è presente un fluido in presenza di gravità.}
+    \label{fig:24_lorenz_turbo}
+\end{figure}
+Ipotizziamo di avere un fluido incomprimibile come in figura \ref{fig:24_lorenz_turbo} con le seguenti caratteristiche note:
+\begin{itemize}
+    \item $\rho_0$ a temperatura $T_0$.
+    \item $\nu = \mu  /\rho_0$ coefficiente di viscosità cinematica.
+    \item $\alpha$ coefficiente di espansione termica.
+    \item $D_T$ coefficiente di diffusione.
+\end{itemize}
+Cerchiamo il campo di velocità del fluido $\vect{u}$. Le componenti di questo campo le definiamo come:
+\[
+    \vect{u}  = (u, v, \omega)
+.\] 
+Ipotizziamo inoltre che valga la seguente:
+\[
+    \nabla \vect{u} = 0
+.\] 
+Diamo per note le equazioni di Navy-Stokes e quelle del gradiente di temperatura:
+\[\begin{aligned}
+    &\partial_{t}\vect{u} + \vect{u}\nabla \vect{u}  = - \frac{1}{\rho_0}\nabla P + \nu\nabla ^2\vect{u} + \alpha g(T-T_0)\hat{z}\\
+    & \partial_{t}T + \vect{u}\nabla T = D_T \nabla ^2T
+.\end{aligned}\]
+Tradizionalmente si introducono delle variabili riscalate:
+\[\begin{aligned}
+    &\vect{x}^* = \frac{\vect{x}}{d} && \qquad  t^* = \frac{D_T}{d^2}t\\
+    & \vect{u}^* = \vect{u}  \frac{d}{D_T} && \qquad p^* = \frac{1}{\rho_0}\left(\frac{d}{D_T}\right)^2P\\
+    & \theta^* = \frac{T-T_0}{T_1-T_0}-z^* && \qquad \left[T = T_0 + \Delta T(\theta^*+z^*)\right]
+.\end{aligned}\]
+La variabile $\theta^*$ rappresenta la variazione dalla linearità del profilo di temperatura.\\
+Inserendo queste variabili nelle equazioni sopra:
+\[\begin{aligned}
+    & \nabla \vect{u}  = 0\\
+    & \partial_{t}\vect{u}  + \vect{u}\cdot \nabla \vect{u} = - \nabla P + P_r \nabla ^2\vect{u} + P_rR_a \theta \hat{z}\\
+    &\partial_{t}\theta + \vect{u}\cdot \nabla \theta = \omega + \nabla ^2\theta
+.\end{aligned}\]
+In cui $P_r = \nu  /D_T$. \\
+Inseriamo le condizioni al contorno:
+\[
+    z = 0, 1 
+    \qquad 
+    \theta  = 0
+    \qquad
+    \omega = 0
+    \qquad
+    \frac{\partial ^2\omega}{\partial t^2}  = 0
+.\] 
+Fino a questo punto il problema è piuttosto generale, Lorenz lo specializzò ad una situazione particolare: il fluido deve muoversi su dei rulli ("rolls").
+\begin{figure}[H]
+    \centering
+    \incfig{24_rolls}
+    \caption{\scriptsize Moto del fluido tra i due strati, si ipotizza quindi la componente della velocità $\vect{u}_x$ nulla.}
+    \label{fig:24_rolls}
+\end{figure}
+In questo modo ci si riduce a studiare il moto solo lungo il piano $y, z$. La divergenza nulla del campo di velocità implica allora che:
+\[
+    \partial_{y}u_y + \partial_{z}u_z = 0
+.\] 
+Una ipotesi (forte) che possiamo fare è che la forma del campo di velocità sia del seguente tipo:
+\[
+    u_y = \partial_{z}\psi (y,z) \qquad u_z = -\partial_{y}\psi (y,z)
+.\] 
+In questo modo la divergenza nulla è rispettata. La funzione $\psi$  viene chiamata "stream function". \\
+Quest'ultima ipotesi equivale a dire che il rotore del campo di velocità (la vorticità: $\vect{\xi}$) sia solo lungo $x$.
+\[
+    \vect{\xi}  = \nabla \times \vect{u}  \implies  \xi_x = \partial_{y}u_z - \partial_{z}u_y = - \nabla_2^2\psi
+.\] 
+In cui l'ultimo laplaciano $\nabla^2_2$  è bidimensionale.\\
+Facendo il rotore della equazione di Navy-Stokes nelle variabili riscalate possiamo introdurvi la $\vect{\xi}$. Effettuando un pò di algebra si arriva alla seguente espressione:
+\[
+    \frac{\partial \xi}{\partial t} + \vect{u}\nabla \xi = P_r \nabla ^2_2 \xi + P_r R_a \frac{\partial \xi}{\partial y} 
+.\] 
+L'equazione per la variabile $\theta$  invece può essere riscritta come:
+\[
+    \frac{\partial \theta}{\partial t}  + J(\theta,\psi) = \nabla _2^2\xi - \frac{\partial \xi}{\partial y} 
+.\] 
+Dove si definisce la quantità:
+\[
+    J(f, \psi) = \vect{u}\nabla f
+.\] 
+Grazie alle proprietà della stream function (che entra nella espressione di $J$  sostituendo $u_y, u_z$). \\
+In conclusione il sistema di equazioni differenziali da risolvere diventa:
+\[\begin{aligned}
+    & \xi = - \nabla _2^2\psi\\
+    & \frac{\partial \xi}{\partial t} + J(\xi, \psi) = P_r \nabla ^2_2 \xi + P_r R_a \frac{\partial \xi}{\partial y} \\
+    &\frac{\partial \theta}{\partial t}  + J(\theta,\psi) = \nabla _2^2\xi - \frac{\partial \xi}{\partial y} 
+.\end{aligned}\]
+Queste ci determinano completamente il moto nei rolls.\\
+A questo punto viene fatta una approssimazione \\
+A questo punto viene fatta una approssimazione sfruttando l'espansione di Galerkin. Si cercano i modi più bassi che possono essere rilevanti per la dinamica che vogliamo studiare.
+\[\begin{aligned}
+    & \psi (z, y, t) = a(t)\sin (\pi z)\sin (k\pi y)\\
+    & \theta (z, y, t) = b(t)\sin (\pi z) \cos (k\pi y) + c(t)\sin (2\pi z)
+.\end{aligned}\]
+I termini trigonometrici in $k\pi y$ tengono di conto della periodicità del moto sui rolls, i termini che contengono invece $\pi z$  tengono di conto che il moto può dipendere dall'angolo.\\
+A questo punto si reinseriscono queste quantità nelle equazioni differenziali ed otterremo un sistema di equazioni nelle derivate rispetto al tempo dei coefficienti $a, b, c$. \\
+In particolare i termini $a, b$  rappresentano  dei rolls lungo $y$ (aventi numero d'onda $k$). La variabile $c$ invece tiene di conto della convezione e quantifica la deviazione della temperatura rispetto alla media.\\
+Il risultato finale di questa operazione sono le seguenti 3 equazioni:
+\[\begin{aligned}
+    &\dot{x} = -\sigma x + \sigma  y\\
+    &\dot{y} = -y + rx -xz\\
+    & \dot{z} = -\tilde{b}z + xy
+.\end{aligned}\]
+Con le 3 variabili che sono delle riscalature di $a, b ,c$:
+\[\begin{aligned}
+    & x = \frac{ka}{\sqrt{2} (1+k^2)}\\
+    & y = \frac{kb}{\sqrt{2} (1+k^2)}\\
+    & z = c
+.\end{aligned}\]
+Le equazioni scritte sopra sono proprio quelle del modello di Lorenz.
