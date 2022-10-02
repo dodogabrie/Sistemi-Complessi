@@ -1,144 +1,42 @@
-\documentclass[a4paper, twocolumn]{report}
-\setlength{\columnsep}{2em}
-\usepackage{float}
-\usepackage{verbatim}
-\usepackage[utf8]{inputenc}
-\usepackage[italian]{babel}
-\usepackage{amsmath}
-\usepackage{mathtools}
-\usepackage{amsbsy,amssymb,amsfonts, amsthm}
-\usepackage[version=4]{mhchem}
-\usepackage{graphicx}
-\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
-\usepackage{xcolor}
-\usepackage[hypertexnames=false]{hyperref}
-\usepackage{nameref}
-\usepackage{framed}
-\usepackage[framemethod=TikZ]{mdframed}
-\usepackage{appendix}
-\usepackage{tikz}
-\usetikzlibrary{math}
-\usetikzlibrary{shapes,arrows}
-\usepackage{pgfplots}
-\usepackage{tcolorbox}
-\usepackage{listings}
-\usepackage{fancyhdr}
-\usepackage{witharrows}
-\usepackage{circuitikz}
- 
-\pgfplotsset{
-    compat=1.16
-}
-\newsavebox{\mybox}
-
-\definecolor{myblue}{RGB}{0,163,243}
-\renewcommand{\footrulewidth}{0.4pt}% default is 0pt
-
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[LE,RO]{\itshape\nouppercase{\rightmark}}
-\fancyhead[RE,LO]{\itshape\nouppercase{\leftmark}}
-\fancyfoot[LE,CO]{Sistemi Complessi}
-\fancyfoot[LE,RO]{\thepage}
-
-
-\newcounter{Sec}
-
-\renewcommand*\thesection{\arabic{section}}
-
-\newtcolorbox{redbox}[1]
-{opacityback=1, colback=red!5!white,opacityframe=0.09, colframe=red!75!black,fonttitle=\bfseries, coltitle=black,title=#1}
-\newtcolorbox{greenbox}[1]
-{opacityback=1, colback=green!5!white,colframe=green!75!black, opacityframe=0.09,fonttitle=\bfseries,coltitle=black, title=#1}
-\newtcolorbox{bluebox}[1]
-{opacityback=1, colback=myblue!5!white,colframe=myblue!75!black,opacityframe=0.09, fonttitle=\bfseries,coltitle=black,title=#1}
-
-
-\lstset{
-      basicstyle=\ttfamily,
-        columns=fullflexible,
-	frame=single,
-      	breaklines=true,
-      	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
-}
-
-% figure support
-\usepackage{import}
-\usepackage{xifthen}
-\pdfminorversion=7
-\usepackage{pdfpages}
-\usepackage{transparent}
-\newcommand{\incfig}[1]{%
-    \def\svgwidth{\columnwidth}
-    \import{./figures/}{#1.pdf_tex}
-}
-\theoremstyle{plain}
-\newtheorem{thm}{Theorem}[subsection] % reset theorem numbering for each chapter
-
-\theoremstyle{definition}
-\newtheorem{defn}{Definizione}[subsection] % definition numbers are dependent on theorem numbers
-\newtheorem{exmp}{Esempio}[subsection]
-\newtheorem{ex}{Esercizio}[subsection] % definition numbers are dependent on theorem numbers
-
-\newcommand{\ffrac}[2]{\ensuremath{\frac{\displaystyle #1}{\displaystyle #2}}}
-\newcommand{\angstrom}{\mbox{\normalfont\AA}}
-\newcommand{\vect}[1]{\boldsymbol{#1}}
-%\renewcommand{\[}{\begin{equation}}
-%\renewcommand{\]}{\end{equation}}
-\renewcommand{\theequation}{\thesection.\arabic{equation}}
-\counterwithin*{equation}{section}
-\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
-
-% \xrightarrow[]{\mathcal{F}^{-1}}
-
+%! TeX root: ./master.tex
+\input{preamble.tex}
 \author{Edoardo Gabrielli}
 \title{Sistemi complessi}
+\includeonly{lezioni/lez_2, lezioni/lez_3}
+
 \begin{document}
-\maketitle 
-\tableofcontents
-
-% Mindmap del corso
-\chapter*{MindMap del corso}
-\input{lezioni/tikz/lez_1_mindmap.tex}
-
-
+\include{intro}
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %  PROCESSI STOCASTICI  %
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Processi stocastici}
-\input{lezioni/lez_1.tex}
-\input{lezioni/lez_2.tex}
-\input{lezioni/lez_3.tex}
-\input{lezioni/lez_4.tex}
-\input{lezioni/lez_5.tex}
-\input{lezioni/lez_6.tex}
-\input{lezioni/lez_7.tex}
-\input{lezioni/lez_8.tex}
-\input{lezioni/lez_9.tex}
-\input{lezioni/lez_10.tex}
-\input{lezioni/lez_11_1.tex}
-\input{lezioni/lez_11_2.tex}
-\input{lezioni/lez_12.tex}
-\input{lezioni/lez_13.tex}
-\input{lezioni/lez_14.tex}
+\include{lezioni/lez_1.tex}
+\include{lezioni/lez_2.tex}
+\include{lezioni/lez_3.tex}
+%\include{lezioni/lez_4.tex}
+%\include{lezioni/lez_5.tex}
+%\include{lezioni/lez_6.tex}
+%\include{lezioni/lez_7.tex}
+%\include{lezioni/lez_8.tex}
+%\include{lezioni/lez_9.tex}
+%\include{lezioni/lez_10.tex}
+%\include{lezioni/lez_11_1.tex}
+%\include{lezioni/lez_11_2.tex}
+%\include{lezioni/lez_12.tex}
+%\include{lezioni/lez_13.tex}
+%\include{lezioni/lez_14.tex}
 
 %%%%%%%%%%%%%%%%%%%%%
 %  SISTEMI CAOTICI  %
 %%%%%%%%%%%%%%%%%%%%%
-
-\setcounter{Sec}{\value{section}} %Mantengo il numero delle sezioni
-\chapter{Sistemi caotici}
-\setcounter{section}{\value{Sec}} %Applico numero sezioni
-\input{lezioni/lez_15.tex}
-\input{lezioni/lez_16.tex}
-\input{lezioni/lez_17.tex}
-\input{lezioni/lez_18.tex}
-\input{lezioni/lez_19.tex}
-\input{lezioni/lez_20.tex}
-\input{lezioni/lez_21.tex}
-\input{lezioni/lez_22.tex}
-\input{lezioni/lez_23.tex}
-\input{lezioni/lez_24.tex}
-
+%\include{lezioni/lez_15.tex}
+%\include{lezioni/lez_16.tex}
+%\include{lezioni/lez_17.tex}
+%\include{lezioni/lez_18.tex}
+%\include{lezioni/lez_19.tex}
+%\include{lezioni/lez_20.tex}
+%\include{lezioni/lez_21.tex}
+%\include{lezioni/lez_22.tex}
+%\include{lezioni/lez_23.tex}
+%\include{lezioni/lez_24.tex}
 \end{document}
