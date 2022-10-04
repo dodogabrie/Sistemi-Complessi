@@ -120,86 +120,121 @@ Quindi il valor medio di $R$ nel continuo:
  \[
     \left<R\right> = \int\limits_{\omega\in \Omega} R(\omega) P(\omega) 
 .\]    
-\subsection{Funzione caratteristica}%
-\label{sub:Funzione caratteristica}
-Sia $\vect{x}$ una variabile random con distribuzione di probabilità $P(\vect{x})$, la funzione caratteristica della distribuzione è la sua trasformata di Fourier:
-\begin{redbox}{}
-    \[
-	\phi (\vect{s}) = \int d\vect{x} P(\vect{x}) e^{i \vect{x}\cdot \vect{s}}
-    .\] 
-\end{redbox}
 
-\begin{exmp}[Distribuzione Gaussiana]
- \[\begin{aligned}
-    &P(x) = \frac{e^{-x^2 / 2 \sigma^2}}{\sqrt{2\pi\sigma^2}} 
-    &\implies&
-    &\phi (s) = e^{-\sigma^2s^2 / 2}
-.\end{aligned}\]
-\end{exmp}
-
-\begin{exmp}[Distribuzione uniforme]
+\subsection{Limiti con variabili stocastiche}%
+\label{sub:Limiti con variabili stocastiche}
+Un problema al limite con una variabile stocastica $x$ è un problema del seguente tipo:
 \[
-    P(x) = 
-    \begin{cases}
-	1 & x \in \left[-\frac{1}{2}, \frac{1}{2}\right]\\
-	0 & \text{Altrimenti}
-    \end{cases}
-\] 
-\[
-    \phi (s) = \int_{-1 /2}^{1 /2} e^{ixs}dx = \frac{2}{s}\sin\left(\frac{s}{2}\right)  
+    x = \lim_{n \to \infty} x_n \qquad x_n \in \Omega
 .\] 
+Dove $x_n$ è una serie di funzioni di variabile stocastica $\omega$, indicizzata da $n$ intero. \\
+La variabile stocastica $\omega$ appartiene all'insieme degli eventi possibili $\Omega$
+\begin{defn}[\textcolor{red}{Almost Certain Limit}]
+ \[
+    \lim^{\text{ac}}_{n \to \infty} x_n = x
+    \qquad \text{se } \forall \omega \in \Omega: \
+    \lim_{n \to \infty} x_n(\omega) = x
+.\] 
+Tale limite rispetta la proprietà:
+\[
+    P(\lim_{n \to \infty} x_n(\omega) =x) =1
+.\] 
+\end{defn}
+\begin{exmp}[Farfalle]
+    Alcune specie di farfalle vivono mediamente un giorno, prendiamo tutte le farfalle viventi che appartengono a questa specie (ed escludiamo quelle che devono ancora nascere).\\
+    Se misuriamo la media del cibo consumato da questo campione ogni ora otteniamo una sequenza di numeri casuali.
+    Tuttavia possiamo essere quasi sicuri che tale sequenza dopo 30 ore sarà 0 e rimarrà 0 per sempre.\\
+    In questo esempio si hanno: 
+    \begin{itemize}
+        \item $x_n$ la sequenza di medie del cibo.
+	\item $\omega$ Il cibo che una farfalla della specie mangia in un'ora.
+	\item $x = 0$.
+    \end{itemize} 
 \end{exmp}
+\begin{exmp}[Equazione stocastica]
+    Prendiamo una equazione stocastica differenziale così costruita:
+    \[
+        dx = - \alpha x dt + bxd\omega
+    .\] 
+    In cui il termine $d\omega$ è un termine stocastico.\\
+    I passi degli $x_n$ saranno definiti dalla equazione sopra:
+    \[
+        x_{n+1} = x_n - \alpha  x_n \Delta t + b x_n \Delta\omega_n
+    .\] 
+    Se ipotizziamo che la $x_n$ (variabile composta da termine stocastico e termine temporale)  nell'evoluzione si avvicini all'origine ($x_n = 0$) allora il termine stocastico in $\omega$ non può più contribuire alla equazione, in tal caso la convergenza avviene.
+\end{exmp}
+\begin{defn}[\textcolor{red}{Mean Square Limit}]
+    Se si ha:
+    \[\begin{aligned}
+	\lim_{n \to \infty} & 
+	\left<\left(x_n(\omega) -x(\omega) \right)^2\right> =\\
+			    &=\lim_{n \to \infty} 
+			    \int  d\omega  P(\omega) 
+			    \left[ x_n(\omega) -x(\omega) \right]^2 = 0
+    .\end{aligned}\]
+    Allora:
+    \[
+        \lim^{\text{ms}}_{n \to \infty} x_n = x
+    .\] 
+\end{defn}
+\begin{defn}[\textcolor{red}{Limite in probabilità}] 
+    \[
+        \lim^{\text{P}}_{n \to \infty} x_n = x
+    .\] 
+    se vale che, $ \forall \epsilon  > 0$:
+    \[
+	\lim_{n \to \infty} P(\left|x_n-x\right| > \epsilon) = 0
+    .\] 
+\end{defn}
+\noindent
+Per capire cosa rappresenta il termine $P(\left|x_n - x\right|>\epsilon)$ introduciamo la funzione caratteristica:
+\[
+    \chi_\epsilon (t) = 
+    \begin{cases}
+	0 & \left|t\right|< \epsilon\\
+	1 & \left|t\right|>\epsilon
+    \end{cases}
+.\] 
 
-\subsubsection{Proprietà della funzione caratteristica}%
-\label{ssub:Proprietà della funzione caratteristica}
-\begin{enumerate}
-    \item $\left|\phi (0) \right|= 1 $.
-    \item $\phi (s) $ è continua.
-    \item Se $\exists \left<x^n\right>$ allora: 
-	\[
-		\left<x^n\right> = \left(-i\right)^n \left.\frac{\partial ^n}{\partial s^n} \phi (s)\right|_{s=0} 
-	.\] 
-    \item Una sequenza di distribuzioni converge ad una distribuzione limite $\iff$ converge la sequenza di funzioni caratteristiche.
-    \item Dato $\vect{x} = \left(x_1, \ldots, x_n\right)$ con $x_i$ indipendenti $\forall i$ allora:
-	\[ 
-	    \phi (s_1, s_2, \ldots) = \prod_{i=1}^{n} \phi (s_i)  
-	\]
-    \item Se $y = \sum_{i}^{} x_i$ con $x_i$ indipendenti, allora:
-	\[
-	    \phi (s) = \left<e^{isy}\right> = \prod_{i}^{} \phi_i(s)  
-	.\] 
-	\begin{exmp}
-	    Se $y = x_1 + x_2$ ho che:
-	    \[
-		P(y) = \int P(x_1) P(y-x_1) dx_1
-	    .\] 
-	    Allora per le proprietà della trasformata di una convoluzione:
-	    \[
-		\phi (s) = \phi_1(s) \phi_2(s) 
-	    .\] 
-	\end{exmp}
-\end{enumerate}
-\begin{exmp}[Testa o Croce]
-    Prendiamo una distribuzione che corrisponda alla probabilità del set di eventi ["testa","croce"] dopo il lancio di una moneta:
+\usetikzlibrary{math}
+\tikzmath{\x = 3; \y = 0;}
+\begin{center}
+\begin{tikzpicture}
+     \draw[-stealth] (-\x,0) -- (\x,0) node[right]{$t$};
+     \draw[-stealth] (0,0) -- (0,\x*2/3) node[above]{$\chi_\epsilon(t)$};
+     \draw[thick] (-\x,\x/3) -- 
+     		  (-\x/3, \x/3) -- 
+		  (-\x/3, 0) node[below]{$-\epsilon$} --
+		  (0,0) node[below]{$0$} -- 
+		  (\x/3,0) node[below]{$\epsilon$} -- 
+		  (\x/3,\x/3) -- 
+		  (\x,\x/3);
+\end{tikzpicture}
+\end{center}
+\noindent
+Il termine di probabilità in questione è valutato proprio nel supporto di questa funzione:
+\[
+    P(\left|x_n-x\right|>\epsilon) = \int d\omega P(\omega) \chi_\epsilon (\left|x_n-x\right|) 
+.\] 
+\begin{defn}[\textcolor{red}{Limite in distribuzione}]
+    Data una funzione di $x_n$: $f(x_n)$ si ha che questa converge a $f(x)$ in distribuzione se:
     \[
-        P(x) = \frac{1}{2}\left( \delta(x-1) + \delta(x+1) \right) 
-    \]
-    Calcoliamo la funzione caratteristica di tale distribuzione:
-    \[
-	\phi(s) = \int P(x) e^{isx} dx = \frac{1}{2}\left[ e^{is} + e^{-is} \right] 
-    \]
-    Ipotizziamo di fare $n$ lanci di moneta e di voler inferire tramite la funzione caratteristica quale sarà la distribuzione di probabilità finale. \\
-    Stiamo parlando della probabilità di una somma di eventi indipendenti, quindi per quanto visto in precedenza si ha che:
-    \[
-	\phi_n(s) = \left[ \phi(s) \right] ^n = \frac{1}{2^n} \left( e^{is} + e^{-is} \right)^n 
-    \]
-    Si sfrutta la formula binomiale:
-    \[
-	\phi_n(s) = \frac{1}{2^n}\sum_{k = 0}^{n}\binom{n}{k} e^{is(n-2k)}
-    \]
-    La trasformata inversa assume la forma di una somma di delta di Dirac che dovrebbero convergere ad una Gaussiana nel limite di $n\to\infty$:
-    \[
-	P(x) = \frac{1}{2\pi}\int ds \phi_n(s) e^{-ixs} = \frac{1}{2^n} \sum_{k = 0}^{n} \binom{n}{k}\delta(n-2k)
-    \]
+	\lim^{\text{dist}}_{n \to \infty}: \qquad \lim_{n \to \infty} \left<f(x_n)\right> = \left<f(x)\right>
+    .\] 
+\end{defn}
+\begin{exmp}[Moto Browniano e moto a step]
+    Prendiamo due moti con regole stocastiche differenti: un moto Browniano (passo del moto random) ed un moto casuale di passo unitario.
+    Ipotizziamo che il corpo che effettua il moto (nei due casi) parta dall'origine.\\
+    Le distribuzioni di probabilità dei fenomeni sono diverse, il valor medio del moto è invece nullo in entrambi i casi. Per questo motivo entrambi i moti tendono a 0 in distribuzione.
 \end{exmp}
+\noindent
+Quest'ultimo limite è usato spesso "simulativamente", ovvero per la soluzione di equazioni differenziali stocastiche.\\
+I limiti elencati in questa sezione non sono tutti indipendenti, infatti ($\implies$ = "implica" ) :
+\[\begin{aligned}
+    & \lim^{\text{ac}}_{n \to \infty} \implies  \lim^{\text{P}}_{n \to \infty} \\
+    & \lim^{\text{ms}}_{n \to \infty} \implies  \lim^{\text{P}}_{n \to \infty} \\
+    & \lim^{\text{P}}_{n \to \infty} \implies \lim^{\text{dist}}_{n \to \infty}  
+.\end{aligned}\]
+
+
 \clearpage

@@ -91,9 +91,18 @@
 \newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
 
 \newlength\tocrulewidth
-\setlength{\tocrulewidth}{1.5pt}
+\setlength{\tocrulewidth}{0.5pt}
 \newcommand{\mylocaltoc}{
-\begingroup\parindent=0em\etocsettocstyle{\rule{\linewidth}{\tocrulewidth}\vskip0.5\baselineskip}{\rule{\linewidth}{\tocrulewidth}}
+\begingroup
+\parindent=0em
+\etocsetstyle {section}
+{}
+{\leavevmode\leftskip 0cm\relax}
+{\bfseries\normalsize\makebox[.5cm][l]{\etocnumber.}%
+\etocname\nobreak\hfill\nobreak
+\rlap{\makebox[1cm]{\mdseries\etocpage}}\par}
+{}
+\etocsettocstyle{\rule{\linewidth}{\tocrulewidth}\vskip0.5\baselineskip}{\rule{\linewidth}{\tocrulewidth}}
 \localtableofcontents 
 \endgroup}
 

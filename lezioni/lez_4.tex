@@ -1,5 +1,94 @@
-\section{Lezione 4}%
+\section{Definizione di processi di Markov}%
 \label{sub:Lezione 4}
+\mylocaltoc
+\subsection{Processi stazionari e processi di Markov}%
+\label{sub:Processi stazionari e processi di Markov}
+\subsubsection{Probabilità di un processo}%
+\label{subsub:Probabilità di un processo}
+Prendiamo un oggetto vittima di un processo stocastico dipendente dal tempo e mettiamoci in un sistema di coordinate spaziali $x$. \\
+Possiamo descrivere completamente il processo con la sequenza di $P_n$ definite come:
+\[
+    P_n(x_1,t_1; x_2,t_2; \ldots ; x_n,t_n) 
+.\] 
+Ovvero la densità di probabilità che l'oggetto si trovi in $x_1$ al tempo $t_1$, $x_2$ al tempo $t_2$ etc\ldots \\
+Per descrivere il moto non basta la densità di probabilità allo step $n$-esimo ma serve l'intera sequenza $P_1, P_2, \ldots$\\
+Scegliamo una base spazio temporale ($\overline{x} = (x,t)$), le proprietà delle $P_n$ sono:
+\begin{itemize}
+    \item $P_n \ge 0$.
+    \item Simmetria: $P_n(\overline{x}_1;\overline{x}_2; \ldots) = P_n(\overline{x}_2; \overline{x}_1)$.
+    \item Completezza:
+	\[
+	    \int P_n(\overline{x}_1;\ldots;\overline{x}_n) dx_n = P_{n-1}(\overline{x}_1;\ldots;\overline{x}_{n-1}) 
+	.\] 
+    \item Norma: $\int P_1(\overline{x}_1) dx_1 = 1$ 
+\end{itemize}
+Possiamo calcolare il valor medio di una quantità nel seguente modo:
+\[\begin{aligned}
+    &\left< x(t_1) \cdot \ldots \cdot x(t_n) \right> =\\
+			     & \qquad=\int\limits_{R^n} dx_1\ldots dx_n P_n(\overline{x}_1;\ldots ;\overline{x}_n) x_1 \ldots x_n
+.\end{aligned}\]
+
+\begin{greenbox}{Processi stazionari}
+    Un processo si dice stazionario se $\forall n$:
+    \[\begin{aligned}
+	P_n&(x_1,t_1;\ldots;x_n,t_n) =\\
+	=&P_n(x_1,t_1+\Delta t;\ldots;x_n,t_n+\Delta t)
+    .\end{aligned}\]
+\end{greenbox}
+\noindent
+\subsubsection{Probabilità condizionata}%
+\label{subsub:Probabilità condizionata}
+Ipotizziamo che all'istante $t_i$ l'oggetto si trovi in $x \in \left[x_i, x_i + \Delta x\right]$ (con $i \in \left[1, k\right]$).\\
+Allora la probabilità che l'oggetto si trovi in un istante successivo $t_{k+l}$ in un intervallo $\left[x_{k+l}, x_{k+l} + \Delta x\right]$ è:
+\[\begin{aligned}
+    P_{k+l}&(\overline{x}_1;\ldots; \overline{x}_{k+l}) =\\
+    =&P_k(\overline{x}_1;..;\overline{x}_k)\cdot P_{l|k}(\overline{x}_{k+1};..;\overline{x}_{k+l}|\overline{x}_1;..;\overline{x}_k) 
+.\end{aligned}\]
+Con $P_{l|k}$ probabilità di trovarsi in un intorno di $x_{k+l}$ condizionata dai primi $k$ step. 
+\begin{exmp}[Prob. condizionata dal primo step]
+    Ipotizziamo di avere la probabilità di essere in $x_1$ al tempo $t_1$, vogliamo trovare la probabilità di essere in $x_2$ al tempo $t_2$:
+    \[
+	P_2(\overline{x}_1;\overline{x}_2) = P_{1|1}(\overline{x}_2|\overline{x}_1) \cdot P_1(\overline{x}_1) 
+    .\] 
+\end{exmp}
+\noindent
+
+\begin{greenbox}{Processi di Markov}
+    Un processo si dice Markoviano se le sole conoscenze di $P_1$ e di $P_{1|1}$ sono sufficienti per studiare l'intera evoluzione del processo.
+    \[
+	P_{1|n-1}(\overline{x}_n|\overline{x}_1;\ldots;\overline{x}_{n-1})  = P_{1|1}(\overline{x}_n|\overline{x}_{n-1}) 
+    .\] 
+\end{greenbox}
+\noindent
+Fisicamente un processo di questo tipico indica che il sistema è senza memoria.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Equazione di Chapman - Kolmogorov  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Equazione di C-K}%
+\label{sub:Equazione di Chapman-Kolmogorov}
+L'equazione di Chapman-Kolmogorov si applica ai processi Markoviani. Si parte dalla seguente identità:
+\[
+    \sum_{B}^{\Omega} P(A \cap B \cap C) = P(A \cap C) 
+.\] 
+Per un processo Markoviano (con ordinamento $t_1 < t_2 < t_3$) l'equazione per la $P_3$ è:
+\[
+    P_3(\overline{x}_1; \overline{x_2}; \overline{x}_3) = P_{1|1}(\overline{x}_3| \overline{x}_2) P_{1|1}(\overline{x}_2 | \overline{x}_1) 
+    P_1(\overline{x}_1) 
+.\] 
+Integrando rispetto alla coordinata $x_2$ e sfruttando la completezza delle $P_n$ si ha:
+\[
+    \int P_3(\overline{x}_1; \overline{x_2}; \overline{x}_3) dx_2 = P_2(\overline{x}_1;\overline{x}_3) = P_{1|1}(\overline{x}_3|\overline{x}_1) P_1(\overline{x}_1)
+.\] 
+Mettendo tutto insieme e semplificando ambo i lati la $P_1(\overline{x}_1)$:
+\begin{redbox}{Equazione di Chapman-Kolmogorov}
+    \[\begin{aligned}
+	P_{1|1}(x_3|x_1) = \int P_{1|1}(x_3|x_2) P_{1|1}(x_2|x_1)dx_2 \label{eq:3_CK}
+    .\end{aligned}\]
+\end{redbox}
+\noindent
+Quindi un processo Markoviano rispetta l'equazione di Chapman-Kolmogorov, tuttavia non vale il viceversa!
 \subsection{Continuità dei processi stocastici}%
 \label{sub:Continuità dei processi stocastici}
 \begin{defn}[Processo continuo]
@@ -35,7 +124,17 @@ I processi Markoviani non sono necessariamente continui:
 	f(\Delta) = \frac{1}{\sqrt{4\pi D\Delta t} }\exp\left(-\frac{1}{4D\Delta t} \left(x-y\right)^2  \right) 
     .\] 
     In altre parole $f(\Delta)$ è proprio un propagatore.\\
-    Inserendo questo oggetto nella definizione di processo continuo si vede che l'uguaglianza al limite è soddisfatta, quindi il moto Browniano è un processo continuo.
+    Si può quindi calcolare il limite nella definizione di continuità di un processo stocastico (conti saltabili):
+    \[\begin{aligned}
+	\lim_{\Delta t \to 0} &\frac{1}{\left(\Delta t\right)^{3 /2}}\int\limits_{\left|x-y\right|>\epsilon } 
+	\exp\left(-\frac{\left(x-y\right)^2}{4D\Delta t }\right) dx \sim \\ 
+			      &\sim \lim_{\Delta t \to 0} \frac{1}{\Delta t}\int\limits_{\epsilon /\sqrt{2\Delta t}}^\infty e^{-t^2} dt 
+			       \sim \lim_{\Delta t \to 0} \frac{\mbox{erf}\left(\frac{\epsilon}{\sqrt{2\Delta t}}\right)}{\Delta t} \\
+			      & \sim 
+                               \lim_{\Delta t \to 0} \frac{1}{\Delta t}
+			       \left(\frac{\exp\left(-\frac{\epsilon^2}{2\Delta t}\right)}{\epsilon /\sqrt{2\Delta t}}\right) = 0
+    .\end{aligned}\]
+    Quindi il moto Browniano è un processo continuo.
 \end{exmp}
 \noindent
 \begin{exmp}[Moto di Cauchy]
@@ -61,13 +160,12 @@ I processi Markoviani non sono necessariamente continui:
 %%%%%%%%%%%%%%%%%%
 %  Chapman form  %
 %%%%%%%%%%%%%%%%%%
-
-\subsection{Forma differenziale di Chapman - Kolmogorov}%
+\subsection{Forma differenziale di C-K}%
 \label{sub:Forma differenziale di Chapman - Kolmogorov}
-Prendiamo un processo stocastico scomponibile\
+Ipotizziamo di avere un processo stocastico Markoviano quindi per cui è possibile scrivere l'equazione di Chapman-Kolmogorov. Ipotizziamo che tale processo sia scomponibile\
 \footnote{Ipotesi per cui si può scomporre sul Gardiner}  in una parte continua ed una non continua.\\
 Si può dimostrare che un processo di questo tipo è descritto dalla seguente forma differenziale:
-\begin{redbox}{Forma di Chapman-Kolmogorov}
+\begin{redbox}{Forma differenziale di Chapman - Kolmogorov}
     \begin{equation}
     \partial_{t}P(\vect{z},t| \vect{y}, t') = - \Gamma + \Phi
     \label{eq:4_CK}
@@ -76,7 +174,7 @@ Si può dimostrare che un processo di questo tipo è descritto dalla seguente fo
 \noindent
 In cui $\Gamma$ è la parte contenente il processo continuo:
 \[\begin{aligned}
-    \Gamma = \sum_{i}^{} \partial_{z_i}&\left[ A_i(\vect{z},t) P(\vect{z},t|\vect{y},t') \right] +\\
+    \Gamma = -\sum_{i}^{} \partial_{z_i}&\left[ A_i(\vect{z},t) P(\vect{z},t|\vect{y},t') \right] +\\
                          &+\sum_{i,J}^{} \frac{1}{2}\partial^2_{z_iZ_J}\left[ B_{iJ}(z,t) P(\vect{z},t|\vect{y},t') \right]
 .\end{aligned}\]
 Qui abbiamo un primo termine "deterministico" (con la $A$) che determina soltanto uno spostamento dell'oggetto ed un termine di diffusione (quello in $B$).\\
@@ -97,106 +195,26 @@ La potenza della equazione è la sua generalità: se sappiamo che un processo è
     .\] 
     Sfruttiamo la proprietà ovvia:
     \[
-	P(\vect{z}, t|\vect{t}, t) = \delta (\vect{y}-\vect{z}) 
+	P(\vect{z}, t|\vect{y}, t) = \delta (\vect{y}-\vect{z}) 
     .\] 
-    Allora possiamo sviluppare l'espressione con $\Delta t$ che tende a $0$ (mettiamoci in una dimensione per semplicità):
-    \begin{greenbox}{Soluzione della forma diff. con termini continui}
+    Allora possiamo sviluppare $\Phi$ al primo ordine in $\Delta t$ l'espressione di $\Phi$ (in 1D):
     \[\begin{aligned}
-	P&(z, t + \Delta t| y, t) = \\
-				  &= \delta (z-y) \left[1-\Delta t\int dx \omega (x|z) \right] + \Delta t \cdot \omega (z|y) 
-    .\end{aligned}\]
+	\Phi &= \int \omega (z|x, t) P(x,t|y,t') dx +\\
+          & \qquad  - \int \omega (x|z, t) P(z,t|y,t') dx \simeq \\
+	     & \simeq \int\left[\omega (z|x, t) \delta (x-y) - \omega (x|z, t)\delta (z-y) \right]dx = \\
+	     & = \omega(z|y) - \delta(z-y) \int dx \omega(x|y)
+    .\end{aligned}\]    
+    \begin{greenbox}{Soluzione della forma diff. con termini continui}
+    \begin{align}
+	P&(z, t + \Delta t| y, t) = \nonumber \\
+	&= \delta (z-y) \left[1-\Delta t\int dx \omega (x|z) \right] + \Delta t \cdot \omega (z|y) 
+	\label{eq:forma_diff_cont}
+    .\end{align}
     \end{greenbox}
+    \noindent
+    Riconosciamo nella equazione \ref{eq:forma_diff_cont} un primo termine (con la $\delta$) che corrisponde alla probabilità di essere già in $z$ diminuito della probabilità di andar via, il secondo termine ($\Delta t \omega (z|y)$) corrisponde invece alla probabilità di finire in $z$ arrivando da $y$.
     \noindent
 \end{exmp}
 \noindent
 
-\subsection{Processo di Wiener}%
-\label{sub:Processo di Wiener}
-Un processo di Wiener è modellato dalla seguente equazione:
-\begin{greenbox}{Equazione per processo di Wiener}
-    L'equazione che regola il processo di Wiener è una Fokker-Planck:
-    \[
-	\frac{\partial }{\partial t} P(\omega,t|\omega_0, t_0) =
-	\frac{1}{2}\frac{\partial ^2}{\partial \omega^2} P(\omega, t|\omega_0, t_0) 
-    .\] 
-\end{greenbox}
-\noindent
-Inoltre deve esser rispettata la condizione iniziale:
-\[
-    P(\omega,t_0|\omega_0, t_0) = \delta (\omega-\omega_0) 
-.\]
-Il processo si può risolvere utilizzando la funzione caratteristica:
-\[
-    \phi (s, t) = \int d\omega P(\omega, t|\omega_0, t_0) e^{is\omega}
-.\] 
-Sfruttando le regole della trasformata possiamo riscrivere l'equazione del processo come:
-\[
-    \frac{\partial \phi }{\partial t} = -\frac{1}{2}s^2\phi
-.\] 
-\[
-    \phi (s, t_0) = \exp (is\omega_0) 
-.\] 
-La soluzione è nota:
-\[\begin{aligned}
-    \phi (s) =& \exp\left(-\frac{1}{2}s^2\left(t-t_0\right)\right)\phi (s,t_0)  =\\
-    	=&\exp\left(-\frac{1}{2}s^2\left(t-t_0\right) + is\omega_0 \right) 
-.\end{aligned}\]
-Visto che l'antitrasformata di una Gaussiana è una Gaussiana abbiamo la soluzione nello spazio reale:
-\begin{redbox}{Soluzione del processo di Wiener}
-    \[
-	P(\omega,t|\omega_0, t_0) = 
-	\frac{1}{\sqrt{2\pi\left(t-t_0\right)} }
-	\exp\left(- \frac{\left(\omega-\omega_0\right)^2}{2\left(t-t_0\right)}\right)
-    \] 
-\end{redbox}
-\noindent
-Il processo che abbiamo ottenuto è Gaussiano:
-\[
-    \left<\omega\right> =  \omega_0
-.\] 
-\[
-    \left<\left(\omega-\omega_0\right)^2\right> = t- t_0
-.\] 
-\paragraph{Proprietà dei processi di Wiener}%
-\label{par:Proprietà dei processi di Wiener}
-\begin{itemize}
-    \item \'E continuo.
-    \item Non è differenziabile, $\forall k$:
-	\[\begin{aligned}
-	    \text{Prob}&\left(\frac{\left|\omega (t+h) - \omega (t) \right|}{h}> k\right) = \\
-		       & = 2 \int_{kh}^{\infty} d\omega  \frac{1}{\sqrt{2\pi  h}} e^{- \omega^2 /2h} 
-		       \ \xrightarrow[]{h\to 0} 1
-	.\end{aligned}\]
-    \item Gli incrementi sono indipendenti:
-	\[\begin{aligned}
-	    P(&\omega_2, t_2; w_1,t_1; \omega_0,t_0) = \\
-	      &= P(\omega_2, t_2|\omega_1,t_1) P(\omega_1, t_1|\omega_0,t_0) P(\omega_0,t_0) 
-	.\end{aligned}\]
-	Il primo termine dopo l'uguale non dipende da $(\omega_0,t_0)$ perché il processo è Markoviano.
-    \item La correlazione: 
-    \[
-	\left<\omega (t) \omega (s) | \left[\omega_0, t_0\right]\right> = \text{min}(t-t_0, s-s_0) + \omega_0^2
-    .\] 
-    Che nel caso particolare in cui $\omega_0=t_0=0$ si ha $\left<\omega (t) \omega (s) \right> = s$ se $t>s$.
-    \usetikzlibrary{math}
-    \tikzmath{\x = 5; \y = 4;}
-    \begin{center}
-    \begin{tikzpicture}
-	 \draw[-stealth] (0,0) --(\x/\y, 0)node[below]{$s$} -- (\x,0) node[right]{$t$};
-	 \draw[-stealth] (0,0) --(0,\x/\y)node[left]{$s$} -- (0,\x*2/5) node[above]{$\left<\omega (t) \omega (s) \right>$};
-         \draw[thick] 
-		  (0,0) node[below]{$0$} -- 
-		  (\x/\y,\x/\y)  -- 
-		  (\x,\x/\y);
-	 \draw[dash dot] 
-		  (\x/\y, 0) --
-		  (\x/\y, \x/\y);
-	\draw[dash dot] 
-		  (0,\x/\y) --
-		  (\x/\y, \x/\y);
-
-    \end{tikzpicture}
-    \end{center}
-    \noindent
-\end{itemize}
 \clearpage

@@ -1,5 +1,108 @@
-\section{Lezione 5}%
+\section{Esempi di processi di Markov}
 \label{sub:Lezione 5}
+\mylocaltoc
+\subsection{Processo di Wiener}%
+\label{sub:Processo di Wiener}
+Un processo di Wiener è modellato dall'equazione di Fokker-Plank così definita:
+\begin{greenbox}{}
+    \[
+	\frac{\partial }{\partial t} P(\omega,t|\omega_0, t_0) =
+	\frac{1}{2}\frac{\partial ^2}{\partial \omega^2} P(\omega, t|\omega_0, t_0) 
+    .\] 
+\end{greenbox}
+\noindent
+Questa corrisponde alla forma differenziale di Chapman-Kolmogorov in 1D con $A = 0$, $B = $const, $\Phi = 0$.\\
+Inoltre si impone la seguente condizione iniziale:
+\[
+    P(\omega,t_0|\omega_0, t_0) = \delta (\omega-\omega_0) 
+.\]
+Il processo si può risolvere utilizzando la funzione caratteristica:
+\[
+    \phi (s, t) = \int d\omega P(\omega, t|\omega_0, t_0) e^{is\omega}
+.\] 
+Sfruttando le regole della trasformata possiamo riscrivere l'equazione del processo come:
+\[
+    \frac{\partial \phi }{\partial t} = -\frac{1}{2}s^2\phi
+.\] 
+\[
+    \phi (s, t_0) = \exp (is\omega_0) 
+.\] 
+La soluzione è nota:
+\[\begin{aligned}
+    \phi (s) =& \exp\left(-\frac{1}{2}s^2\left(t-t_0\right)\right)\phi (s,t_0)  =\\
+    	=&\exp\left(-\frac{1}{2}s^2\left(t-t_0\right) + is\omega_0 \right) 
+.\end{aligned}\]
+Visto che l'antitrasformata di una Gaussiana è una Gaussiana abbiamo la soluzione nello spazio reale:
+\begin{redbox}{Soluzione del processo di Wiener}
+    \[
+	P(\omega,t|\omega_0, t_0) = 
+	\frac{1}{\sqrt{2\pi\left(t-t_0\right)} }
+	\exp\left(- \frac{\left(\omega-\omega_0\right)^2}{2\left(t-t_0\right)}\right)
+    \] 
+\end{redbox}
+\noindent
+Il processo che abbiamo ottenuto è Gaussiano:
+\begin{align}
+    &\left<\omega\right> =  \omega_0 \label{eq:mean_wiener}\\
+    &\left<\left(\omega-\omega_0\right)^2\right> = t- t_0 \label{eq:var_wiener}
+.\end{align}
+\paragraph{Proprietà dei processi di Wiener}%
+\label{par:Proprietà dei processi di Wiener}
+\begin{itemize}
+    \item \'E continuo.
+    \item Non è differenziabile, $\forall k$:
+	\[\begin{aligned}
+	    \text{Prob}&\left(\frac{\left|\omega (t+h) - \omega (t) \right|}{h}> k\right) = \\
+		       & = 2 \int_{kh}^{\infty} d\omega  \frac{1}{\sqrt{2\pi  h}} e^{- \omega^2 /2h} = \\
+		       &=1-\mbox{erf}\left(k \sqrt{\frac{k}{2}} \right) = \\
+		       &=1- \frac{2}{\sqrt{\pi} } \sum_{n=0}^{\infty} \frac{(-1)^n \left[k\sqrt{\frac{h}{2}} \right]^{2n + 1}}{n! (2n+1) }
+		       \ \xrightarrow[]{h\to 0} 1
+	.\end{aligned}\]
+	Quindi $\forall k$ grande a piacere quando $h\to 0$ si ha che:
+	\[
+	    \frac{\omega (t + h)-\omega (t)}{h}>k
+	.\] 
+	Questo implica la non differenziabilità del processo.
+    \item Gli incrementi sono indipendenti:
+	\[\begin{aligned}
+	    P(&\omega_2, t_2; w_1,t_1; \omega_0,t_0) = \\
+	      &= P(\omega_2, t_2|\omega_1,t_1) P(\omega_1, t_1|\omega_0,t_0) P(\omega_0,t_0) 
+	.\end{aligned}\]
+	Il primo termine dopo l'uguale non dipende da $(\omega_0,t_0)$ perché il processo è Markoviano.
+    \item La correlazione: \\
+	Ipotizziamo di avere $t>s$:
+	\[\begin{aligned}
+	    \left<\omega (t) \omega (s)\right> &= \left<\left(\omega (t) -\omega (s)\right)\omega (s) \right>+\left<\omega^2(s) \right> =\\
+					       &=\left<\left(\omega (t)-\omega (s)\right)\right>\left<\omega(s)\right> + s = s
+	.\end{aligned}\]
+    In cui nel primo passaggio si somma e si sottrae $\omega (s)$, nel secondo passaggio si ha che l'incremento $\omega (t)-\omega (s)$ è indipendente da $\omega (s)$, quindi la media del prodotto corrisponde al prodotto delle medie. Tuttavia l'incremento è distribuito come una gaussiana a media nulla, quindi il primo termine si annulla. Il secondo termine invece è pari a $s$ per l'equazione \ref{eq:var_wiener}.\\
+    Nel caso generale si ha che:
+    \[
+        \left<\omega (t)\omega (s)| \left[\omega_0t_0\right]\right> = \min(t-t_0, s-t_0) + \omega_0^2
+    .\] 
+    Che nel caso particolare in cui $\omega_0=t_0=0$ si ricongiunge a quello visto sopra $\left<\omega (t) \omega (s) \right> = s$ se $t>s$.
+    \usetikzlibrary{math}
+    \tikzmath{\x = 5; \y = 4;}
+    \begin{center}
+    \begin{tikzpicture}
+	 \draw[-stealth] (0,0) --(\x/\y, 0)node[below]{$s$} -- (\x,0) node[right]{$t$};
+	 \draw[-stealth] (0,0) --(0,\x/\y)node[left]{$s$} -- (0,\x*2/5) node[above]{$\left<\omega (t) \omega (s) \right>$};
+         \draw[thick] 
+		  (0,0) node[below]{$0$} -- 
+		  (\x/\y,\x/\y)  -- 
+		  (\x,\x/\y);
+	 \draw[dash dot] 
+		  (\x/\y, 0) --
+		  (\x/\y, \x/\y);
+	\draw[dash dot] 
+		  (0,\x/\y) --
+		  (\x/\y, \x/\y);
+
+    \end{tikzpicture}
+    \end{center}
+    \noindent
+\end{itemize}
+
 \subsection{Processo di Ornstein - Uhlenback}%
 \label{sub:Processo di Ornstein - Uhlenback}
 Prendiamo in considerazione altri esempi di processi di Markov.
@@ -239,4 +342,3 @@ Se osserviamo il moto su scale temporali di quest'ordine allora lo spettro degli
 \end{ex}
 % Appendice
 \input{lezioni/Appendix/App_lez_5.tex}
-\clearpage

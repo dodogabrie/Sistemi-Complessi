@@ -1,4 +1,4 @@
-\section{Processi di Markov e Master Equation}%
+\section{Introduzione ai processi di Markov}%
 \label{sub:Lezione 1}
 \mylocaltoc
 \subsection{Ipotesi di Markov}%
@@ -203,7 +203,7 @@ La variabile stocastica del problema è $t_k$: il tempo di arrivo di un elettron
 	q \exp\left(-\alpha t\right) 	&t \ge 0
     \end{cases}
 \] 
-La corrente totale sarà data dalla somma degli elettroni che arrivano su $\sigma$ all'istante $t_k$:
+La corrente totale sarà data dalla somma degli elettroni che arrivano su $\sigma$ per ciascun tempo stocastico $t_k$:
 \[
     I(t) = \sum_{t_k}^{} F(t-t_k) 
 .\] 
@@ -225,7 +225,7 @@ Il termine della Master Equation $P(n, t + \Delta t)$ si scrive come somma di:
 \end{itemize}
 Quindi mettendo tutto insieme:
 \[
-    P_n(t+\Delta  t) = \left(1-\lambda\Delta t\right)P_n(t) + \lambda\Delta t  P_n(t)\implies 
+    P_n(t+\Delta  t) = \left(1-\lambda\Delta t\right)P_n(t) + \lambda\Delta t  P_{n-1}(t)\implies 
 \] 
 \[
 	\frac{P(n, t+\Delta  t) - P(n,t)}{\Delta t} = \lambda\left[P(n-1,t) -P(n,t)\right] 
@@ -236,6 +236,7 @@ Che è proprio l'equazione cercata. Vediamo adesso un metodo di risoluzione di q
 %  Metodo della funzione generatrice  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Metodo della funzione generatrice}%
+\label{subsec:fgen_met}
 Per risolvere il problema introduciamo la funzione generatrice $G(s,t)$:
 \[
     G(s,t) =\sum_{n}^{} s^nP(n,t) 
@@ -279,11 +280,11 @@ Passiamo al continuo nei tempi di arrivo degli elettroni e riscriviamo la corren
     I(t) =& \int dx F(t-x) \mu(x) =\\
 	 =&\int_{- \infty}^{t} q \exp\left(-\alpha (t-x) \right) \frac{\text{d} N}{\text{d} x} dx 
 .\end{aligned}\]
-La difficoltà dell'espressione sta nel fatto che $N(t)$ è una funzione a salti irregolari.\\
-Differenziando rispetto al tempo $I(t)$:
+La difficoltà dell'espressione sta nel fatto che $N(t)$ è una funzione a gradini con i gradini che arrivano in modo stocastico nel tempo.\\
+Si deriva a destra e sinistra rispetto al tempo ed si integra per parti:
 \[\begin{aligned}
-    \frac{\text{d} I}{\text{d} t} &= q\exp\left(-\alpha (t-x)\right)\left.\dot{N}\right|_{x=t} + \\
-				   &\qquad +\int_{-\infty}^{t} \left(-\alpha q\right)\exp\left(-\alpha (t-x)\right)\dot{N}dx =\\
+    \frac{\text{d} I}{\text{d} t} &= \left[q\exp\left(-\alpha (t-x)\right)\left \frac{\text{d} N}{\text{d} t}\right]  \right|_{x=t} + \\
+				   &\qquad +\int_{-\infty}^{t} \left(-\alpha q\right)\exp\left(-\alpha (t-x)\right)\frac{\text{d} N}{\text{d} x} dx =\\
 				   &= q\mu (t) - \alpha I(t) 
 .\end{aligned}\]
 \begin{redbox}{Equazione stocastica differenziale}
@@ -347,7 +348,4 @@ Che è anch'esso di prim'ordine nel tempo! L'equazione corretta sarebbe allora:
 \[
     \frac{1}{2}\frac{\text{d} }{\text{d} t} \left<I^2\right>= \lambda q\left<I\right>-\alpha\left<I^2\right> + q^2\lambda + O(dt)
 .\]
-
-
-
 \newpage

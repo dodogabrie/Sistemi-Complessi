@@ -1,122 +1,89 @@
-\section{Lezione 3}%
+\section{Funzione caratteristica e Momenti Fattoriali}%
 \label{sub:Lezione 3}
-\subsection{Limiti con variabili stocastiche}%
-\label{sub:Limiti con variabili stocastiche}
-Un problema al limite con una variabile stocastica $x$ è un problema del seguente tipo:
-\[
-    x = \lim_{n \to \infty} x_n \qquad x_n \in \Omega
-.\] 
-Dove $x_n$ è una serie di funzioni di variabile stocastica $\omega$, indicizzata da $n$ intero. \\
-La variabile stocastica $\omega$ appartiene all'insieme degli eventi possibili $\Omega$
-\begin{defn}[\textcolor{red}{Almost Certain Limit}]
- \[
-    \lim^{\text{ac}}_{n \to \infty} x_n = x
-    \qquad \text{se } \forall \omega \in \Omega: \
-    \lim_{n \to \infty} x_n(\omega) = x
-.\] 
-Tale limite rispetta la proprietà:
-\[
-    P(\lim_{n \to \infty} x_n(\omega) =x) =1
-.\] 
-\end{defn}
-\begin{exmp}[Farfalle]
-    Alcune specie di farfalle vivono mediamente un giorno, prendiamo tutte le farfalle viventi che appartengono a questa specie (ed escludiamo quelle che devono ancora nascere).\\
-    Se misuriamo la media del cibo consumato da questo campione ogni ora otteniamo una sequenza di numeri casuali.
-    Tuttavia possiamo essere quasi sicuri che tale sequenza dopo 30 ore sarà 0 e rimarrà 0 per sempre.\\
-    In questo esempio si hanno: 
-    \begin{itemize}
-        \item $x_n$ la sequenza di medie del cibo.
-	\item $\omega$ Il cibo che una farfalla della specie mangia in un'ora.
-	\item $x = 0$.
-    \end{itemize} 
-\end{exmp}
-\begin{exmp}[Equazione stocastica]
-    Prendiamo una equazione stocastica differenziale così costruita:
+\mylocaltoc
+\subsection{Funzione caratteristica e cumulanti}%
+\label{sub:Funzione caratteristica}
+Sia $\vect{x}$ una variabile random con distribuzione di probabilità $P(\vect{x})$, la funzione caratteristica della distribuzione è la sua trasformata di Fourier:
+\begin{redbox}{}
     \[
-        dx = - \alpha x dt + bxd\omega
+	\phi (\vect{s}) = \int d\vect{x} P(\vect{x}) e^{i \vect{x}\cdot \vect{s}}
     .\] 
-    In cui il termine $d\omega$ è un termine stocastico.\\
-    I passi degli $x_n$ saranno definiti dalla equazione sopra:
-    \[
-        x_{n+1} = x_n - \alpha  x_n \Delta t + b x_n \Delta\omega_n
-    .\] 
-    Se ipotizziamo che la $x_n$ (variabile composta da termine stocastico e termine temporale)  nell'evoluzione si avvicini all'origine ($x_n = 0$) allora il termine stocastico in $\omega$ non può più contribuire alla equazione, in tal caso la convergenza avviene.
-\end{exmp}
-\begin{defn}[\textcolor{red}{Mean Square Limit}]
-    Se si ha:
-    \[\begin{aligned}
-	\lim_{n \to \infty} & 
-	\left<\left(x_n(\omega) -x(\omega) \right)^2\right> =\\
-			    &=\lim_{n \to \infty} 
-			    \int  d\omega  P(\omega) 
-			    \left[ x_n(\omega) -x(\omega) \right]^2 = 0
-    .\end{aligned}\]
-    Allora:
-    \[
-        \lim^{\text{ms}}_{n \to \infty} x_n = x
-    .\] 
-\end{defn}
-\begin{defn}[\textcolor{red}{Limite in probabilità}] 
-    \[
-        \lim^{\text{P}}_{n \to \infty} x_n = x
-    .\] 
-    se vale che, $ \forall \epsilon  > 0$:
-    \[
-	\lim_{n \to \infty} P(\left|x_n-x\right| > \epsilon) = 0
-    .\] 
-\end{defn}
-\noindent
-Per capire cosa rappresenta il termine $P(\left|x_n - x\right|>\epsilon)$ introduciamo la funzione caratteristica:
-\[
-    \chi_\epsilon (t) = 
-    \begin{cases}
-	0 & \left|t\right|< \epsilon\\
-	1 & \left|t\right|>\epsilon
-    \end{cases}
-.\] 
+\end{redbox}
 
-\usetikzlibrary{math}
-\tikzmath{\x = 3; \y = 0;}
-\begin{center}
-\begin{tikzpicture}
-     \draw[-stealth] (-\x,0) -- (\x,0) node[right]{$t$};
-     \draw[-stealth] (0,0) -- (0,\x*2/3) node[above]{$\chi_\epsilon(t)$};
-     \draw[thick] (-\x,\x/3) -- 
-     		  (-\x/3, \x/3) -- 
-		  (-\x/3, 0) node[below]{$-\epsilon$} --
-		  (0,0) node[below]{$0$} -- 
-		  (\x/3,0) node[below]{$\epsilon$} -- 
-		  (\x/3,\x/3) -- 
-		  (\x,\x/3);
-\end{tikzpicture}
-\end{center}
-\noindent
-Il termine di probabilità in questione è valutato proprio nel supporto di questa funzione:
-\[
-    P(\left|x_n-x\right|>\epsilon) = \int d\omega P(\omega) \chi_\epsilon (\left|x_n-x\right|) 
-.\] 
-\begin{defn}[\textcolor{red}{Limite in distribuzione}]
-    Data una funzione di $x_n$: $f(x_n)$ si ha che questa converge a $f(x)$ in distribuzione se:
-    \[
-	\lim^{\text{dist}}_{n \to \infty}: \qquad \lim_{n \to \infty} \left<f(x_n)\right> = \left<f(x)\right>
-    .\] 
-\end{defn}
-\begin{exmp}[Moto Browniano e moto a step]
-    Prendiamo due moti con regole stocastiche differenti: un moto Browniano (passo del moto random) ed un moto casuale di passo unitario.
-    Ipotizziamo che il corpo che effettua il moto (nei due casi) parta dall'origine.\\
-    Le distribuzioni di probabilità dei fenomeni sono diverse, il valor medio del moto è invece nullo in entrambi i casi. Per questo motivo entrambi i moti tendono a 0 in distribuzione.
-\end{exmp}
-\noindent
-Quest'ultimo limite è usato spesso "simulativamente", ovvero per la soluzione di equazioni differenziali stocastiche.\\
-I limiti elencati in questa sezione non sono tutti indipendenti, infatti ($\implies$ = "implica" ) :
-\[\begin{aligned}
-    & \lim^{\text{ac}}_{n \to \infty} \implies  \lim^{\text{P}}_{n \to \infty} \\
-    & \lim^{\text{ms}}_{n \to \infty} \implies  \lim^{\text{P}}_{n \to \infty} \\
-    & \lim^{\text{P}}_{n \to \infty} \implies \lim^{\text{dist}}_{n \to \infty}  
+\begin{exmp}[Distribuzione Gaussiana]
+ \[\begin{aligned}
+    &P(x) = \frac{e^{-x^2 / 2 \sigma^2}}{\sqrt{2\pi\sigma^2}} 
+    &\implies&
+    &\phi (s) = e^{-\sigma^2s^2 / 2}
 .\end{aligned}\]
+\end{exmp}
 
+\begin{exmp}[Distribuzione uniforme]
+\[
+    P(x) = 
+    \begin{cases}
+	1 & x \in \left[-\frac{1}{2}, \frac{1}{2}\right]\\
+	0 & \text{Altrimenti}
+    \end{cases}
+\] 
+\[
+    \phi (s) = \int_{-1 /2}^{1 /2} e^{ixs}dx = \frac{2}{s}\sin\left(\frac{s}{2}\right)  
+.\] 
+\end{exmp}
 
-\subsection{Cumulanti della funzione caratteristica.}%
+\subsubsection{Proprietà della funzione caratteristica}%
+\label{ssub:Proprietà della funzione caratteristica}
+\begin{enumerate}
+    \item $\left|\phi (0) \right|= 1 $.
+    \item $\phi (s) $ è continua.
+    \item Se $\exists \left<x^n\right>$ allora: 
+	\[
+		\left<x^n\right> = \left(-i\right)^n \left.\frac{\partial ^n}{\partial s^n} \phi (s)\right|_{s=0} 
+	.\] 
+    \item Una sequenza di distribuzioni converge ad una distribuzione limite $\iff$ converge la sequenza di funzioni caratteristiche.
+    \item Dato $\vect{x} = \left(x_1, \ldots, x_n\right)$ con $x_i$ indipendenti $\forall i$ allora:
+	\[ 
+	    \phi (s_1, s_2, \ldots) = \prod_{i=1}^{n} \phi (s_i)  
+	\]
+    \item Se $y = \sum_{i}^{} x_i$ con $x_i$ indipendenti, allora:
+	\[
+	    \phi (s) = \left<e^{isy}\right> = \prod_{i}^{} \phi_i(s)  
+	.\] 
+	\begin{exmp}
+	    Se $y = x_1 + x_2$ ho che:
+	    \[
+		P(y) = \int P(x_1) P(y-x_1) dx_1
+	    .\] 
+	    Allora per le proprietà della trasformata di una convoluzione:
+	    \[
+		\phi (s) = \phi_1(s) \phi_2(s) 
+	    .\] 
+	\end{exmp}
+\end{enumerate}
+\begin{exmp}[Testa o Croce]
+    Prendiamo una distribuzione che corrisponda alla probabilità del set di eventi ["testa","croce"] dopo il lancio di una moneta:
+    \[
+        P(x) = \frac{1}{2}\left( \delta(x-1) + \delta(x+1) \right) 
+    \]
+    Calcoliamo la funzione caratteristica di tale distribuzione:
+    \[
+	\phi(s) = \int P(x) e^{isx} dx = \frac{1}{2}\left[ e^{is} + e^{-is} \right] 
+    \]
+    Ipotizziamo di fare $n$ lanci di moneta e di voler inferire tramite la funzione caratteristica quale sarà la distribuzione di probabilità finale. \\
+    Stiamo parlando della probabilità di una somma di eventi indipendenti, quindi per quanto visto in precedenza si ha che:
+    \[
+	\phi_n(s) = \left[ \phi(s) \right] ^n = \frac{1}{2^n} \left( e^{is} + e^{-is} \right)^n 
+    \]
+    Si sfrutta la formula binomiale (somma di elementi elevati alla $n$):
+    \[
+	\phi_n(s) = \frac{1}{2^n}\sum_{k = 0}^{n}\binom{n}{k} e^{is(n-2k)}
+    \]
+    La trasformata inversa assume la forma di una somma di delta di Dirac che dovrebbero convergere ad una Gaussiana nel limite di $n\to\infty$:
+    \[
+	P(x) = \frac{1}{2\pi}\int ds \phi_n(s) e^{-ixs} = \frac{1}{2^n} \sum_{k = 0}^{n} \binom{n}{k}\delta(n-2k)
+    \]
+\end{exmp}
+\subsubsection{Cumulanti della funzione caratteristica.}%
 \label{sub:Sviluppo in cumulanti di phi}
 \begin{redbox}{Funzione generatrice dei cumulanti}
    \[
@@ -147,11 +114,11 @@ Consideriamo adesso i cumulanti per una stessa variabile stocastica ($x_i = x_j 
 	\left<\left<x^4\right>\right> =& \left<x^4\right>-4\left<x^3\right>\left<x\right>+\\
 					&-3\left<x^2\right>^2 + 12\left<x^2\right>\left<x\right>^2-6\left<x\right>^4
     .\end{aligned}\]
-    Possiamo dimostrare che questo è nullo valutando la derivata del cumulante terzo:
+    Possiamo dimostrare che $\left<\left<x^4\right>\right> = 0$ valutando $\frac{d}{dx}\left<x^3\right>$:
     \[
         \int_{-\infty}^{\infty} \frac{\text{d} }{\text{d} x} \left\{x^3 \exp\left(\frac{-x^2}{2\sigma^2}\right)\right\} dx = 0 
     .\] 
-    Questa si azzera perché la Gaussiana si annulla per $x = \pm \infty$, rendendo esplicita la derivata:
+    Questa si azzera perché la Gaussiana si annulla in $x = \pm \infty$, la precedente equazione può essere riscritta tramite le regole della derivata composta:
     \[
         \int\left(3x^2\exp\left(-\frac{x^2}{2\sigma^2}\right) - 
 		\frac{x^4}{\sigma^2}\exp\left(- \frac{x^2}{2\sigma^2}\right) \right)dx = 0 
@@ -170,29 +137,31 @@ In generale questa cosa non funziona, non è possibile esprimere i cumulanti in 
    La somma di variabili stocastiche aventi media e varianza definita tende ad una Gaussiana. 
 \end{redbox}
 \noindent
-Sia $\left\{x_i\right\}$ una variabile random con distribuzione di probabilità $P_i(x_i)$ tale che:
+Sia $\left\{x_i\right\}$ una variabile random con distribuzione di probabilità $P_i(x_i)$, il teorema richiede che i primi due momenti siano definiti:
 \[\begin{aligned}
     & \left<x_i\right> = 0; &&
     & \text{var}\left\{x_i^2\right\} = b_i^2
 .\end{aligned}\]
-Il teorema richiede che i primi due momenti siano definiti:
+Si definiscono le seguenti quantità:
 \[\begin{aligned}
     & s_n = \sum_{i=1}^{n} x_i;
     &&
     &\sigma_n^2 = \sum_{i=1}^{n} b_i^2
 .\end{aligned}\]
-Inoltre le code della $s_n$ si devono annullare in modo rapido:
+Se le code della $s_n$ si annullano in modo "rapido" secondo la seguente equazione:
 \[
     \lim_{n \to \infty} 
     \left[\frac{1}{\sigma_n^2} \sum_{i=1}^{n} \int\limits_{\left|x\right|>t\sigma_n}^{} dx x^2_i P_i(x)  \right] 
     = 0 \qquad \forall t>0
 .\] 
-Se ne conclude che 
+Se ne conclude che $s_n/\sigma_n$ tende ad una gaussiana di media nulla e varianza unitaria.
 \[
-    \tilde{s}_n = s_n /\sigma_n \to G
+    \tilde{s}_n = s_n /\sigma_n \to G \qquad \mbox{Per} \ n \to \infty
 .\] 
-Con $G$ Gaussiana di media $0$ e varianza $1$.
-
+\begin{exmp}[Distribuzione che non tende ad una Gaussiana]
+    Una somma di variabili stocastiche distribuite secondo una Lorenziana non tende ad una Gaussiana perché il suo momento secondo diverge.
+\end{exmp}
+\noindent
 \subsubsection{Teorema di Chebyshev}%
 \label{subsub:Teorema di Chebyshev}
 Si cerca di quantificare quanto velocemente una distribuzione tenda alla Gaussiana.\\
@@ -217,23 +186,26 @@ In conclusione le distribuzioni tendono ad una Gaussiana nelle ipotesi del teore
 
 \subsection{Momenti fattoriali}%
 \label{sub:Momenti fattoriali}
-
-\subsubsection{Momenti fattoriali della distribuzione di Poisson}%
-\label{subsub:Momenti fattoriali della distribuzione di Poisson}
-\[
-	P(x) = e^{-\lambda } \frac{\lambda^x}{x!\,}
-.\] 
+I momenti fattoriali di una distribuzione $f$ sono definiti nel seguente modo:
 \begin{redbox}{Momenti fattoriali}
     \[
-	\left<x^r\right>_f = \left<x\cdot (x-1) \cdot \ldots \cdot (x-r+1) \right>
+	\left<n^r\right>_f = \left<n\cdot (n-1) \cdot \ldots \cdot (n-r+1) \right>
     .\] 
 \end{redbox}
 \noindent
+\subsubsection{Momenti fattoriali della distribuzione di Poisson}%
+\label{subsub:Momenti fattoriali della distribuzione di Poisson}
+Prendiamo la distribuzione:
+\[
+	P(n) = e^{-\lambda } \frac{\lambda^n}{n!\,}
+.\] 
 \begin{exmp}[Poisson con $r=2$.]
+    Sia $f$ Poissoniana:
    \[\begin{aligned}
-       \left<x\left(x-1\right)\right> =& \sum_{x = 0}^{\infty} x\left(x-1\right)e^{-\lambda} \frac{\lambda^x}{x!\,} = \\
+       \left<x^2\right>_f=\left<x\left(x-1\right)\right>_f =& \sum_{x = 0}^{\infty} x\left(x-1\right)e^{-\lambda} \frac{\lambda^x}{x!\,} = \\
        =& \lambda^2 \sum_{x = 0}^{\infty}  e^{-\lambda} \frac{\lambda^{x-2}}{\left(x-2\right)!} = \lambda^2
    .\end{aligned}\]
+   L'ultimo passaggio lo si ottiene dal fatto che l'indice della sommatoria può essere traslato e che tale sommatoria si estende ad $\infty$, quindi la somma corrisponde a $\left<f\right> \equiv 1$.
 \end{exmp}
 \noindent
 Iterando questa procedura si ottiene:
@@ -244,7 +216,7 @@ Iterando questa procedura si ottiene:
 \end{bluebox}
 \noindent
 
-\subsubsection{Funzione generatrice generalizzata.}%
+\subsection{Funzione generatrice generalizzata.}%
 \label{subsub:Funzione generatrice generalizzata.}
 
 \begin{redbox}{Funzione generatrice}
@@ -257,113 +229,27 @@ Possiamo ottenere la $G(s)$ a partire dalla funzione caratteristica:
 \[
     G(s) = \phi (-i\ln s) 
 .\] 
-Grazie a questa possiamo esprimere i cumulanti fattoriali nel seguente modo:
+Grazie a questa possiamo esprimere i momenti fattoriali nel seguente modo:
 \[
-\left<x^n\right>_f = \left[\frac{\partial^n}{\partial s^n} G(s)\right]
+    \left<x^n\right>_f = \left[\frac{\partial^n}{\partial s^n} G(s)\right]_{s=1}
 .\] 
 \begin{bluebox}{Funzione generatrice dei cumulanti fattoriali}
     \[
-	g(s) \equiv \ln (G(s)) = \sum_{r=1}^{\infty} \left<\left<x^r\right>\right>_f \frac{\left(s-1\right)^r}{r!,}
+	g(s) \equiv \ln (G(s)) = \sum_{r=1}^{\infty} \left<\left<x^r\right>\right>_f \frac{\left(s-1\right)^r}{r!}
     .\] 
 \end{bluebox}
 \noindent
+I cumulanti fattoriali, come quelli visti nella sezione precedente, sono tabulati per ciascuna distribuzione.
 \begin{exmp}[Funzione generatrice per Poissoniana]
     \[\begin{aligned}
 	G(s) =& \sum_{n=1}^{\infty} s^n e^{-\lambda} \frac{\lambda^n}{n!\,} =\\
 	=& e^{-\lambda}\sum_{n=1}^{\infty} \frac{\left(s\lambda\right)^n}{n!\,} =  e^{\lambda (s-1) }
      .\end{aligned}\]
+     Che è lo stesso risultato ottenuto nella \ref{subsec:fgen_met}.
      Per Poisson si ha quindi che:
      \[
          \left<\left<x^r\right>\right>_f = 0 \quad \forall r \ge  2
      .\] 
 \end{exmp}
-\noindent
-
-\subsection{Processi stazionari e processi di Markov}%
-\label{sub:Processi stazionari e processi di Markov}
-\subsubsection{Probabilità di un processo}%
-\label{subsub:Probabilità di un processo}
-Prendiamo un oggetto vittima di un processo stocastico dipendente dal tempo e mettiamoci in un sistema di coordinate spaziali $x$. \\
-Possiamo descrivere completamente il processo con:
-\[
-    P_n(x_1,t_1; x_2,t_2; \ldots ; x_n,t_n) 
-.\] 
-Ovvero la densità di probabilità che l'oggetto si trovi in $x_1$ al tempo $t_1$, $x_2$ al tempo $t_2$ etc\ldots \\
-Scegliamo una base spazio temporale ($\overline{x} = (x,t)$), le proprietà di cui gode questa quantità sono:
-\begin{itemize}
-    \item $P_n \ge 0$.
-    \item Simmetria: $P_n(\overline{x}_1;\overline{x}_2; \ldots) = P_n(\overline{x}_2; \overline{x}_1)$.
-    \item Completezza:
-	\[
-	    \int P_n(\overline{x}_1;\ldots;\overline{x}_n) dx_n = P_{n-1}(\overline{x}_1;\ldots;\overline{x}_{n-1}) 
-	.\] 
-    \item Norma: $\int P_1(\overline{x}_1) dx_1 = 1$ 
-\end{itemize}
-Possiamo calcolare il valor medio di una quantità nel seguente modo:
-\[\begin{aligned}
-    &\left< x(t_1) \cdot \ldots \cdot x(t_n) \right> =\\
-			     & \qquad=\int\limits_{R^n} dx_1\ldots dx_n P_n(\overline{x}_1;\ldots ;\overline{x}_n) x_1 \ldots x_n
-.\end{aligned}\]
-
-
-\begin{greenbox}{Processi stazionari}
-    Un processo si dice stazionario se $\forall n$:
-    \[\begin{aligned}
-	P_n&(x_1,t_1;\ldots;x_n,t_n) =\\
-	=&P_n(x_1,t_1+\Delta t;\ldots;x_n,t_n+\Delta t)
-    .\end{aligned}\]
-\end{greenbox}
-\noindent
-\subsubsection{Probabilità condizionata}%
-\label{subsub:Probabilità condizionata}
-Ipotizziamo che all'istante $t_i$ l'oggetto si trovi in $x \in \left[x_i, x_i + \Delta x\right]$ (con $i \in \left[1, k\right]$).\\
-Allora la probabilità che l'oggetto si trovi in un istante successivo $t_{k+l}$ in un intervallo $\left[x_{k+l}, x_{k+l} + \Delta x\right]$ è:
-\[\begin{aligned}
-    P_{k+l}&(\overline{x}_1;\ldots; \overline{x}_{k+l}) =\\
-    =&P_k(\overline{x}_1;..;\overline{x}_k)\cdot P_{l|k}(\overline{x}_{k+1};..;\overline{x}_{k+l}|\overline{x}_1;..;\overline{x}_k) 
-.\end{aligned}\]
-Con $P_{l|k}$ probabilità di trovarsi in un intorno di $x_{k+l}$ condizionata dai primi $k$ step. 
-\begin{exmp}[Prob. condizionata dal primo step]
-    \[
-	P_2(\overline{x}_1;\overline{x}_2) = P_{1|1}(\overline{x}_2|\overline{x}_1) \cdot P_1(\overline{x}_1) 
-    .\] 
-\end{exmp}
-\noindent
-
-\begin{greenbox}{Processi di Markov}
-    Un processo si dice Markoviano se:
-    \[
-	P_{1|n-1}(\overline{x}_n|\overline{x}_1;\ldots;\overline{x}_{n-1})  = P_{1|1}(\overline{x}_n|\overline{x}_{n-1}) 
-    .\] 
-\end{greenbox}
-\noindent
-Nel caso dei processi di Markov basta conoscere $P_1$ e $P_{1|1}$ per conoscere l'intero processo.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%  Equazione di Chapman - Kolmogorov  %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Equazione di Chapman - Kolmogorov}%
-\label{sub:Equazione di Chapman-Kolmogorov}
-
-L'idea per l'equazione è data dall'identità:
-\[
-    \sum_{B}^{\Omega} P(A \cap B \cap C) = P(A \cap C) 
-.\] 
-Prendiamo un processo Markoviano, l'equazione per la $P_3$ è:
-\[
-    P_3(\overline{x}_1; \overline{x_2}; \overline{x}_3) = P_{1|1}(\overline{x}_3| \overline{x}_2) P_{1|1}(\overline{x}_2 | \overline{x}_1) 
-    P_1(\overline{x}_1) 
-.\] 
-Integrando rispetto alla coord. $x_2$ otteniamo a sinistra la $P_2(\overline{x}_1;\overline{x}_3)$ (per la completezza delle $P_n$) , che può essere riscritta come:
-\[
-    P_2(\overline{x}_1;\overline{x}_3) = P_{1|1}(\overline{x}_3|\overline{x}_1) P_1(\overline{x}_1)
-.\] 
-Il risultato è l'equazione di Chapman-Kolmogorov.
-\begin{redbox}{}
-    \[\begin{aligned}
-	P_{1|1}(x_3|x_1) = \int P_{1|1}(x_3|x_2) P_{1|1}(x_2|x_1)dx_2 \label{eq:3_CK}
-    .\end{aligned}\]
-\end{redbox}
 \noindent
 \clearpage
