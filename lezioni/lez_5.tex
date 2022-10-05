@@ -126,13 +126,18 @@ Se ipotizziamo che:
     & 1. \ \lim_{\left|x\right| \to \infty} P(x, t|x_0,t_0) = 0 \\
     & 2. \ \lim_{\left|x\right| \to \infty} xP(x, t|x_0,t_0) = 0
 .\end{aligned}\]
-Allora possiamo affermare che la corrente $J=0$ per $x\to \infty$. Si risolve allora l'equazione differenziale:
+Allora possiamo affermare che nel limite di $x\to\infty$ la corrente $J$ vale $0$. Essendo $J$ costante allora questo fissa il valore di $J = 0$ . Si risolve allora l'equazione differenziale:
+\[
+    \frac{1}{2}D \frac{\partial P_s}{\partial x} = - kxP_s
+.\] 
 \begin{bluebox}{Soluzione stazionaria}
     \begin{equation}
 	P_s(x) = \frac{1}{\sqrt{\pi} D /k}e^{-kx^2 / D} \label{eq:5_staz}
     \end{equation}
 \end{bluebox}
 \noindent
+Si nota subito che, a differenza del processo di Wiener in cui il moto Browniano si allargava sempre di più (la larghezza della gaussiana dipende da $t$), adesso si ha una $\sigma^2\propto D / k$ costante.\\
+Il termine aggiuntivo rispetto a Wiener in questo processo funziona come una forza armonica per la $P$ (una molla) che la richiama in $x = 0$.
 \subsubsection{Soluzione dipendente dal tempo.}%
 \label{subsub:Soluzione dipendente dal tempo}
 Per la dipendenza temporale sfruttiamo la funzione caratteristica $\phi (s)$.
@@ -170,6 +175,14 @@ Parametrizzando con $\eta$ abbiamo le equazioni caratteristiche:
 	\qquad
 	\frac{\text{d} g}{\text{d} \eta} = -\frac{1}{2}D s^2
 .\] 
+Facendo dell'algebra (da fisici) si ha:
+\[
+    \begin{cases}
+	& dt = d\eta  \\
+	& \frac{ds}{ks} = d\eta  \\
+	& \frac{dg}{1 / 2 Ds^2} = - d\eta
+    \end{cases}
+.\] 
 Possiamo risolvere per rimuovere $\eta$:
 \[
     \begin{cases}
@@ -180,12 +193,17 @@ Possiamo risolvere per rimuovere $\eta$:
 Integrando queste equazioni escono fuori delle costanti, ridefinendo tali costanti come funzioni ($u_1,u_2$) saremo in grado di risalire alla $\phi$.\\ 
 Risolviamo la 1:
 \[
-    c_1 = t - \frac{1}{k}\ln (s) \ \implies  \ c'_1 = \exp\left(t- \frac{1}{k}\ln (s) \right) = s e^{-kt}
+    c_1 = t - \frac{1}{k}\ln (s) 
 .\] 
-Quindi definiamo la prima soluzione come $u_1$:
+Visto che $c_1$ è una costante possiamo applicarvi qualsiasi operatore (purché non vi siano presenti le variabili del sistema), quindi:
+\[
+    c_1=-kt + \ln (s) \ \implies \ c_1'' = s e^{-kt}
+.\] 
+Quindi definiamo la prima costante del moto come $u_1$:
 \begin{equation}
     u_1(t,s) = s e^{-kt} \label{eq:cat1}
 \end{equation}
+L'equazione alle derivate parziali che stiamo risolvendo deve mantenere costante nel tempo la $u_1$.\\
 Passiamo alla equazione 2 del sistema, integrando si ottiene:
 \[
     c_2 = \frac{s^2D}{4k} + g 
@@ -198,10 +216,11 @@ Riscrivendo la \ref{eq:cat2} isolando $\phi$ si ha:
 \[
     \phi  = u_2 \exp\left(-\frac{Ds^2}{4k}\right)
 .\]
-Visto che $u_1$ e $u_2$ sono entrambe costanti collegate dalle equazioni caratteristiche sarà vero che:
+Visto che $u_1$ e $u_2$ sono entrambe costanti collegate dalle equazioni caratteristiche sarà sempre possibile esprimere una in funzione dell'altra:
 \[
     u_2 = f(u_1) 
 .\] 
+Dove la $f$ è una funzione generica dettata dalle condizioni al contorno.
 \begin{redbox}{Soluzione dipendente dal tempo per $\phi$}
     \begin{equation}
     \phi =f\left(se^{-kt}\right)\exp\left(-\frac{Ds^2}{4k}\right) 
@@ -211,14 +230,16 @@ Visto che $u_1$ e $u_2$ sono entrambe costanti collegate dalle equazioni caratte
 \noindent
 \subsubsection{Condizioni al contorno}%
 \label{subsub:Condizioni al contorno}
+Prendiamo il caso più semplice, l'oggetto in analisi si trova inizialmente nel punto $x_0$:
 \[
     P(x,0|x_0,0) = \delta (x-x_0) \implies  \phi (s,0) = e^{ix_0s}
 .\] 
 Prendiamo l'equazione \ref{eq:car_phi} ed invertiamola per trovare la $f(s)$ ($t=0$) inserendo anche la condizione iniziale:
-\[
-	f(s) = e^{ix_0s}\exp\left(\frac{Ds^2}{4k}\right)
-.\] 
-Per reinserire il tempo e trovare la soluzione con queste condizioni iniziali basta fare la sostituzione:
+\[\begin{aligned}
+    e^{ix_0s} = f(s e^0) &\exp\left(\frac{-Ds^2}{4k}\right) \ \implies \\
+			 &\implies  \ f(s) = e^{ix_0s}\exp\left(\frac{Ds^2}{4k}\right)
+.\end{aligned}\]
+Per reinserire il tempo e trovare la soluzione con queste condizioni iniziali basta fare la sostituzione (solo in $f(s)$):
 \[
     s \to se^{-kt}
 .\] 
@@ -229,7 +250,7 @@ Per reinserire il tempo e trovare la soluzione con queste condizioni iniziali ba
     \end{equation}
 \end{redbox}
 \noindent
-A questo punto possiamo tornare indietro con una antitrasformata, altrimenti possiamo ricavare i momenti sfruttando le proprietà di $\phi$:
+A questo punto possiamo tornare indietro con una trasformata inversa, altrimenti possiamo ricavare i momenti sfruttando le proprietà di $\phi$:
 \[
     \left<x(t)\right> = \left.i\frac{\partial \phi}{\partial s} \right|_{s=0} = x_0e^{-kt}
 .\] 
