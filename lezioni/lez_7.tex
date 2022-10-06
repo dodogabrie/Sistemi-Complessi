@@ -1,5 +1,204 @@
 \section{Lezione 7}%
 \label{sub:Lezione 7}
+
+\subsection{Integrali stocastici}%
+\label{sub:Integrali stocastici}
+Sia $x$ una variabile stocastica, il differenziale di questa variabile lo definiamo come:
+\begin{equation}
+    dx = d\omega (t) \label{eq:6_int}
+\end{equation}
+Ipotizziamo che il processo stocastico sia un processo di Wiener, in tal caso:
+\[
+    P(d\omega) \sim \exp\left(-\frac{\left(d\omega\right)^2}{dt}\right)
+.\] 
+Con $dt$ differenziale temporale.\\
+Prendiamo allora una funzione $G(s)$, vogliamo definire cosa significa calcolare l'integrale di $G(s)$ se la misura è stocastica.
+\begin{figure}[H]
+    \centering
+    \incfig{lez_6_int}
+    \caption{\scriptsize Funzione $G(t)$ con punti stocastici $\omega_i$, $\Delta\omega_i$ è la distanza sull'asse $y$ tra il punto $\omega_{i-1}$ e $\omega_i$.}
+    \label{fig:lez_6_int}
+\end{figure}
+Definiamo allora l'integrale come:
+\begin{redbox}{Integrale stocastico}
+\[
+    \int_{t_0}^{t_n} G(s) d\omega (s) \equiv \lim^{\text{ms}}_{n \to \infty} \sum_{i}^{} G(\tau_i) \left[\omega (t_i) - \omega (t_{i-1}) \right]
+\]     
+Il valore dell'integrale dipende dalla scelta dei $\tau_i$.
+\end{redbox}
+\noindent
+\'E interessante utilizzare come $G(t)$ il processo di Wiener stesso per vedere cosa succede:
+\[
+    G(t) = \omega (t) 
+.\]
+Inoltre definiamo gli step $\tau_i$ come:
+\[\begin{aligned}
+    \tau_i = t_{i-1} + \alpha (t_i - t_{i-1}) \qquad 0 <\alpha <1 \label{eq:tau}
+.\end{aligned}\]
+Valutiamo la sommatoria all'interno della definizione:
+\[\begin{aligned}
+    \left<S_n\right> =& \sum_{i=0}^{n} \left<\omega (\tau_i)\left[ \omega (t_i) - \omega (t_{i-1})  \right] \right>=\\
+		      & = \sum_{i=0}^{n} \left<\omega (t_{i-1} +\alpha (t_i-t_{i-1}) ) \omega(t_i) \right> + \\
+		  & \qquad \qquad - \left<\omega (t_{i-1} +\alpha (t_i-t_{i-1}) ) \omega(t_{i-1}) \right>
+.\end{aligned}\]
+Ricordando che nei processi di Wiener vale:
+\[
+    \left<\omega (t) \omega (s) \right> = \text{min}(s,t) 
+.\] 
+Rimane soltanto:
+\[\begin{aligned}
+    \left<S_n\right> =& \sum_{i=0}^{n} t_{i-1} + \alpha (t_i-t_{i-1}) -\sum_{i=0}^{n} t_{i-1} = \\
+		      & =\alpha(t_n-t_0) 
+.\end{aligned}\]
+Di conseguenza con la scelta \ref{eq:tau} per i $\tau_i$ contano solo l'istante finale ed iniziale. \\
+Inoltre quando $\alpha =0$ l'integrale si annulla, mentre quando $\alpha =1$ l'integrale è l'intervallo temporale.\\
+La vera domanda da porsi è quale sia il giusto valore di $\alpha$\ldots
+\subsection{Integrale di $\hat{\text{I}}$to e di Stratonovich}%
+\label{sub:Integrale di Ito e di Stratonovich}
+\subsubsection{Integrale di $\hat{\text{I}}$to}%
+\label{subsub:Integrale di Ito}
+$\hat{\text{I}}$to è un matematico Giapponese, integrare con $\hat{\text{I}}$to implica scegliere $\tau_i$ all'inizio dell'intervallo.
+\begin{bluebox}{Integrale di $\hat{\text{I}}$to}
+    \[
+        \alpha  = 0
+    .\] 
+    \[
+	\tau_i = t_{i-1}
+    .\] 
+\end{bluebox}
+\noindent
+Le somme parziali con questo integrale si scrivono come:
+\[
+    S_n = \sum_{i}^{} \omega (t_{i-1}) \left[\omega (t_i) -\omega (t_{i-1}) \right]
+.\]
+L'integrazione di $\hat{\text{I}}$to forma una \texttt{Martingala}.
+\paragraph{Martingala}%
+\label{par:Martingala}
+Dato un set di variabili stocastiche:
+\[
+    \left\{x_i\right\}: E(\left|x_i\right|) < \infty
+.\] 
+\[
+    \left\{x_i\right\} \text{ è marting.} \iff
+    E(x_{n+1}|x_1,\ldots,x_n) = x_n
+.\] 
+Con $E$: valore di aspettazione.\\
+Possiamo notare che il processo di Wiener realizza una martingala perché rispetta questa proprietà.\\
+Il calcolo di $\hat{\text{I}}$to è anche non anticipante:
+\begin{redbox}{Funzione non anticipante}
+    $G(t)$ è non anticipante se è indipendente dall'incremento $\omega (t) - \omega (s) $ $\forall t, s$.
+\end{redbox}
+\noindent
+\begin{exmp}[Esempi di funzioni non anticipanti]
+    Dato un processo di Wiener $\omega (t)$ tutte le seguenti funzioni sono non anticipanti:
+    \begin{itemize}
+	\item $\omega (t) $.
+	\item $\int dt f(\omega (t) ) $.
+	\item $\int d\omega f(\omega (t) ) $.
+    \end{itemize}
+\end{exmp}
+\noindent
+\subsubsection{Integrale di Stratonovich}%
+\label{subsub:Integrale di Stratonovich}
+Stratonovich era un fisico russo, integrare con Stratonovich implica scegliere il centro dell'intervallo.
+\begin{bluebox}{Integrale di Stratonovich}
+    \[
+        \alpha = \frac{1}{2}
+    .\] 
+    \[
+        \tau_i = \frac{1}{2}\left(\tau_{i-1}+ \tau_i\right)
+    .\] 
+\end{bluebox}
+\noindent
+Le somme parziali in questo caso si scrivono come:
+\[
+    S_n = \sum_{i}^{} \omega\left(\frac{t_i + t_{i-1}}{2}\right)\left[\omega (t_i) -\omega (t_{i-1}) \right]
+.\] 
+L'integrale di Stratonovich ha caratteristiche analoghe a quello che si usa normalmente in fisica, infatti si applica bene con funzioni "morbide".
+
+\begin{exmp}[]
+    \[
+	\int_{0}^{t} \omega (t) dt = 
+	\begin{cases}
+	    \dfrac{\omega^2(t)}{2}-\dfrac{\omega^2(0)}{2} = \dfrac{t}{2} & \text{ Strato}\\
+	    \sum_{}^{} \omega_{i-1}\left(\omega_i-\omega_{i-1}\right) = 0 & \text{ }\hat{\text{I}}\text{to}
+	\end{cases}
+    \] 
+\end{exmp}
+\noindent
+
+\subsection{Relazione tra l'incremento stocastico e l'incremento temporale.}%
+\label{sub:Relazione tra l'incremento stocastico e l'incremento temporale.}
+La relazione tra i due differenziali è la seguente:
+\begin{greenbox}{}
+\[
+    \left(d\omega\right)^2\sim dt
+.\] 
+\end{greenbox}
+\noindent
+Questo significa che $d\omega$  è continuo ma non è differenziabile. Abbiamo già accennato alla non differenziabilità dei processi di Wiener, ecco un'altra riprova.\\
+Tutti gli ordini più alti dell'incremento si annullano:
+\[
+    d\omega^{N+2} \sim 0 \qquad \forall N>0
+.\] 
+Più formalmente, consideriamo il seguente integrale:
+\[\begin{aligned}
+    \int\left(d\omega\right)^{2+N}G(t) = \lim^{\text{ms}}_{n \to \infty} \sum_{i=0}^{n} G_{i-1} (\Delta\omega_i)^{2+N} 
+.\end{aligned}\]
+Quello che si può dimostrare è che:
+\[
+  \lim^{\text{ms}}_{n \to \infty} \sum_{i=0}^{n} G_{i-1} (\Delta\omega_i)^{2+N} = 
+  \begin{cases}
+      \int dtG(t) & N=0\\
+      0          & N>0 
+  \end{cases}
+\] 
+Quindi anche che:
+\[
+    \int\left(d\omega\right)^2 G(t) = \int dtG(t) 
+.\] 
+\begin{redbox}{}
+    \begin{equation}
+	d\omega  \sim O(dt^{1 /2}) \label{eq:6_order}
+    \end{equation}
+\end{redbox}
+\noindent
+\subsubsection{Applicazione: Differenziale di una funzione}%
+\label{subsub:Applicazione: Differenziale di una funzione}
+Prendiamo una funzione del tempo e del processo di Wiener: $f\left[\omega,t\right]$. Visto che si ha la \ref{eq:6_order} il differenziale $df$  all'ordine più basso è:
+\begin{bluebox}{Differenziale di una funzione}
+    \[
+	df\left[\omega,t\right] = \left[\frac{\partial d}{\partial t} + \frac{1}{2}\frac{\partial ^2 f}{\partial \omega^2} \right]dt + \frac{\partial f}{\partial \omega} d\omega
+    .\] 
+\end{bluebox}
+\noindent
+Questa struttura per il differenziale di una funzione è profondamente legata alla formula di $\hat{\text{I}}$to.
+\subsection{Formula di $\hat{\text{I}}$to}%
+\label{sub:Formula di ITO}
+Supponiamo di avere una SDE della seguente forma:
+\[
+    dx = a(x,t) dt + b(x,t) d\omega
+.\] 
+La soluzione formale è del seguente tipo:
+\[
+    x(t) = x_0 + \int_{t_0}^{t} a(x,s) ds + \int_{t_0}^{t} b(x,s) d\omega (s)   
+.\] 
+Supponiamo che esista una ed una sola soluzione non anticipante
+\footnote{Le ipotesi per cui vale sono negli appunti}. \\
+Allora se ho una $f(x,t)$ con $x$ soluzione della SDE scrivendone il differenziale all'ordine più basso si ha:
+\begin{redbox}{Formula di $\hat{\text{I}}$to}
+    \[\begin{aligned}
+	df(x,t) = 
+	\left[\frac{\partial f}{\partial t} + 
+	a \frac{\partial f}{\partial x} +
+        \frac{1}{2}b^2 \frac{\partial ^2 f}{\partial x^2} \right] dt +
+	b\frac{\partial f}{\partial x} d\omega 
+    .\end{aligned}\]
+    con $dx = adt + bd\omega$.
+\end{redbox}
+\noindent
+L'utilità della formula è che ci permette di fare cambi di variabili con funzioni dipendenti da una variabile casuale.
+
 \subsection{Integrale di una SDE}%
 \label{sub:Integrale di una SDE}
 Prendiamo una SDE (Stochastical Differential Equation) del seguente tipo:
