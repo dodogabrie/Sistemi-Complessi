@@ -206,10 +206,10 @@ Quindi è dimostrata la relazione \ref{eq:rel_dwdt_start} (proprio per la defini
 \noindent
 \subsubsection{Applicazione: Differenziale di una funzione}%
 \label{subsub:Applicazione: Differenziale di una funzione}
-Prendiamo una funzione del tempo e del processo di Wiener: $f\left[\omega,t\right]$. Visto che si ha la \ref{eq:6_order} il differenziale $df$  all'ordine più basso è:
+Prendiamo una funzione del tempo e del processo di Wiener $f\left[\omega,t\right]$, Visto che vale la \ref{eq:6_order} quando se ne effettua il differenziale i termini di ordine più basso sono i seguenti ($\left(d\omega\right)^2 \sim dt$):
 \begin{bluebox}{Differenziale di una funzione}
     \[
-	df\left[\omega,t\right] = \left[\frac{\partial d}{\partial t} + \frac{1}{2}\frac{\partial ^2 f}{\partial \omega^2} \right]dt + \frac{\partial f}{\partial \omega} d\omega
+	df\left[\omega,t\right] = \left[\frac{\partial f}{\partial t} + \frac{1}{2}\frac{\partial ^2 f}{\partial \omega^2} \right]dt + \frac{\partial f}{\partial \omega} d\omega
     .\] 
 \end{bluebox}
 \noindent
@@ -225,8 +225,8 @@ La soluzione formale è del seguente tipo:
     x(t) = x_0 + \int_{t_0}^{t} a(x,s) ds + \int_{t_0}^{t} b(x,s) d\omega (s)   
 .\] 
 Supponiamo che esista una ed una sola soluzione non anticipante
-\footnote{Le ipotesi per cui vale sono negli appunti}. \\
-Allora se ho una $f(x,t)$ con $x$ soluzione della SDE scrivendone il differenziale all'ordine più basso si ha:
+\footnote{Le ipotesi per cui vale sono negli appunti (saltate a lezione)}. \\
+Data una funzione $f(x,t)$ della soluzione $x$ della SDE, il differenziale di $f(x, t$ all'ordine più basso si esprime tramite la formula di $\hat{\text{I}}$to.
 \begin{redbox}{Formula di $\hat{\text{I}}$to}
     \[\begin{aligned}
 	df(x,t) = 
