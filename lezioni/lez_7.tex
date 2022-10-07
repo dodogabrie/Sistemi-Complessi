@@ -1,6 +1,6 @@
-\section{Lezione 7}%
+\section{Integrali con variabili stocastiche}%
 \label{sub:Lezione 7}
-
+\mylocaltoc
 \subsection{Integrali stocastici}%
 \label{sub:Integrali stocastici}
 Sia $x$ una variabile stocastica, il differenziale di questa variabile lo definiamo come:
@@ -12,21 +12,26 @@ Ipotizziamo che il processo stocastico sia un processo di Wiener, in tal caso:
     P(d\omega) \sim \exp\left(-\frac{\left(d\omega\right)^2}{dt}\right)
 .\] 
 Con $dt$ differenziale temporale.\\
-Prendiamo allora una funzione $G(s)$, vogliamo definire cosa significa calcolare l'integrale di $G(s)$ se la misura è stocastica.
+Prendiamo allora una funzione $G(t)$, vogliamo definire cosa significa calcolare l'integrale di $G(t)$ se la misura è stocastica ($d\omega (t))$.
 \begin{figure}[H]
     \centering
     \incfig{lez_6_int}
     \caption{\scriptsize Funzione $G(t)$ con punti stocastici $\omega_i$, $\Delta\omega_i$ è la distanza sull'asse $y$ tra il punto $\omega_{i-1}$ e $\omega_i$.}
     \label{fig:lez_6_int}
 \end{figure}
-Definiamo allora l'integrale come:
+\noindent
+Definiamo l'integrale di $G(t)$ come mean-square limit:
 \begin{redbox}{Integrale stocastico}
 \[
     \int_{t_0}^{t_n} G(s) d\omega (s) \equiv \lim^{\text{ms}}_{n \to \infty} \sum_{i}^{} G(\tau_i) \left[\omega (t_i) - \omega (t_{i-1}) \right]
-\]     
+\] 
 Il valore dell'integrale dipende dalla scelta dei $\tau_i$.
 \end{redbox}
 \noindent
+Il limite in questione è definito analogamente a quanto definito nella \ref{def:mslim}: sia $I$ il risultato dell'integrale, allora deve valere che:
+\[
+    \lim_{n \to \infty} \left<\left(I -  \sum_{i}^{} G(\tau_i) \left[\omega (t_i) - \omega (t_{i-1}) \right]\right)^2\right> = 0
+.\] 
 \'E interessante utilizzare come $G(t)$ il processo di Wiener stesso per vedere cosa succede:
 \[
     G(t) = \omega (t) 
@@ -50,8 +55,8 @@ Rimane soltanto:
     \left<S_n\right> =& \sum_{i=0}^{n} t_{i-1} + \alpha (t_i-t_{i-1}) -\sum_{i=0}^{n} t_{i-1} = \\
 		      & =\alpha(t_n-t_0) 
 .\end{aligned}\]
-Di conseguenza con la scelta \ref{eq:tau} per i $\tau_i$ contano solo l'istante finale ed iniziale. \\
-Inoltre quando $\alpha =0$ l'integrale si annulla, mentre quando $\alpha =1$ l'integrale è l'intervallo temporale.\\
+Di conseguenza con la scelta \ref{eq:tau} per i $\tau_i$ contano solo l'istante finale ed iniziale. Quindi anche facendo il limite per $\Delta t \to 0$ (quindi $n \to \infty$) il limite dipende sempre da $\alpha$. \\
+Quando $\alpha =0$ l'integrale si annulla, mentre quando $\alpha =1$ l'integrale è l'intervallo temporale.\\
 La vera domanda da porsi è quale sia il giusto valore di $\alpha$\ldots
 \subsection{Integrale di $\hat{\text{I}}$to e di Stratonovich}%
 \label{sub:Integrale di Ito e di Stratonovich}
@@ -127,25 +132,25 @@ L'integrale di Stratonovich ha caratteristiche analoghe a quello che si usa norm
 \end{exmp}
 \noindent
 
-\subsection{Relazione tra l'incremento stocastico e l'incremento temporale.}%
+\subsection{Incremento stocastico e temporale.}%
 \label{sub:Relazione tra l'incremento stocastico e l'incremento temporale.}
-La relazione tra i due differenziali è la seguente:
+Dato $\omega$ processo di Wiener, allora vale la seguente:
 \begin{greenbox}{}
 \[
     \left(d\omega\right)^2\sim dt
 .\] 
 \end{greenbox}
 \noindent
-Questo significa che $d\omega$  è continuo ma non è differenziabile. Abbiamo già accennato alla non differenziabilità dei processi di Wiener, ecco un'altra riprova.\\
+Questo significa che $d\omega$  è continuo ma non è differenziabile, come accennato nella Sezione \ref{sub:Processo di Wiener} per i processi di Wiener.\\
 Tutti gli ordini più alti dell'incremento si annullano:
 \[
     d\omega^{N+2} \sim 0 \qquad \forall N>0
 .\] 
-Più formalmente, consideriamo il seguente integrale:
+Più formalmente, consideriamo il seguente integrale calcolato con il metodo di $\hat{\text{I}}$to:
 \[\begin{aligned}
     \int\left(d\omega\right)^{2+N}G(t) = \lim^{\text{ms}}_{n \to \infty} \sum_{i=0}^{n} G_{i-1} (\Delta\omega_i)^{2+N} 
 .\end{aligned}\]
-Quello che si può dimostrare è che:
+In cui $\Delta\omega_i = \omega_i - \omega_{i-1}$. Dimostriamo che questo integrale vale:
 \[
   \lim^{\text{ms}}_{n \to \infty} \sum_{i=0}^{n} G_{i-1} (\Delta\omega_i)^{2+N} = 
   \begin{cases}
@@ -153,10 +158,46 @@ Quello che si può dimostrare è che:
       0          & N>0 
   \end{cases}
 \] 
-Quindi anche che:
+Partiamo con l'esprimere il risultato per $N = 0$, quindi vogliamo dimostrare che:
+\begin{equation}
+    \int G(t) \left(d\omega\right)^2 = \int G(t) dt
+    \label{eq:rel_dwdt_start}
+\end{equation}
+In termini di $\hat{\text{I}}$to il risultato dell'integrale si esprime come: 
 \[
-    \int\left(d\omega\right)^2 G(t) = \int dtG(t) 
+    \int G(t) dt = \lim_{n \to \infty} \sum_{i = 0}^{n} G_{i-1} \Delta t_i
 .\] 
+Dimostrando la relazione \ref{eq:rel_dwdt_start} si ha la tesi. Per farlo utilizziamo la definizione di limite m-s (la quantità sotto definita $I$ deve tendere a $0$): 
+\[\begin{aligned}
+    I &= \lim_{n \to \infty} \left<\left[G_{i-1} \left(\Delta\omega_i^2 - \Delta t_i\right)\right]^2\right> = \\
+      &= \lim_{n \to \infty} \left<\sum_{i = 0}^{n} G_{i-1}^2\left(\Delta\omega_i^2-\Delta t_i\right)^2\right> +  \\
+      & \quad + 2 \sum_{i > j}^{n} \left<G_{i-1}G{j-1} \left(\Delta\omega^2_j-\Delta t_j\right)\left(\Delta\omega_i^2 - \Delta t_i\right)\right>
+.\end{aligned}\]
+I due termini all'interno della prima sommatoria (su $i = 0 \to \infty$) sono indipendenti perché il processo è non anticipante, lo stesso vale per la seconda sommatoria con il termine $\left(\Delta\omega^2_i - \Delta t_i\right)$ e tutti i restanti a moltiplicare. Di conseguenza si possono mediare separatamente i termini indipendenti.\\
+Esplicitiamo la relazione $\left<\left(\Delta\omega_i^2 - \Delta  t_i\right)^2\right>$ ricordando la eq. \ref{eq:var_wiener}:
+\begin{equation}
+    \left<\Delta\omega_i^2\right> = \Delta t_i
+    \label{eq:rem_wiener}
+\end{equation}
+Ed anche la eq. \ref{eq:cum4_gauss}:
+\[
+\left<\Delta\omega^4_i\right> = 2\left(\sigma^2\right)^2 = 3 \Delta t_i^2
+.\] 
+Possiamo esplicitare i vari termini nel seguente modo:
+\[\begin{aligned}
+    \left<\left(\Delta\omega_i^2 -\Delta t_i\right)^2\right> &= \left<\Delta\omega_i^4\right> - 2\Delta t_i\left< \Delta\omega_i^2\right> + \Delta t_i^2 = \\
+    &=3\Delta t_i^2 - 2\Delta t_i^2 + \Delta t_i^2 = 2 \Delta t^2_i
+.\end{aligned}\]
+I termini della seconda sommatoria sono tutti nulli perché:
+\[
+    \left<\left(\Delta\omega_i^2-\Delta t_i\right)\right> = \Delta t_i - \Delta t_i = 0 
+.\] 
+Per via della eq. \ref{eq:rem_wiener}. In conclusione il limite vale:
+\[
+    \lim_{n \to \infty} 2\sum_{i = 0}^{n} \left<G_{i-1}^2\right> \Delta t_i^2 = 0
+.\] 
+Perché $\Delta t_i^2$ tende a $0$ con $n\to\infty$.\\
+Quindi è dimostrata la relazione \ref{eq:rel_dwdt_start} (proprio per la definizione di limite m-s) e di conseguenza si ha l'andamento atteso:
 \begin{redbox}{}
     \begin{equation}
 	d\omega  \sim O(dt^{1 /2}) \label{eq:6_order}
