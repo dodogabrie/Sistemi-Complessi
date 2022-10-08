@@ -1,4 +1,4 @@
-\section{Integrali con variabili stocastiche}%
+\section{Introduzione agli Integrali stocastici}%
 \label{sub:Lezione 7}
 \mylocaltoc
 \subsection{Integrali stocastici}%
@@ -37,9 +37,9 @@ Il limite in questione è definito analogamente a quanto definito nella \ref{def
     G(t) = \omega (t) 
 .\]
 Inoltre definiamo gli step $\tau_i$ come:
-\[\begin{aligned}
+\begin{equation}
     \tau_i = t_{i-1} + \alpha (t_i - t_{i-1}) \qquad 0 <\alpha <1 \label{eq:tau}
-.\end{aligned}\]
+.\end{equation}
 Valutiamo la sommatoria all'interno della definizione:
 \[\begin{aligned}
     \left<S_n\right> =& \sum_{i=0}^{n} \left<\omega (\tau_i)\left[ \omega (t_i) - \omega (t_{i-1})  \right] \right>=\\
@@ -243,9 +243,10 @@ L'utilità della formula è che ci permette di fare cambi di variabili con funzi
 \subsection{Integrale di una SDE}%
 \label{sub:Integrale di una SDE}
 Prendiamo una SDE (Stochastical Differential Equation) del seguente tipo:
-\[
+\begin{equation}
     dx = f(x) dt + g(x) d\omega
-.\] 
+    \label{eq:sde}
+\end{equation}
 Con $\omega$ processo di Wiener. \\
 Nell'equazione abbiamo una parte deterministica ($f(x) dt$) ed una stocastica ($g(x)d\omega$).
 \begin{figure}[H]
@@ -268,19 +269,19 @@ Se prendiamo un passo di integrazione $h$ piccolo, possiamo sviluppare $f$ e $g$
     g(x_s)   &= g_0 + g'_0\delta x_s + \frac{1}{2}g''_0(\delta x_s) ^2 
 .\end{aligned}\]
 Con $\delta x_s = x_s-x_0$. Sostituendo nella equazione per la soluzione formale e tenendo solo l'ordine più basso si ha:
-\[
+\begin{equation}
     \delta x_h = \int_{0}^{h} f_0ds + \int_{0}^{h} g_0d\omega  = f_0h + g_0  \int_{0}^{h} d\omega 
-.\] 
-Al secondo termine abbiamo un integrale stocastico. Questo indica che, operativamente, per effettuare una integrazione numerica e calcolare il punto successivo $x_{n+1}$ si deve:
-\begin{itemize}
-    \item Valutare la $f$ nel punto $x_n$.
-    \item Valutare la $g$ nel punto $x_n$ (la $g$ di per se è solo una funzione, se la variabile è deterministica anche la $g$ da un risultato deterministico).
-    \item Ipotizzare una distribuzione per $\omega$.
-    \item Estrarre ogni volta un valore $Z_n$ secondo tale distribuzione
+    \label{eq:int_stocastico_init}
+\end{equation}
+Al secondo termine della eq. \ref{eq:int_stocastico_init} vi è un integrale stocastico che, nel caso di un processo di Wiener, può essere valutato numericamente in modo semplice.
+\paragraph{Soluzione numerica di integrale stocastico per processo di Wiener}
+Data una SDE come in equazione \ref{eq:sde} con $d\omega$ processo di Wiener la soluzione del corrispettivo integrale può essere espressa (secondo lo sviluppo perturbativo di cui sopra) sotto forma di sequenza $\left\{x_n\right\}$ valutata tramite una procedura algoritmica. Noto l'elemento $x_n$ i passaggi per il calcolo del suo successivo $x_{n+1}$ sono i seguenti:
+\begin{enumerate}
+    \item Valutare la $f$ e la $g$ nel punto $x_n$.
+    \item Estrarre un valore $z$ secondo la distribuzione del processo $\int d\omega$.
     \footnote{caratterizzeremo meglio tale distribuzione sotto}
-     facendo in modo che, alla fine del processo, i valori siano distribuiti secondo la distribuzione di $\omega$.
-    \item $x_{n+1} = f(x_n)h + g(x_n) Z_n$ 
-\end{itemize}
+    \item Mettere tutto insieme nel calcolo dello step $n+1$: $x_{n+1} = f(x_n)h + g(x_n) z$ 
+\end{enumerate}
 Il procedimento funziona perché l'integrale:
 \[
     \int_{0}^{h} d\omega 
@@ -299,7 +300,7 @@ Poiché il processo di Wiener ha media nulla.
 			   &=\left<\sum_{i}^{} \left(\omega_i-\omega_{i-1}\right) \sum_{J}^{} \left(\omega_J-\omega_{J-1}\right)\right> = \\
 			   &= \sum_{i}^{} \sum_{J}^{} \Delta t\delta_{iJ} = h
 .\end{aligned}\]
-Dove per risolvere si è usato che:
+Dove per risolvere si è usato che se $i \neq j$ i due incrementi sono indipendenti, quindi la media del loro prodotto è nulla. Inoltre si è usata l'uguaglianza dimostrata per i processi di Wiener:
 \[
     \left<\Delta\omega^2\right> = \Delta t
 .\] 
@@ -315,14 +316,15 @@ Ed ottenere la variabile da moltiplicare a $g_0$ con:
 \[
     Z_1(h) = \sqrt{h} Y_1(i) 
 .\] 
-In conclusione si ha che:
-\begin{redbox}{}
-\[
-    \delta x_h = f_0 h + g_0Z_1(h) 
-.\]     
-\end{redbox}
-\noindent
-Guardando l'espressione notiamo che il primo termine è di ordine $h$ mentre il secondo è di ordine $\sqrt{h}$  poiché è un processo di Wiener. \\
+Da questa distribuzione è possibile estrarre il valore stocastico $z$ per il procedimento algoritmico.
+\paragraph{Correzione di $\hat{\text{I}}$to o Stratonovich}%
+\label{par:Correzione di ito o Stratonovich}
+L'equazione risultante per l'incremento $\delta x_h$ è:
+\begin{equation}
+\delta x_h = f_0 h + g_0Z_1(h) 
+\label{eq:deltax_error}
+\end{equation}
+Nell'equazione \ref{eq:deltax_error} il primo termine a destra dell'uguale è di ordine $h$ mentre il secondo è di ordine $\sqrt{h}$ (poiché si parla di processo di Wiener). \\
 Risulta quindi necessario capire se ci siamo persi dei termini di ordine $h$  nella parte di sviluppo stocastico.\\
 Possiamo prendere la soluzione perturbativa al primo ordine e inserirla nuovamente all'interno dello sviluppo.\\
 Ci limitiamo inoltre ad inserire solo il termine all'ordine più basso ($g_0Z_1(h)$) poiché il termine con $f_0$  darebbe sicuramente contributi di ordine superiore.
@@ -330,14 +332,16 @@ Ci limitiamo inoltre ad inserire solo il termine all'ordine più basso ($g_0Z_1(
     \delta x_s^{(1 /2)} = g_0Z_1(h) = g_0  \int_{0}^{h} d\omega 
 .\] 
 \[\begin{aligned}
-    \delta x_t = &\int_{0}^{t} \left(f_0 + f'_0 g_0\int_{0}^{s}d\omega_r  \right) ds + \\
-		 & + \int_{0}^{h} \left(g_0+ g'_0 g_0 \int_{0}^{s} d\omega_r\right)d\omega_s  
+    \delta x_t =& \int_0^t \left(f_0 + f_0' \delta x_s^{1 / 2}\right)ds + \int_0^t \left(g_0 + g_0' \delta x_s^{1 / 2}\right)d\omega_s = \\
+    =& \int_{0}^{t} \left(f_0 + f'_0 g_0\int_{0}^{s}d\omega_r  \right) ds + \\
+		 & + \int_{0}^{t} \left(g_0+ g'_0 g_0 \int_{0}^{s} d\omega_r\right)d\omega_s  \sim \\
+    \sim & \left(O(t) + O(t^{3 / 2}) \right) + \left(O(t^{1 / 2}) + O(t)\right)
 .\end{aligned}\]
-L'unico contributo di ordine $h$  deriva dal secondo integrale, che ci da un termine del tipo:
+L'unico nuovo contributo di ordine $t$ deriva dall'ultimo termine dell'integrale stocastico, tale termine è del tipo:
 \[
-    \int_{0}^{t} \int_{0}^{s} d\omega_r d\omega_s = \int_{0}^{t} \omega_sd\omega_s 
+    \int_{0}^{t} \left(\int_{0}^{s} d\omega_r\right) d\omega_s = \int_{0}^{t} \omega_sd\omega_s 
 .\] 
-Quindi adesso dobbiamo decidere quale calcolo utilizzare: $\hat{\text{I}}$to oppure Stratonovich. 
+Ne risulta che, all'ordine $t$, il calcolo dell'integrale dipende dalla scelta del parametro di discretizzazione $\tau$ ovvero dal calcolo di $\hat{\text{I}}$to o Stratonovich. 
 \begin{bluebox}{}
     L'evoluzione dell'equazione differenziale stocastica dipende dalla scelta del metodo di integrazione.
 \end{bluebox}
@@ -350,12 +354,13 @@ Quindi adesso dobbiamo decidere quale calcolo utilizzare: $\hat{\text{I}}$to opp
 \] 
 In entrambi i casi si ottiene un termine $O(h)$, quindi:
 \begin{redbox}{}
- \[
+    \begin{equation}
     \delta x_h = 
     g_0Z_1(h) +
     f_0h + 
     \frac{g_0g'_0}{2}\cdot \alpha (\hat{\text{I}}, S) 
-\] 
+    \label{eq:int_stocastico_fin}
+    \end{equation}
 Con $\alpha (\hat{\text{I}}, S)$ data da:
 \[
     \alpha (\hat{\text{I}}, S) = 
@@ -368,20 +373,27 @@ Con $\alpha (\hat{\text{I}}, S)$ data da:
 \noindent
 \subsubsection{Uguaglianza tra i due metodi}%
 \label{subsub:Uguaglianza tra i due metodi}
-Effettuando il seguente cambio di variabili:
+L'equazione \ref{eq:int_stocastico_fin} descrive un integratore di ordine più basso possibile, tuttavia di fronte a casi di studio reali c'è spesso la necessità di utilizzare metodi di integrazione di ordine più elevato. Se il processo fisico in analisi segue il calcolo di Stratonovich allora si possono utilizzare tutti gli algoritmi noti (per esempio i Runge-Kutta), se il processo va trattato con $\hat{\text{I}}$to in linea di principio questo non è possibile.\\
+Ci viene in aiuto il seguente cambio di variabili:
 \[
-    dx = \left(f-\frac{1}{2}gg'\right)dt + gd\omega
+    dx = \left(f-\frac{1}{2}gg'\right)dt + gd\omega \equiv \tilde{f} dt + g d\omega
 .\] 
-si ha che i due $\delta x_h$ ($\hat{\text{I}}$to e Stratonovich) si eguagliano poiché il termine aggiunto va a compensare il termine che subentra con l'integrale di $\hat{\text{I}}$to.\\
-L'importanza di questo "cambio di variabili" è che ci autorizza ad utilizzare l'approccio di Stratonovich anche per sistemi che fisicamente andrebbero trattati con $\hat{\text{I}}$to
-\footnote{Stratonovich permette algoritmi di integrazione più potenti.}.
+in questo modo si ha che i due $\delta x_h$ ($\hat{\text{I}}$to e Stratonovich) si eguagliano poiché il termine aggiunto va a compensare il termine che subentra con l'integrale di $\hat{\text{I}}$to. Di conseguenza la formula per l'incremento si modifica nel seguente modo:
+\[
+    \delta x_h = 
+    g_0Z_1(h) +
+    \tilde{f}_0h + 
+    \frac{g_0g'_0}{2}\cdot Z_1^2(h)
+\]
+L'importanza di questo "cambio di variabili" è che ci autorizza ad utilizzare l'approccio di Stratonovich anche per sistemi che fisicamente andrebbero trattati con $\hat{\text{I}}$to. \\
 \subsection{Algoritmo di Heun}%
 \label{sub:Algoritmo di Heun}
-Operativamente (per davvero) si usa spesso l'algoritmo di Heun per l'integrazione di SDE: si tratta di un algoritmo a 3 step:
+L'algoritmo di Heun è spesso utilizzato per integrare le SDE, si tratta di un algoritmo a 3 step:
 \[\begin{aligned}
     & \tilde{x}_1 = x_0 + Z_1g_0 + f_0 h  + \frac{1}{2}g_0g'_0 Z_1^2\\
     & x_1 = x_0 + Z_1 g(\tilde{x}_0) + f(\tilde{x}_0)  + \frac{1}{2}g(\tilde{x}_0) g'(\tilde{x}_0) Z_1^2\\
     & x_h = \frac{1}{2}\left(x_1+ \tilde{x}_1\right)
 .\end{aligned}\]
-Sostanzialmente equivale a fare un primo step di predizione ed un successivo step di correzione.
+Dove la $Z_1$ viene calcolata una sola volta per i tre step descritti sopra (una unica estrazione).\\
+L'algoritmo di Heun corrisponde a fare un primo step di predizione ed un successivo step di correzione.
 \clearpage

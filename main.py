@@ -9,7 +9,8 @@ dict_names = {1: "1_markov_master",
               3: "3_func_caratt_mom_fatt",
               4: "4_markov_def",
               5: "5_markov_ex",
-              6: "6_Rand_Walk"}
+              6: "6_Rand_Walk",
+              7: "7_Integr_stoca"}
 
 def create_aux_tex(n):
     # Read in the file
