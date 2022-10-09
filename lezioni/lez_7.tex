@@ -119,9 +119,7 @@ Le somme parziali in questo caso si scrivono come:
 \[
     S_n = \sum_{i}^{} \omega\left(\frac{t_i + t_{i-1}}{2}\right)\left[\omega (t_i) -\omega (t_{i-1}) \right]
 .\] 
-L'integrale di Stratonovich ha caratteristiche analoghe a quello che si usa normalmente in fisica, infatti si applica bene con funzioni "morbide".
-
-\begin{exmp}[]
+\begin{exmp}[Esempio di integrale di Stratonovich]
     \[
 	\int_{0}^{t} \omega (t) dt = 
 	\begin{cases}
@@ -131,6 +129,14 @@ L'integrale di Stratonovich ha caratteristiche analoghe a quello che si usa norm
     \] 
 \end{exmp}
 \noindent
+L'integrale di Stratonovich ha caratteristiche analoghe a quello che si usa normalmente in fisica, infatti si applica bene con funzioni "morbide".
+\paragraph{Quando si sceglie $\hat{\mbox{I}}$to e quando Stratonovich}
+L'integrale di Stratonovich è anticipante, questo deriva dall'aver scelto $\alpha  = \frac{1}{2}$. \\
+Un integrale anticipante dipende dall'incremento $\Delta\omega$, il nome (anticipante) deriva proprio dal fatto che è necessario conoscere il "futuro del processo" per applicare questo integrale. \\
+Questa caratteristica rende l'integrale di Stratonovich inadatto a modellizzare i processi di Wiener poiché per tali processi l'incremento non può essere in alcun modo noto in anticipo (poiché puramente stocastico), quindi per i processi di Wiener si usa l'integrale di $\hat{\mbox{I}}$to.\\
+Stratonovich risulta adatto a tutti i processi in cui è presente una inerzia, in tal caso è possibile stimare l'incremento e quindi utilizzare un integrale anticipante.
+
+
 
 \subsection{Incremento stocastico e temporale.}%
 \label{sub:Relazione tra l'incremento stocastico e l'incremento temporale.}
