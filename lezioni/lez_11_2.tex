@@ -1,13 +1,17 @@
-\section*{Parte 2}%
-\label{sub:Parte 2}
-\subsection{Tempo di primo passaggio o MFPT}%
+\section{Tempo di primo passaggio}%
+\mylocaltoc
+\subsection{Introduzione al MFPT}%
 \label{sub:Tempo di primo passaggio o MFPT}
 Ipotizziamo di avere un fenomeno stocastico e di osservarne l'andamento temporale. Possiamo ipotizzare anche che questo fenomeno presenti dei picchi randomici in maniera irregolare. \\
-In questa lezione cerchiamo un metodo analitico per esprimere l'intervallo temporale medio tra due eventi di questo tipo, anche detto tempo di primo passaggio.\\
-Operativamente dobbiamo:
+\begin{redbox}{Tempo di primo passaggio}
+    Dato un fenomeno stocastico che presenta delle anomalie ricorrenti nel tempo si definisce tempo di primo passaggio \textbf{MFPT} l'intervallo temporale medio che intercorre tra le anomalie.
+\end{redbox}
+\noindent
+L'analisi di tale quantità ha molta importanza in vari campi di ricerca, ad esempio l'analisi sismica, l'analisi delle forti piogge e la dinamica neuronale.\\
+Per calcolare il MFPT è necessario:
 \begin{itemize}
     \item Creare un modello del fenomeno in termini stocastici.
-    \item Derivare una qualche quantità dal modello che ci permetta di calcolare il tempo medio tra gli eventi.
+    \item Derivare una qualche quantità del modello che ci permetta di calcolare il tempo medio tra gli eventi.
 \end{itemize}
 Ad esempio possiamo avere una certa distribuzione iniziale di oggetti (o camminatori):
 \input{lezioni/tikz/lez_11_MFTP_base.tex}
@@ -39,7 +43,7 @@ Poiché se al tempo $t$  il camminatore sta ancora dentro l'intervallo allora si
 Cerchiamo l'equazione differenziale alla quale soddisfa l'oggetto del moto. \\
 Il problema è che l'equazione di FP che abbiamo visto per ora ci dice come evolve il propagatore, quindi in questo caso coinvolge la variabile $x'$. 
 Noi vorremmo invece lasciar libera la variabile di integrazione $x'$ e far agire la FK su $x$. \\
-Ci viene in aiuto allora la \texttt{Backward Fokker Plank}, si riesce ad ottenere una equazione per la quantità $P\left(x,t|y,t'\right)$. Si riporta adesso l'equazione completa (sul Gardiner si trova tutto il Ballino di conti):
+Ci viene in aiuto allora la \texttt{Backward Fokker Plank}, si riesce ad ottenere una equazione per la quantità $P\left(x,t|y,t'\right)$. Si riporta adesso l'equazione completa (sul Gardiner si trova il conto completo):
 \begin{redbox}{Backward FK}
 \[\begin{aligned}
      \partial_{t'}&P\left(x,t|y,t'\right) = \\

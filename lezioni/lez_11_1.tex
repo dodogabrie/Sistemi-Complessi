@@ -1,22 +1,20 @@
-\section{Lezione 11}%
+\section{Metodi analitici per la soluzione di FK}%
 \label{sub:Lezione 11-1}
-\section*{Parte 1}%
-\label{sub:Parte 1}
-
-\subsection{Equazione di Fokker-Plank: soluzione analitica.}%
+\mylocaltoc
+\subsection{Equazione FP in forma conservativa.}%
 \label{sub:Equazione di Fokker-Plank: soluzione analitica.}
-Questa lezione è una lunga nota storica su come facevano i nostri antenati a risolvere l'equazione di FK negli anni 80-90 con le mani. L'utilità sta nel fatto che ci da gli strumenti per affrontare la prossima lezione che è invece concettualmente molto interessante.\\
-Abbiamo visto nella Lezione \ref{sub:Lezione 4} la forma differenziale di Chapman-Kolmogorov (equazione \ref{eq:4_CK}). La parte di tale equazione che conteneva termini di derivate prime e seconde (quindi quella riguardante la parte continua del processo) è nota come 
+Abbiamo visto nella Sezione \ref{sub:Lezione 4} la forma differenziale di Chapman-Kolmogorov (equazione \ref{eq:4_CK}). La parte di tale equazione che conteneva termini di derivate prime e seconde (la parte continua del processo) è nota come:
 \begin{redbox}{Equazione di Fokker-Plank.}
-   \[\begin{aligned}
+   \begin{align}
        \partial_{t}P(\vect{x}, t) = &
-      				      -\partial_{x_i}A_i(\vect{x}, t) P(\vect{x}, t) + \\
+      				      -\partial_{x_i}A_i(\vect{x}, t) P(\vect{x}, t) + \nonumber \\
 				    & + \frac{1}{2}\partial_{x_i}\partial_{x_J}B_{iJ}(\vect{x},t) P(\vect{x},t) 
-   .\end{aligned}\]	 
+				    \label{eq:FK_general}
+   .\end{align}
 \end{redbox}
 \noindent
-In qui il termine $B_{iJ}$ ricordiamo essere il termine di diffusione.\\
-Modernamente questa equazione viene risolta numericamente per quasi tutti i casi "interessanti". Tuttavia ci sono alcune situazioni in cui si riesce a risolvere analiticamente, concentriamo questa lezione su quelle.\\
+Il termine $B_{iJ}$ rappresenta la diffusione del processo.
+\paragraph{Corrente di probabilità e forma conservativa}
 Definiamo una corrente $\vect{J}$:
 \[
     J_i = \left(A_i - \frac{1}{2}\partial_{x_J}B_{iJ}\right)P(\vect{x},t) 
@@ -35,7 +33,7 @@ Dove $\partial V$ è il bordo del volume $V$ (e l'ultima espressione dopo l'ugua
 \end{greenbox}
 \noindent
 Quindi la soluzione di questa equazione alle derivate parziali dipende fortemente dall'andamento della corrente lungo la superficie di $V$.
-\subsection{Condizioni al bordo per la soluzione della FK.}%
+\subsection{Condizioni al bordo per la FK.}%
 \label{sub:Condizioni al bordo per la soluzione della FK.}
 \paragraph{Condizioni al bordo riflettenti.}%
 Questo è il caso in cui la corrente di probabilità rispetta la seguente:
@@ -82,8 +80,12 @@ In questo caso possono esistere delle situazioni ancor più esoteriche in cui ol
     .\] 
 \end{exmp}
 \noindent
-\subsection{Distribuzione di equilibrio del processo}%
+\subsection{Distribuzione di equilibrio}%
 \label{sub:Distribuzione di equilibrio del processo}
+La distribuzione di equilibrio è data dalla soluzione stazionaria dell'equazione di Fokker-Plank:
+\[
+    \partial_t P = 0 \ \implies  \ \nabla J = 0
+.\] 
 Riscriviamo la corrente esplicitando la derivata $\partial_{x_J}$:
 \begin{equation}
     J_i = \left[A_i-\frac{1}{2}\left(\partial_{x_J}B_{iJ}\right)\right]P - \frac{1}{2} B_{iJ}\partial_{x_J}P
@@ -95,67 +97,63 @@ Cerchiamo una distribuzione di equilibrio con le seguenti ipotesi:
     \item All'infinito la distribuzione di probabilità si annulla.
     \item $B_{iJ}$ invertibile.
 \end{itemize}
-Vogliamo allora capire con queste supposizioni quanto vale $\partial_{x_J}P$.
-Si procede invertendo l'espressione \ref{11_J}:
-\[
-    \partial_{x_J}P = 2B^{-1}_{iJ}\left[A_i-\frac{1}{2}\partial_{x_k}B_{ik}\right]P
-.\] 
-Quindi portando a sinistra la $P$ si ha anche:
-\[
-    \frac{\partial }{\partial x_J} \ln (P) = 2B_{iJ}^{-1}\left[A_i-\partial_{x_k}B_{ik}\right]
-.\] 
-Quindi abbiamo a sinistra un gradiente, come conseguenza anche la quantità a destra deve essere un gradiente.
-Per le proprietà del gradiente deve essere vero che:
-\[
-    \text{rot}(\nabla f)  = 0 \quad \forall f
-.\] 
-Quindi:
+Si effettuano alcuni passaggi algebrici nella \ref{eq:11_J} per isolare la $P$:
+\begin{align}
+    &\partial_{x_J}P \equiv \nabla_J P = 2B^{-1}_{iJ}\left[A_i-\frac{1}{2}\partial_{x_k}B_{ik}\right]P \label{eq:P_staz}\\
+    &\implies
+    \nabla_{J} (\ln (P)) = 2B_{iJ}^{-1}\left[A_i-\partial_{x_k}B_{ik}\right] \equiv Z_J[A, B, \vect{x}]
+    \nonumber
+.\end{align}
+In cui si è definito il vettore $\vect{Z}$ le cui componenti sono così definite:
 \[
     Z_J\left[A,B, \vect{x}\right] \equiv 2B_{iJ}^{-1}\left[A_i - \partial_{x_k}B_{ik}\right]
 .\] 
+Si applica il rotore a destra e sinistra ricordando che:
+\[
+    \text{rot}(\nabla f)  = 0 \quad \forall f \implies 
+    0 = \mbox{rot}\left[\nabla (\ln (P))\right]  = \text{rot}(\vect{Z})
+\]
+Il rotore nullo di $\vect{Z}$ impone delle condizioni sulle derivate di tale quantità:
 \begin{equation}
-    \text{rot}(Z_J) = 0
+    \text{rot}(\vect{Z}) = 0 \implies  
+     \frac{\partial }{\partial x_i} Z_J = \frac{\partial }{\partial x_J} Z_i  
     \label{eq:11_rot}
 \end{equation}
-Di fatto questa condizione si traduce in:
-\[
-  \frac{\partial }{\partial x_i} Z_J = \frac{\partial }{\partial x_J} Z_i  
-.\] 
-Se vale questa condizione possiamo allora integrare lungo una curva generica, si ottiene che:
-\[
-    P_{st}(\vect{x}) = \exp\left(\int\limits^{x} d\vect{s}\vect{Z}\left[A,B, \vect{s}\right]\right)
-\] 
-In cui si definisce 
-\begin{redbox}{Forma potenziale}
+Se vale questa condizione possiamo allora integrare l'equazione per $\nabla (\ln (P))$ lungo una curva generica:
+\[\begin{aligned}
+    &\nabla (\ln (P_{st})) = \vect{Z} \\
+    & \implies  P_{st}(\vect{x}) = \exp\left(\int\limits^{x} d\vect{s}\vect{Z}\left[A,B, \vect{s}\right]\right)
+.\end{aligned}\]
+\begin{redbox}{Soluzione stazionaria: forma potenziale}
     \begin{equation}
-	P(\vect{x})  = \exp (-\phi (\vect{x})) 
+	P_{st}(\vect{x})  = \exp (-\phi (\vect{x})) 
 	\label{eq:11_forma_pot}
     \end{equation}
-    con 
      \[
-	\phi (\vect{x}) = - \int\limits^{x} d\vect{s}\vect{Z} 
+	\phi (\vect{x}) \equiv - \int\limits^{x} d\vect{s}\vect{Z} 
     .\] 
 \end{redbox}
 \noindent
-Tutto questo metodo funziona se si verifica il fatto che $\text{rot}(\vect{Z}) = 0$. Nei casi in cui questa condizione non si avvera non è possibile integrare l'equazione ed ottenere il risultato stazionario \ref{eq:11_forma_pot}.
+Il metodo descritto in questa sezione non è generale poiché non è sempre possibile esprimere $\text{rot}(\vect{Z}) = 0$.
 \begin{exmp}[Processo di Wiener]
     \[
 	dx = f(x) dt + Bd\omega
     .\] 
-    La FK si scrive come:
+    I passaggi per arrivare alla soluzione stazionaria sono semplici:
+    \[\begin{aligned}
+	&\partial_{t}P = \left(- \partial_{x}f + \frac{1}{2} B^2\partial^2_{x^2}\right)P = \partial_x \left[\left(-f + \frac{1}{2}B^2\partial_x\right)P\right] \\
+	&\implies J = 0 = - f P + \frac{1}{2}B^2\partial_x P \implies  \partial_x (\ln (P) ) = \frac{2f}{B^2}
+    .\end{aligned}\]
+
     \[
-        \partial_{t}P = \left(- \partial_{x}f + \frac{1}{2} B^2\partial^2_{x^2}\right)P; \qquad
-	Z = \frac{2f}{B^2}
-    .\] 
-    Con $Z$  valutato come sopra (tramite la corrente stazionaria). Quindi si ha che:
-    \[
+	Z = \frac{2f}{B^2} \implies
 	P_{st}\sim \exp\left(\int\limits^{x} \frac{2f}{B^2}dx \right) 
     .\] 
     \begin{greenbox}{}
         I processi di Wiener hanno una distribuzione di equilibrio.
     \end{greenbox}
     \noindent
-    Ovviamente è necessario avere una $f$ che si comporti bene asintoticamente (se ho $f=x$ rompo il metodo).
+    Il comportamento asintotico della $f$ decreta la bontà della soluzione stazionaria (prendere $f = x$ non va bene).
 \end{exmp}
 \noindent
 
@@ -362,7 +360,7 @@ Sfruttando il fatto che la $\delta$ è pari e che la $\delta$ di una quantità v
     .\end{aligned}\]
 \end{redbox}
 \noindent
-La prima comporta che $P_s$ dovrà essere una potenza pari delle $v$ poiché queste ultime cambiano di segno quando si applica $\epsilon$.
+La prima comporta che la variabile $v$ all'interno della $P_s$ dovrà comparire solo con potenze pari poiché $v$ cambia il suo segno quando si applica $\epsilon$.
 \subsubsection{Conseguenze del bilancio dettagliato applicato ad una Chapman-Kolmogorov}%
 \label{subsub:Conseguenze del bilancio dettagliato applicato ad una Chapman-Kolmogorov}
 Si può dimostrare che (libro di Van Kampen) il bilancio dettagliato permette di descrivere la struttura generale dei vari termini della equazione di CK (equazione \ref{eq:4_CK}), le seguenti formule sono pura referenza ma ne faremo uso\ldots
@@ -396,8 +394,8 @@ Infatti se la $D^{\text{irr}}_i\neq 0$ allora il sistema non presenta il bilanci
    L'equazione di FK che ne emerge è la seguente:
    \[\begin{aligned}
        &\partial_{t}P =\\
-       &=-\partial_{x}v + \frac{1}{m}\partial_{v}\left[\left(V'(x) + \gamma v\right)P\right] + 
-		      +\frac{\gamma k_b T}{m^2}\partial^2_{v^2}P
+       &=-\partial_{x}v + \frac{1}{m}\partial_{v}\left[\left(V'(x) + \gamma v\right)P\right] +\\
+       &  \ +\frac{\gamma k_b T}{m^2}\partial^2_{v^2}P
    .\end{aligned}\]
    Quindi abbiamo che:
    \[
@@ -457,9 +455,9 @@ Nell'esempio precedente si è legato il termine di dissipazione al termine stoca
 .\] 
 Notiamo infatti che $\gamma$ compare sia nel termine per $dt$ che in quello per $d\omega$.\\
 Il motivo per il quale lo abbiamo fatto è dovuto ad un importante teorema.
-\subsection{Relazione di Onsager e Teorema di Fluttuazione Dissipazione.}%
+\subsection{Teorema di Fluttuazione Dissipazione.}%
 \label{sub:Relazione di Onsager e Teorema di Fluttuazione Dissipazione.}
-Prendiamo un processo di OU nel quale all'interno della FK il termine $A$ è lineare ed il termine $B$ è costante
+Prendiamo un processo di OU nel quale all'interno della FK (di equazione \ref{eq:FK_general}) il termine $A$ è lineare ed il termine $B$ è costante
 \[
     A_i(x) = A_{iJ}x_J \qquad
     B_{iJ}(x) = B_{iJ}
@@ -478,7 +476,9 @@ Allora è sempre vero che:
 \[
     P_s = N \exp\left(-\frac{1}{2}x^tD^{-1}x\right)
 .\] 
-Con $D^{-1}$ simmetrica.\\
+Con $D^{-1}$ simmetrica.
+\paragraph{Relazioni di Onsager}%
+\label{par:Relazioni di Onsager}
 Se vale il principio del bilancio dettagliato allora esistono delle relazioni che legano la matrice $D^{-1}$ (che contiene l'equivalente della temperatura del sistema) ai vettori $A$:
 \begin{equation}
 \begin{aligned}
@@ -488,7 +488,6 @@ Se vale il principio del bilancio dettagliato allora esistono delle relazioni ch
     & B = -\left(AD + DA^t\right) \label{eq:11_B1}
 .\end{aligned}
 \end{equation}
-Per arrivare a queste conclusioni si è saltata una paccata di algebra noiosa.
 \begin{exmp}[Circuito RLC]
     Prendiamo il seguente circuito
     \input{lezioni/tikz/lez_11_RLC.tex}
@@ -594,9 +593,8 @@ Per arrivare a queste conclusioni si è saltata una paccata di algebra noiosa.
     Allora l'intensità del processo stocastico vale $\sim \sqrt{2k_BT \gamma}$ (con normalizzazioni opportune)
 \end{redbox}
 \noindent
-\subsection{Fokker-Plank dipendente dal tempo}%
+\subsection{FP come problema agli autovalori}%
 \label{sub:Fokker-Plank dipendente dal tempo}
-L'argomento di questa sezione è un pò fumoso, operativamente si capirà meglio il significato con degli esempi pratici\ldots\\
 Riprendiamo l'equazione FK e cerchiamo una soluzione non stazionaria.
 \begin{equation}
     \partial_{t}P = \left(-\partial_{x}A + \frac{1}{2}\partial^2_{x^2} B\right)P 
@@ -605,12 +603,14 @@ Riprendiamo l'equazione FK e cerchiamo una soluzione non stazionaria.
 Possiamo vedere il termine nella parentesi di destra come un operatore: $\mathcal{L}$.
 \[
     \partial_{t}P = \mathcal{L}P
-.\] 
-Possiamo vedere questa come una equazione agli autovalori, in tal caso possiamo scrivere la $P$ come una sovrapposizione lineare di autovalori ed autovettori:
-\[
+\] 
+che rappresenta una equazione agli autovalori. \\
+In questa rappresentazione la $P$ si esprime come sovrapposizione lineare di autovalori $\lambda$ ed autovettori $P_\lambda$:
+\begin{equation}
     P = P_\lambda (x) e^{-\lambda t}
-.\] 
-Per poi sostituire nella equazione \ref{eq:11_FK_t} per trovare le soluzioni $P_\lambda, \lambda$:
+    \label{eq:P_autoval}
+\end{equation}
+Le quantità $P_\lambda$ e $\lambda$ possono essere ottenute sostituendo nell'equazione \ref{eq:11_FK_t} l'espressione per la $P$ \ref{eq:P_autoval}.
 \begin{equation}
     -\lambda P_\lambda  e^{-\lambda t} = \mathcal{L}P_\lambda  e^{-\lambda t}
     \label{eq:11_FK_auto}

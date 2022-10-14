@@ -10,22 +10,32 @@ dict_names = {1: "1_markov_master",
               4: "4_markov_def",
               5: "5_markov_ex",
               6: "6_Rand_Walk",
-              7: "7_Integr_stoca"}
+              7: "7_Integr_stoca",
+              8: "8_legame_SDE_FK",
+              9: "9_Levy",
+              10: "10_RW_Wierstrass", 
+              11.1: "11_FK_analitica"}
 
-def create_aux_tex(n):
+def create_aux_tex(N, n):
+    num_str = ''
+    if n == 0 and N == 11:
+        raise Exception('Lesson 11 is divided in 2 parts, please tell which part you want.')
+    if n != 0:
+        num_str = f'_{n}'
+
+    repl = '\\includeonly{' + f'lezioni/lez_{N}' + num_str + '}'
     # Read in the file
     with open('master.tex', 'r') as file :
-      filedata = file.read()
-    
-    # Replace the target string
-    filedata = re.sub("includeonly{lezioni/lez_\d", 'includeonly{' + f'lezioni/lez_{n}', filedata)
-    
-    # Write the file out again
-    with open('master_aux.tex', 'w') as file:
-      file.write(filedata)
-    return
+        with open('master_aux.tex', 'w') as auxfile:
+            for line in file:
+                if line.startswith("\\includeonly"):
+                    auxfile.write(repl)
+                else:
+                    auxfile.write(line)
 
-def compile_aux(n):
+def compile_aux(N, n):
+    if n != 0:
+        n = n/10
     print("Compile all files")
     with open('master_aux.tex', 'r') as file :
         filedata = file.read()
@@ -54,7 +64,7 @@ def compile_aux(n):
     os.system(f'pdflatex -interaction="batchmode" master_aux.tex')
     print("Done")
 
-    os.system(f"mv master_aux.pdf PDF/{dict_names[n]}.pdf")
+    os.system(f"mv master_aux.pdf PDF/{dict_names[N+n]}.pdf")
     return
 
 def clear_files():
@@ -66,11 +76,13 @@ def clear_files():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create an auxiliary tex file to compile')
     parser.add_argument("N", default=1, type=int, const=1, nargs='?', help='Number of section (default: 1)')
-    n = vars(parser.parse_args())['N']
-    if n in dict_names:
-        create_aux_tex(n)
-        compile_aux(n)
+    parser.add_argument("n", default=0, type=int, const=1, nargs='?', help='Number of section (default: 0)')
+    N = vars(parser.parse_args())['N']
+    n = vars(parser.parse_args())['n']
+    if N+n/10 in dict_names:
+        create_aux_tex(N, n)
+        compile_aux(N, n)
         clear_files()
     else:
-        print(f'No file {n}')
+        print(f'No file {N} {n}')
 

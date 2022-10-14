@@ -1,5 +1,6 @@
-\section{Lezione 8}%
+\section{SDE e Fokker-Plank}%
 \label{sub:Lezione 8}
+\mylocaltoc
 \subsection{Legame tra SDE e Fokker-Plank}%
 \label{sub:Legame tra SDE e Fokker-Plank}
 Prendiamo una equazione differenziale sticastica del tipo:
@@ -257,4 +258,30 @@ Mentre per la covarianza si ha che:
     \left<x(t),x(t) \right> = & \exp\left(-2  \int_{0}^{t} a(s) ds \right)\left<x_0,x_0\right> + \\
 			      & + \int_{0}^{t} dt'  \exp\left(-2\int_{t'}^{t} a(s) ds \right) b^2(t') 
 .\end{aligned}\]
+\subsection{SDE in 2D}%
+\label{sub:SDE in 2D}
+Una generica SDE in due dimensioni può essere espressa mediante il seguente sistema:
+\begin{equation}
+    \begin{cases}
+	dx_1 = f_1 dt + b_{11}d\omega_1 &\\
+	dx_2 = f_2 dt + b_{21} d\omega_1 + b_{22}d\omega_2&
+    \end{cases}
+\end{equation}
+Notiamo che, per mantenere l'equazione generale, nell'equazione per $dx_2$ si ha una componente per il processo stocastico $\omega_1$ ed un ulteriore processo stocastico indipendente $\omega_2$.\\
+Si procede calcolando valori medi, covarianze e correlazioni dei due processi:
+\[\begin{aligned}
+   &\left<dx_1\right> \sim  \left<f_1dt\right> \\
+   &\left<dx_2\right> \sim  \left<f_2dt\right>
+   &\mbox{cov}(dx_1^2) \sim b_{11}^2\\
+   & \mbox{cov}(dx_2^2) \sim b_{21}^2 + b_{22}^2\\
+   &\mbox{cov}(dx_1dx_2) \sim b_{11}b_{21}
+.\end{aligned}\]
+Quindi, per quanto visto sopra, possiamo aspettarci una equazione di Fokker-Plank per il processo del seguente tipo:
+\[\begin{aligned}
+    \partial_t P(x_1,x_2,t) =& \left[-\partial_{x_1}f_1 -\partial_{x_2}f_2 \right. + \\
+			     & \ + \frac{1}{2}\partial^2_{x_1^2} b_{11}^2 + \\
+			     & \ + \frac{1}{2}\partial^2_{x_2^2}\left(b_{21}^2 + b_{22}^2\right) + \\
+			     & \ + \left.\partial_{x_1} \partial_{x_2}\left(b_{11}b_{21}\right)\right] P(x_1,x_2,t)
+.\end{aligned}\]
+
 \clearpage

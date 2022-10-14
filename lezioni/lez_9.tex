@@ -1,12 +1,13 @@
-\section{Lezione 9}%
+\section{Distribuzioni di Levy}%
 \label{sub:Lezione 9}
+\mylocaltoc
 \subsection{Oltre il teorema del limite centrale}%
 \label{sub:Distribuzioni fisiche che non rispettano il teorema del limite centrale}
 Abbiamo visto che, per variabili stocastiche con media e deviazione standard definite, vale:
 \[
     S_n = \sum_{i}^{} x_i \to G
 .\] 
-Ci chiediamo se esista solo questa possibilità, ovvero se non esistano altre distribuzioni che possono far da limite per le variabili stocastiche.\\
+Ci chiediamo se esista solo questa possibilità, ovvero se (una volta rilassate le ipotesi del teorema del limite centrale) non esistano altre distribuzioni limite per le variabili stocastiche.\\
 Vediamo che succede se prendiamo una somma di variabili stocastiche estratte da una qualunque distribuzione:
 \[
     S_2 = x_1 + x_2 \implies P_2(S_2) = \sum_{x_1}^{} P_1(x_1) P_1(x_2) 
@@ -123,7 +124,7 @@ Data una distribuzione di probabilità $L_{\alpha,\beta}(x)$ con $\alpha,\beta$ 
     L_{\alpha,\beta  }(k) = \left<e^{ikx}\right> = \int_{-\infty}^{\infty} dx e^{ikx}L_{\alpha,\beta  }(x)  
 .\] 
 ha la forma generale:
-\begin{redbox}{}
+\begin{redbox}{Teorema della rappresentazione canonica}
 \[\begin{aligned}
     \ln&(L_{\alpha,\beta}(k)) =\\
        &=\begin{cases}
@@ -192,7 +193,7 @@ Per avere un momento di ordien $\delta$ finito l'integrale deve convergere.
 Se ne conclude che 
 \begin{itemize}
     \item per $\alpha <2$ la varianza non è definita
-    \item per $\alpha <1$ non è definita nemmeno la media.
+    \item per $\alpha \le 1$ non è definita nemmeno la media.
 \end{itemize}
 Studiando un fenomeno fisico quello che abbiamo sempre fatto è stato cercare una scala del problema, quindi il momento secondo. \\
 Per tutte le distribuzioni di Levy (tranne la Gaussiana) il momento secondo non è definito, questo le rende distribuzioni controintuitive.
@@ -229,7 +230,21 @@ Data una $P(x) $ possiamo vedere a quale $L_{\alpha,\beta  }(x)$ converge con il
     .\] 
 \end{greenbox}
 \noindent
-Le costanti $c_{\pm}\ge 0$, $a>0$ sono legate ai coefficienti di $L_{\alpha,\beta  }(x)$ da relazioni semplici (che non si riescono a leggere negli appunti).\\
+Le costanti $c_{\pm}\ge 0$, $a>0$ sono legate ai coefficienti di $L_{\alpha,\beta  }(x)$ da relazioni semplici:
+\[
+    \gamma  = 
+    \begin{cases}
+	\frac{\pi\left(c_+-c_-\right)}{2\alpha\Gamma(\alpha) \sin (\pi\alpha  /2) } & \alpha\neq 1 \\
+	(\pi / 2) (c_+ + c_-) & \alpha  = 1
+    \end{cases}
+.\] 
+\[
+    \beta  = 
+    \begin{cases}
+	\frac{c_- - c_+}{c_+ + c_-} & \alpha  \neq 1 \\
+	\frac{c_+ - c_-}{c_+ + c_-} & \alpha  = 1
+    \end{cases}
+.\] 
 Notiamo che anche i momenti di $P(x)$ sono definiti per $\delta <\alpha$ esattamente come quelli di $L_{\alpha,\beta  }(x)$.  
 \subsection{Cambio di scala}%
 \label{sub:Cambio di scala}
@@ -309,7 +324,7 @@ Sostanzialmente è l'integrale di Ito.
 \subsubsection{Algoritmo di Weron}%
 \label{subsub:Algoritmo di Weron}
 Per risolvere è necessario inventare una tecnologia per valutare le variabili stocastiche secondo una distribuzione di Levy generale. \\
-L'algoritmo di Weron si occupa proprio di come generare questi numeri casuali $\xi$ (Vedi appendice), secondo tale algoritmo l'integrale di una funzione si può scrivere come:
+L'algoritmo di Weron si occupa proprio di come generare questi numeri casuali $\xi$, secondo tale algoritmo l'integrale di una funzione si può scrivere come:
 \[
     \int_{t_0}^{t} f(s) dL_{\alpha,\beta  }(s) = \sum_{i}^{N} f(\Delta s(i-1)) \left(\Delta s\right)^{1 /\alpha}\xi_i
 .\] 
@@ -322,7 +337,5 @@ Quindi operativamente si ha:
 \[
     x_{n+1} = x_n + h ^{1 /\alpha}\xi_n
 .\] 
-\subsubsection{Che devo fare per generare la $\xi$?}%
-Mentre per generare numeri gaussiani possiamo utilizzare una infinità di librerie per generare un numero secondo una distribuzione di Levy non è detto che vi sia un qualche pacchetto. \\
-Non ho trascritto la procedura di generazione ben esplicata nelle note del professore, esiste una libreria Python ( sotto Scipy ) che si occupa di generare numeri secondo una qualunque distribuzione di Levy.
+L'algoritmo che si occupa di generare le $\xi$ è chiamato algoritmo di Weron e viene utilizzato da molte librerie per risolvere questa tipologia di problemi.
 \clearpage
