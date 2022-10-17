@@ -53,7 +53,7 @@ Ci viene in aiuto allora la \texttt{Backward Fokker Plank}, si riesce ad ottener
 .\end{aligned}\]    
 \end{redbox}
 \noindent
-Tornando al problema MFPT in una dimensione l'equazione che ci serve è:
+L'ultimo membro della Backward FP riguarda la parte dei processi a salto che trascuriamo in questa analisi 1D:
 \[\begin{aligned}
     \partial_{t'}P\left(x',t|x,t'\right) = & -A(x) \partial_{x}P\left(x',t|x,t'\right) +\\
 					   &-\frac{1}{2}B(x) \partial^2_{x^2}P\left(x',t|x,t'\right)
@@ -87,7 +87,7 @@ Inserendo le solite condizioni iniziali:
 	0 &\text{Altrove}
     \end{cases}
 \] 
-Inoltre si deve avere anche che:
+Inoltre se un camminatore raggiunge il bordo allora significa che la probabilità che esca ad un tempo superiore è nulla (poiché è appena uscito):
 \[
     \text{Prob}(T\ge t) = 0 \quad \text{se} \quad x = a \text{ oppure } x = b
 .\] 
@@ -99,43 +99,44 @@ Visto che il nostro insieme di camminatori, al passare del tempo, avrà una prob
 \[
     G(x, t+dt) < G(x,t)
 .\] 
-Il numero di camminatori usciti tra $t$ e $t+dt$ vale:
+Il numero di camminatori usciti tra $t$ e $t+dt$ è proporzionale alla variazione di $G(x, t)$:
 \[
     dG = G(x,t)-G(x,t+dt) = -\frac{\text{d} }{\text{d} t}(G(x,t)) dt
 .\] 
 Questa quantità ci permette di calcolare tutti i valori medi di funzioni dipendenti dal tempo in questo intervallo:
 \[
-    \left<f(t) \right>_x = \int_{0}^{\infty} f(t) \frac{\text{d} }{\text{d} t} \left[G(x,t) \right]dt 
+    \left<f(t) \right>_x = -\int_{0}^{\infty} f(t) \frac{\text{d} }{\text{d} t} \left[G(x,t) \right]dt 
 .\] 
 In particolare il tempo medio di uscita, supponendo di essere in $x$  a $t=0$:
-\begin{redbox}{}
+\begin{redbox}{MFPT}
 \[
     T(x) \equiv \text{MFPT} = - \int_{0}^{\infty} t \partial_{t}G(x,t) dt 
 .\]   
 Integrando per parti:
-\begin{equation}
-    T(x) = \int_{0}^{\infty} G(x,t) dt 
+\begin{align}
+    T(x) &= \left. - t G(x, t) \right|_0^\infty + \int_{0}^{\infty} G(x,t) dt  = \nonumber\\
+	 &= \int_{0}^{\infty} G(x,t) dt
     \label{eq:11_MFPT}
-\end{equation}
+\end{align}
 \end{redbox}
 \noindent
 In generale il "momento" n-esimo di primo passaggio vale:
 \[
     T^n(x) = \left<T^n(x)\right> = \int_{0}^{\infty} t^{n-1}G(x,t) dt 
 .\] 
-Sfruttando la \ref{eq:11_MFPT} e la \ref{eq:11_G_diff} possiamo ricavare una equazione differenziale per il tempo di primo passaggio integrando e notando che:
+Notando che si ha la relazione banale:
 \[
-    \int_{0}^{\infty} \partial_{t}G(x,t) = G(x,\infty) -G(x,0) = -1 
+    \int_{0}^{\infty} dt \partial_{t}G(x,t) = G(x,\infty) -G(x,0) = -1 
 .\] 
-In conclusione:
+Si possono sfruttare la \ref{eq:11_MFPT} e la \ref{eq:11_G_diff} per ricavare una equazione differenziale per il tempo di primo passaggio, infatti integrando nel tempo la \ref{eq:11_G_diff} si ottiene:
 \[
-    -1 = AT'(x) + \frac{1}{2}BT''(x) 
+    -1 = A\partial_xT(x) + \frac{1}{2}B \partial^2_{x^2}T(x) 
 .\] 
-Con le condizioni al contorno banali:
+L'equazione si risolve imponendo delle condizioni al contorno, ad esempio:
 \[
     T(a) =T(b) =0
 .\] 
-Possiamo risolvere l'equazione per $T(x)$ utilizzando il fattore integrante:
+La soluzione si ottiene in termini del seguente fattore integrante:
 \[
     \phi (x) = \exp\left(\int_{a}^{x} \frac{2A}{B}dx' \right)
 .\] 
@@ -143,23 +144,20 @@ che ci porta ad una equazione integrabile per $T(x)$:
 \[
     \frac{\text{d} }{\text{d} x} \left[T' \phi (x) \right] = - \frac{2}{B}\phi (x) 
 .\] 
-In conclusione si ha:
+Tale equazione si risolve integrando in $x$, successivamente dividendo per $\phi$\ldots La soluzione è:
 \begin{bluebox}{Forma analitica di $T(x)$}
+    Dato un intervallo $X = \left[a, b\right]$ (quindi con $a<b$) il tempo medio di primo passaggio si esprime come:
     \[
-	T(x) = \frac{1}{N} \left[\Omega (x,b) - \Omega (a,x)\right]
+	T(x) = \frac{\Omega (x,b) - \Omega (a,x)}{\int_{a}^{b} \frac{dy}{\phi (y) }}
     .\] 
-    con 
-    \[
-	N = \int_{a}^{b} \frac{dy}{\phi (y) }
-    .\] 
-    Che funge da normalizzazione, mentre al numeratore abbiamo:
+    In cui si definisce $\Omega$ come:
     \[\begin{aligned}
 	\Omega &(x_1,x_2) = \\
 	       & = \int_{a}^{x} \frac{dy}{\phi (y) }  \int_{x_1}^{x_2} dy'\left[\frac{1}{\phi (y') } \int_{a}^{y'} dz \frac{\phi (z)}{B(Z) } 
 \right]    .\end{aligned}\]
 \end{bluebox}
 \noindent
-Cambiando le condizioni al contorno cambia anche il risultato, anche se i passaggi concettuali restano i medesimi.
+Cambiando le condizioni al contorno cambia anche il risultato, i passaggi invece restano i medesimi.
 \begin{exmp}[$a$ riflette e $b$ assorbe]
     Le condizioni ci dicono che:
     \[
@@ -178,10 +176,11 @@ Prendiamo una buca di potenziale del seguente tipo:
 \input{lezioni/tikz/lez_11_fuga.tex}
 \noindent
 Ipotizziamo di preparare il sistema nell'intervallo tra minimo e massimo del potenziale $[ a, b ]$, l'equazione dell'evoluzione del propagatore sarà:
-\[
+\begin{equation}
     \partial_{t}P = \partial_{x}\left(U'(x) P\right) + D\partial^2_{x^2}P
-.\] 
-Ed abbiamo visto che questa equazione ha come soluzione stazionaria:
+    \label{eq:MFTP_buca}
+\end{equation}
+In cui abbiamo cambiato notazione: $A(x) \to U'(x)$. Nella sezione precedente si è trovata la distribuzione di equilibrio della \ref{eq:MFTP_buca}:
 \[
     P_s \approx N\exp\left[-\frac{U(x)}{D}\right]
 .\] 
@@ -189,14 +188,17 @@ Ed abbiamo visto che questa equazione ha come soluzione stazionaria:
 \noindent
 A questo punto dobbiamo scegliere le condizioni al contorno su $a$ e $b$, prendiamo ad esempio le seguenti:
 \begin{itemize}
-    \item $b\equiv x_0$ bordo assorbente: le particelle che arrivano qui fanno "Puf".
-    \item $a\equiv \to -\infty$ come dire bordo riflettente poiché a $-\infty$ c'è un muro di potenziale che va a $\infty$.
+    \item $b\equiv x_0$ bordo assorbente: le particelle che arrivano qui spariscono.
+    \item $a\equiv \to -\infty$ come dire bordo riflettente poiché a $-\infty$ c'è un muro di potenziale divergente.
 \end{itemize}
 A questo punto possiamo prendere l'espressione \ref{eq:11_T_final} e specializzarla per il nostro problema. Si ottiene che il tempo di primo passaggio per andare da $a$ a $x_0$ vale:
-\[\begin{aligned}
-    &T(a\to x_0) =\\
-    & = \lim_{a \to -\infty} \frac{1}{D}\int_{a}^{x_0} dy \exp\left(\frac{U(y)}{D}\right) \int_{a}^{y} \exp\left(-\frac{U(z)}{D}\right)dz 
-.\end{aligned}\]
+\begin{align}
+    &T(a\to x_0) = \nonumber\\
+    & = \lim_{a \to -\infty} \frac{1}{D}\int_{a}^{x_0} dy\left[ e^{\frac{U(y)}{D}} \int_{a}^{y} e^{-\frac{U(z)}{D}}dz 
+	\label{eq:exmp_T}
+\right]
+.\end{align}
+Per risolvere analiticamente è comodo disaccoppiare i due integrali. 
 Mettiamoci nel limite in cui la barriera di potenziale è molto maggiore del coefficiente di diffusione:
 \[
     \Delta  U = U(b) -U(a); \qquad \frac{\Delta U}{D}\gg 1
@@ -205,24 +207,24 @@ Concentrandoci in un intorno di $b$ possiamo notare che:
 \[
     \exp\left(\frac{U}{D}\right) \text{ ha max in }b
 .\] 
-Inoltre in questa approssimazione:
+Inoltre ipotizzando che $U(x = a) = 0$ e se $x \to b$ si ha che:
 \[
-    \text{Se } x = b \implies  \exp\left(-\frac{U}{D}\right)\to 0 \qquad \text{Con } \frac{U(b)}{D} \gg 1
+    -\frac{U(b)}{D} \to -\infty \implies  \exp\left(-\frac{U}{D}\right)\to 0
 .\] 
-Visto che il secondo integrale contiene questo termine e che la variabile $y$ corre tra $-\infty$ e $x_0=b$ possiamo approssimare l'estremo di integrazione $y$ come:
+Tale esponenziale decrescente è contenuto dell'integrale interno della \ref{eq:exmp_T}, allora si approssima tale integrale estendendone fino a $b$ l'estremo di integrazione. 
 \[
  \int_{-\infty}^{y} \exp\left(-\frac{U(z)}{D}\right)dz \sim \int_{-\infty}^{b} \exp\left(-\frac{U(z)}{D}\right)dz   
 .\] 
-Assumendo che i termini della somma provenienti da un intorno di $b$ contino poco. In questo modo i due integrali si disaccoppiano:
+L'approssimazione consiste quindi nell'assumere che i termini della somma provenienti da un intorno di $b$ contino poco. I due integrali sono adesso disaccoppiati:
 \[
     T \approx \frac{1}{D}\int_{-\infty}^{b}\exp\left(-\frac{U(z)}{D}\right)dz \int_{-\infty}^{x_0} dy \exp\left(\frac{U(y)}{D}\right)
 .\] 
-Un'altra approssimazione che si può fare è pensare $U(x)$ parabolico intorno ad $a$ e $b$:
+In conclusione si può risolvere per la $T(x)$ ipotizzando una forma parabolica per la $U(x)$ intorno a $a$ e $b$:
 \[\begin{aligned}
     &U(x)  \approx U(b) - \frac{1}{2} \frac{\left(x-b\right)^2}{\delta^2} \ \text{  vicino a } b\\
     &U(x)  \approx U(a) + \frac{1}{2} \frac{\left(x-a\right)^2}{\alpha^2} \ \text{  vicino ad } a
 .\end{aligned}\]
-Risolvendo quindi gli integrali arriviamo ad una forma per il tempo di primo passaggio:
+La soluzione prende la forma della famosa legge di Arrhenius:
 \begin{greenbox}{Legge di Arrhenius}
 \[
     T(a\to x_0) \approx 2\alpha\delta\pi  \exp\left(\frac{U(b) - U(a) }{D}\right)
@@ -260,7 +262,7 @@ Prendiamo la SDE per un set di camminatori:
 .\] 
 Quindi per piccoli tempi possiamo scrivere che:
 \[
-    x_{n+1} = x_n + f(x_n) \Delta t + g(x_n) \Delta\omega
+    x_{n+1} = x_n + f(x_n) \Delta t + g(x_n) \Delta\omega_n
 .\] 
 Quindi mettiamoci in un punto $x_n$ e valutiamo la probabilità che $x_{n+1}$ sia fuori dal dominio considerato $(a,b)$. Ad esempio consideriamo la probabilità che $x_{n+1}$ sia oltre $b$.
 
@@ -272,9 +274,9 @@ Per superare il massimo del potenziale il processo di Wiener che spinge il cammi
 \noindent
 Ipotizziamo di avere l'andamento del processo stocastico per un camminatore $\omega (x) $, dimostriamo che tramite questo possiamo risalire al MFPT. 
 \[
-    x_{n+1} = x_n + f_n\Delta t + \sqrt{D}\Delta\omega
+    x_{n+1} = x_n + f_n\Delta t + \sqrt{D}\Delta\omega_n
 .\] 
-E si ha anche che:
+Esplicitando tale relazione ricorsiva possiamo esprimere il passo $n$-esimo in funzione del passo $0$:
 \[
     x_n = x_0 + \sum_{}^{} f_i \Delta t + \sqrt{D} \sum_{}^{} \Delta\omega_i
 .\] 
@@ -295,12 +297,15 @@ Quindi la probabilità di andare da $a$  a $b$ sarà la probabilità che tutti i
     P(a\to b) \sim \prod_{i}^{} \exp\left(-\frac{\left(\Delta\omega_i\right)^2}{D\Delta t}\right) 
 .\] 
 Ed inserendo la forma di $\Delta\omega_i$ ricavata in precedenza:
+\[\begin{aligned}
+    P(a\to b) &\sim \prod_{i}^{} \exp\left(-\frac{\left( x_{i+1}-(x_i + f_i\Delta t) \right)^2}{D\Delta t}\right) = \\
+	      &= \exp\left(-\sum_{i}^{} \frac{\left( x_{i+1}-(x_i + f_i\Delta t) \right)^2}{D\Delta t}\right)=\\
+	      &=\exp\left[-\sum_{i}^{} \frac{\Delta t}{D}\left(\frac{ x_{i+1}-x_i}{\Delta t} - f_i \right)^2\right] \to \\
+	      & \to \exp\left[ -\frac{1}{D} \int dt \left(\dot{x} - f \right)^2\right]
+.\end{aligned}\]
+Per massimizzare la probabilità di passaggio da $a\to b$ è necessario minimizzare l'argomento dell'esponenziale, quindi si ricava il tempo minimo di primo passaggio tramite un problema di minimo:
 \[
-    P(a\to b) \sim \prod_{i}^{} \exp\left(-\frac{\left( x_{i+1}-(x_i + f_i\Delta t) \right)^2}{D\Delta t}\right) 
+    \text{min}\int_{a}^{b} \left(\dot{x}-f\right)^2 dt
 .\] 
-Passando al continuo nel tempo ed applicando dell'algebra se ne conclude che per trovare la probabilità massima di fare il passaggio basta risolvere:
-\[
-    \text{min}\int_{a}^{b} \left(\dot{x}-f\right) dt
-.\] 
-Questo determina la probabilità che si verifichi una speciale fluttuazione del processo di Wiener che ci fa fare il salto, in definitiva determina anche il tempo medio di primo passaggio.
+Che rappresenta proprio la minimizzazione della Lagrangiana del sistema!\\
 \clearpage

@@ -1,5 +1,6 @@
-\section{Lezione 12}%
+\section{Applicazioni del MFPT}%
 \label{sub:Lezione 12}
+\mylocaltoc
 \subsection{Simulazione del processo di Wiener in una doppia buca.}%
 \label{sub:Simulazione dei camminatori.}
 Riprendiamo l'ultimo argomento della lezione \ref{sub:Parte 2}, ovvero il calcolo del tempo di primo passaggio con un metodo più potente. \\
@@ -55,9 +56,10 @@ Superata la barriera allora il rumore può gradualmente rilassare: la fatica orm
 \subsection{Hamiltoniana per il MFPT}%
 \label{sub:Hamiltoniana per il MFPT}
 Riprendiamo l'equazione per il processo in forma discretizzata:
-\[
+\begin{equation}
     x_{n+1} = x_n + f(x_n) \Delta t + \sigma \Delta\omega_n = F(x_n) + \xi_n
-.\] 
+    \label{eq:Ham_start}
+\end{equation}
 \[
     \left<\xi_n\xi_m\right> = \epsilon\Delta_{nm}
 .\] 
@@ -97,30 +99,29 @@ La probabilità che tale fluttuazione avvenga avrà la forma (vedi ad esempio la
 Quindi il tempo di primo passaggio può essere ricavato dal fatto che
 \footnote{La dimostrazione che questa probabilità ed il MFPT sono legati è nel PDF del professore (pathintegral).}
 :
-\[
+\begin{equation}
     P\left(x_n,t_n = T|x_0,t_0\right) \sim k \exp\left(-\frac{S_{\text{min}}}{\epsilon}\right)
-.\] 
+    \label{eq:mftp_azione}
+\end{equation}
 Quello che cerchiamo è il minimo dell'azione $S$: $\overline{S}$, ovvero la sequenza $\gamma$ che massimizza la probabilità di fare il salto $a\to b$.\\
 Per risolvere il problema di minimo possiamo utilizzare un set di moltiplicatori di Lagrange $\lambda_i$.
 \[
     \overline{S} = \frac{1}{2}\sum_{i}^{} \zeta^2_i + \lambda_i \left[x_{i+1}-F(x_i)- \zeta_i\right]
 .\] 
 Risolvendo il problema dei moltiplicatori si ottiene:
-\[\begin{aligned}
+\begin{align}
     &1. \quad x_{n+1} = F(x_n) + \lambda_n\\
-    &2. \quad \lambda_{n+1}=\left[\left.\frac{\partial F}{\partial x_i} \right|_{i = n+1}\right]^{-1}\lambda_n
-.\end{aligned}\]
-Passiamo a tempi continui, chiamiamo $\Delta t = h$, dalla prima equazione si ottiene che
-\footnote{Non mi torna l'$h$, mi pare sparita\ldots}
-:
+    &2. \quad \lambda_{n+1}=\left[\left.\frac{\partial F}{\partial x_i} \right|_{i = n+1}\right]^{-1}\lambda_n \label{eq:Ham_second}
+.\end{align}
+Passiamo a tempi continui, chiamiamo $\Delta t = h$, dalla prima equazione si ottiene (rinormalizzando $\lambda / h\to \lambda$:
 \[
     x_{n+1} = x_n + h f(x_n) + \lambda_n \implies  \dot{x} = f + \lambda
 .\] 
-La seconda equazione può essere manipolata considerando la definizione di $F$:
+La seconda equazione può essere manipolata considerando la definizione di $F$ (equazione \ref{eq:Ham_start}):
 \[
     F(x_n) = x_n+hf(x_n) \quad \implies  \quad  \frac{\partial F}{\partial x} = 1+hf'
 .\] 
-Sostituendo questa nella (2.) e sommando e sottraendo $\lambda_n$ si arriva a:
+Sostituendo questa nella \ref{eq:Ham_second} e sommando e sottraendo $\lambda_n$ si arriva a:
 \[
     \dot{\lambda} =  - f'\lambda
 .\] 
@@ -279,7 +280,7 @@ A questo punto possiamo integrare per ottenere l'azione:
             =& 2  \int_{a}^{b} \left(\frac{\text{d} U}{\text{d} t} \right)dt =
 	     2(U_b-U_a)  
 .\end{aligned}\]
-Quindi il tempo di primo passaggio, come già accennato, sarà proporzionale a:
+Quindi il tempo di primo passaggio si calcola tramite l'equazione \ref{eq:mftp_azione}:
 \[\begin{aligned}
     \text{MFPT} \sim& \exp\left(-\frac{S_{\text{min}}}{\epsilon}\right) =
     \exp\left(-\frac{2(U_b-U_a)}{2D}\right) =\\
