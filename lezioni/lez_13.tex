@@ -1,6 +1,7 @@
-\section{Lezione 13}%
+\section{Processi a salto}%
 \label{sub:Lezione 13}
-Prendiamo di nuovo l'equazione differenziale CK (\ref{eq:4_CK}) e concentriamoci sulla parte che abbiamo trascurato fino a questo punto: il processo a salti. Per trattarlo prendiamo l'esempio del processo di nascita-morte.
+\mylocaltoc \\
+Prendiamo di nuovo l'equazione differenziale CK (\ref{eq:4_CK}) e concentriamoci sulla parte che abbiamo trascurato fino a questo punto: il processo a salti.
 \subsection{Processo di nascita e morte}%
 \label{sub:Processo di nascita e morte}
 Prendiamo un processo con la probabilità di transizione $\omega$:
@@ -38,7 +39,7 @@ In cui la corrente è definita come:
 \begin{equation}
     J(x) = t^-(x) P_s(x) - t^+(x-1) P_s(x-1) \label{eq:13_def_curr}
 \end{equation}
-Scegliamo le condizioni al contorno: identifichiamo con $x=0$ il primo sito, in questo modo la transizione $(x=0)\to (x=-1) $ deve essere posta nulla (non c'è nessuno da uccidere\ldots):
+Scegliamo le condizioni al contorno: identifichiamo con $x=0$ il primo sito, le condizioni al contorno scelte sono tali per cui la transizione $(x=0)\to (x=-1) $ è posta nulla. In questo modo si modella un processo di nascita e morte in cui il numero di individui di una specie non può scendere sotto lo zero.
 \[
     t^-(0) = 0
 .\] 
@@ -160,6 +161,10 @@ La funzione $G$  ci permette comunque di trovare il valor medio della popolazion
     &\left<x\right>_t = \left.\partial_{s}G(s,t)\right|_{s=1} =\frac{k_2a}{k_1}(1-e^{-k_1t}) + Ne^{-k_1t}\\
     &\left<x^2\right>_t = \left.\partial^2_{s^2}G(s,t)\right|_{s=1} = \left<x\right>_t^2 - Ne^{-2k_1t}
 .\end{aligned}\]
+Visto che asintoticamente il sistema presenta una caratteristica tipica della Distribuzione di Poisson: $\sigma^2\to \mu$. Inoltre il valore della media per $t\to \infty$ è quello atteso se si scrive una semplice equazione del moto per la $x$ a stazionarietà:
+\[
+0 = \dot{x} = -k_1x + k_2a \quad \implies  \quad x_s = \frac{k_2a}{k_1}
+.\] 
 \subsubsection{Condizioni iniziali Poissoniane}%
 \label{subsub:Condizioni iniziali Poissoniane}
 Supponiamo che la popolazione iniziale avesse una distribuzione di probabilità poissoniana del tipo:
@@ -191,74 +196,6 @@ Applicando un'antitrasformata possiamo risolvere nello spazio reale:
     P(x,t) = \frac{e^{-\alpha (t)}}{x!}\left[\alpha (t) \right]^x
 .\] 
 Quindi la soluzione con queste condizioni iniziali è una poissoniana "traslata".\\
-Vediamo quindi in generale che lavorare con la Master Equation è generalmente complicato, ci chiediamo se ci sia un modo per passare da questa equazione a quella di Fokker Plank.
-\subsection{Da Master Equation a Fokker Plank}%
-\label{sub:Da Master Equation a Fokker Plank}
-Abbiamo visto in precedenza che a stazionarietà (o mandando a zero il passo del reticolo) un processo a salti poteva esser scritto con una FK. Il passaggio in generale può esser fatto sotto alcune condioni, prendiamo la ME:
-\begin{equation}
-    \frac{\partial P}{\partial t} = \int dx' \left[\omega (x|x') P(x') - \omega (x'|x) P(x) \right]
-    \label{eq:13-ME_gen}
-\end{equation}
-Possiamo scrivere una FK per questo processo della seguente forma:
-\[
-    \frac{\partial P}{\partial t} = \left[-\partial_{x}A_1(x) + \frac{1}{2}\partial^2_{x^2} A_2(x) \right]P(x) 
-.\] 
-Se vale che
-\footnote{scrivendo l'equazione per un processo di Wiener appare naturalmente una forma di questo tipo per $\omega$}
-:
-\[
-    \omega_\delta (x'|x) = \phi	\left( \frac{x'-x - A(x)\delta}{\sqrt{\delta}}, x\right)
-.\] 
-Ed inoltre, definito l'integrale:
-\[
-    Q = \int dy \phi (y, x) 
-.\] 
-Si deve avere che i 3 seguenti integrali rimangono finiti ($A_1$ e $A_2$ entrano nella FK):
-\[\begin{aligned}
-    A_0(x)  &= \int dx'\omega_\delta (x'|x) = \frac{Q}{\delta}\\
-    A_1(x) &= \int dx' (x'-x) \omega_\delta\left(x'|x\right) = A(x) Q\\
-    A_2(x) &= \int dx'(x'-x)^2 \omega_\delta\left(x'|x\right) = \int dy y^2\phi (y,x) 
-.\end{aligned}\]
-\begin{exmp}[Random Walk]
-    Nel caso del random walk si aveva:
-    \[
-        x = nl
-    .\]
-    \[
-	\omega (x,x') = d(\delta_{x',x-1} + \delta_{x',x+1}) 
-    .\] 
-    Risolvendo per i momenti $Q_i$ si ha:
-    \[\begin{aligned}
-	&A_0(x) = 2d\\
-	&A_1(x) = 0\\
-	&A_2(x) = 2l^2d
-    .\end{aligned}\]
-    Se assumiamo $\delta =l^2$ e $D = l^2d$ e mandiamo $l\to 0$ e $\delta\to 0$ si ha che
-    \begin{itemize}
-        \item $\omega\to \infty$.
-	\item $A_1$ e $A_2$ rimangono finiti.
-    \end{itemize}
-    Di conseguenza come avevamo visto questo esempio si esprime tramite una FK:
-    \[
-        \frac{\partial P}{\partial t} = D\frac{\partial ^2P}{\partial x^2} 
-    .\] 
-\end{exmp}
-\noindent
-\begin{exmp}[Distribuzione di Poisson]
-    Nel caso della distribuzione di Poisson invece (lo sharp noise) quello che si ha è:
-    \[
-        x = nl
-    .\] 
-    \[
-	\omega (x|x') = d\delta_{x,x'+1}
-    .\] 
-    Quindi i momenti sono:
-    \[\begin{aligned}
-	&A_0(x) = d\\
-	&A_1(x) = ld\\
-	&A_2(x) = l^2d
-    .\end{aligned}\]
-    Quindi non è possibile fissare finita ne la quantità $ld$ ne la quantità $l^2d$, in entrambi i casi uno tra $Q_1$ e $Q_2$ non è definito.\\
-    In questo secondo esempio non è possibile scrivere una Fokker Plank per il sistema. In precedenza infatti per risolvere questo caso abbiamo inserito il rumore $\omega$ sopra ad una funzione, tuttavia così facendo si risolve un altro problema e non quello in questione.
-\end{exmp}
+Si ha che in generale che lavorare con la Master Equation è complicato ma per questo caso specifico siamo stati in grado di ottenere la distribuzione.\\
+Potrebbe essere utile trovare il sistema per passare dalla Master-Equation alla Fokker-Plank in modo da applicare i metodi risolutivi discussi nelle precedenti sezioni.
 \clearpage

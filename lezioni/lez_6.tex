@@ -75,14 +75,11 @@ Quindi effettuando la trasformata inversa si ottiene una Gaussiana con larghezza
 \label{subsub:2. Salto ad un tempo tau fissato}
 In questo caso il tempo è una variabile discreta di passo $\tau$.
 \begin{bluebox}{Equazione per il propagatore nel RW 2}
-\begin{equation}
-\begin{aligned}
-    P\left(n,(N+1) \tau|\right.&\left.n',N'\tau\right)= \\
-			       &\frac{1}{2}\left[P\left(n+1,N\tau|n',N'\tau\right)\right. + \\
-			       & \quad + \left.  P\left(n-1,N\tau|n',N'\tau\right)\right] \label{eq:6_1}
-.\end{aligned}
-\end{equation}
-    
+\begin{align}
+    &P( n,(N+1) \tau |  n',N'\tau ) = \nonumber \\
+			       & \frac{1}{2} \left[ P\left( n+1,N\tau |n',N'\tau \right) \right. +  \nonumber \\
+			       & \quad + \left.  P\left(n-1,N\tau |n',N'\tau\right) \right] \label{eq:6_1}
+.\end{align}
 \end{bluebox}
 \noindent
 \begin{greenbox}{RW1 e RW2 equivalenti per scale piccole.}

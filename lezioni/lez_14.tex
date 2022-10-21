@@ -1,6 +1,76 @@
-\section{Lezione 14}%
+\section{Da ME a FK}%
 \label{sub:Lezione 14}
-\subsection{Derivazione classica del passaggio ME$\to $FK: Kramers Moyal}%
+\mylocaltoc
+\subsection{Introduzione al passaggio da ME a FK}%
+\label{sub:Da Master Equation a Fokker Plank}
+Abbiamo visto in precedenza che a stazionarietà (o mandando a zero il passo del reticolo) un processo a salti poteva esser scritto con una FK. Il passaggio in generale può esser fatto sotto alcune condioni, prendiamo la ME:
+\begin{equation}
+    \frac{\partial P}{\partial t} = \int dx' \left[\omega (x|x') P(x') - \omega (x'|x) P(x) \right]
+    \label{eq:13-ME_gen}
+\end{equation}
+Possiamo scrivere una FK per questo processo della seguente forma:
+\[
+    \frac{\partial P}{\partial t} = \left[-\partial_{x}A_1(x) + \frac{1}{2}\partial^2_{x^2} A_2(x) \right]P(x) 
+.\] 
+Se vale che
+\footnote{scrivendo l'equazione per un processo di Wiener appare naturalmente una forma di questo tipo per $\omega$}
+:
+\[
+    \omega_\delta (x'|x) = \phi	\left( \frac{x'-x - A(x)\delta}{\sqrt{\delta}}, x\right)
+.\] 
+Ed inoltre, definito l'integrale:
+\[
+    Q = \int dy \phi (y, x) 
+.\] 
+Si deve avere che i 3 seguenti integrali rimangono finiti ($A_1$ e $A_2$ entrano nella FK):
+\[\begin{aligned}
+    A_0(x)  &= \int dx'\omega_\delta (x'|x) = \frac{Q}{\delta}\\
+    A_1(x) &= \int dx' (x'-x) \omega_\delta\left(x'|x\right) = A(x) Q\\
+    A_2(x) &= \int dx'(x'-x)^2 \omega_\delta\left(x'|x\right) = \int dy y^2\phi (y,x) 
+.\end{aligned}\]
+\begin{exmp}[Random Walk]
+    Nel caso del random walk si aveva:
+    \[
+        x = nl
+    .\]
+    \[
+	\omega (x,x') = d(\delta_{x',x-1} + \delta_{x',x+1}) 
+    .\] 
+    Risolvendo per i momenti $Q_i$ si ha:
+    \[\begin{aligned}
+	&A_0(x) = 2d\\
+	&A_1(x) = 0\\
+	&A_2(x) = 2l^2d
+    .\end{aligned}\]
+    Se assumiamo $\delta =l^2$ e $D = l^2d$ e mandiamo $l\to 0$ e $\delta\to 0$ si ha che
+    \begin{itemize}
+        \item $\omega\to \infty$.
+	\item $A_1$ e $A_2$ rimangono finiti.
+    \end{itemize}
+    Di conseguenza come avevamo visto questo esempio si esprime tramite una FK:
+    \[
+        \frac{\partial P}{\partial t} = D\frac{\partial ^2P}{\partial x^2} 
+    .\] 
+\end{exmp}
+\noindent
+\begin{exmp}[Distribuzione di Poisson]
+    Nel caso della distribuzione di Poisson invece (lo sharp noise) quello che si ha è:
+    \[
+        x = nl
+    .\] 
+    \[
+	\omega (x|x') = d\delta_{x,x'+1}
+    .\] 
+    Quindi i momenti sono:
+    \[\begin{aligned}
+	&A_0(x) = d\\
+	&A_1(x) = ld\\
+	&A_2(x) = l^2d
+    .\end{aligned}\]
+    Quindi non è possibile fissare finita ne la quantità $ld$ ne la quantità $l^2d$, in entrambi i casi uno tra $Q_1$ e $Q_2$ non è definito.\\
+    In questo secondo esempio non è possibile scrivere una Fokker Plank per il sistema. In precedenza infatti per risolvere questo caso abbiamo inserito il rumore $\omega$ sopra ad una funzione, tuttavia così facendo si risolve un altro problema e non quello in questione.
+\end{exmp}
+\subsection{Derivazione di Kramers Moyal}%
 Partiamo dalla ME di equazione \ref{eq:13-ME_gen}:
 \[
     \frac{\partial P}{\partial t} = \int dx' \left[\omega (x|x') P(x') - \omega (x'|x) P(x) \right]
@@ -77,6 +147,10 @@ In termini di $x$ i momenti scritti in precedenza diventano
 \[
     A_n(a)  = \Omega \tilde{A}_n(x) 
 .\] 
+Visto che si è effettuato un cambio di variabile (e che la variabile $z$ ha una dipendenza temporale) è necessario modificare l'espressione della derivata temporale:
+\[
+    \partial_t \to \partial_t + \frac{\partial z}{\partial t} \partial_z = \partial_t - \sqrt{\Omega}\dot{\varphi}\partial_z 
+.\] 
 Sostituendo tutto nella equazione di Kramers Moyal si ottiene: 
 \[\begin{aligned}
     \frac{\partial }{\partial t} &P(z, t) - \sqrt{\Omega} \dot{\varphi}\frac{\partial }{\partial z} P(z,t) = \\
@@ -110,7 +184,7 @@ Notiamo anche che l'espansione nella visione di Von Kampen, una volta riportata 
 \[
     \partial_{t}P(x) = - \partial_{x} \left[\tilde{A}_1(x) P(x) \right] + \frac{1}{2\Omega} \partial^2_{x^2} \left[\tilde{A}_2(x) P(x)\right]
 .\] 
-\subsection{Differenze fisiche tra Kramers Moyal e Van Kampen}%
+\subsection{Differenze tra le derivazioni}%
 \label{sub:Differenze fisiche tra Kramers Moyal e Van Kampen}
 Le due visioni sono identiche all'ordine $1 /\sqrt{\Omega}$, per ordini successivi invece è necessario fare una distinzione tra il tipo di passaggio al continuo del sistema:
 \begin{itemize}

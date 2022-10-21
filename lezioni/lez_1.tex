@@ -283,7 +283,7 @@ Passiamo al continuo nei tempi di arrivo degli elettroni e riscriviamo la corren
 La difficoltà dell'espressione sta nel fatto che $N(t)$ è una funzione a gradini con i gradini che arrivano in modo stocastico nel tempo.\\
 Si deriva a destra e sinistra rispetto al tempo ed si integra per parti:
 \[\begin{aligned}
-    \frac{\text{d} I}{\text{d} t} &= \left[q\exp\left(-\alpha (t-x)\right)\left \frac{\text{d} N}{\text{d} t}\right]  \right|_{x=t} + \\
+    \frac{\text{d} I}{\text{d} t} &= \left[q\exp\left(-\alpha (t-x)\right)\left. \frac{\text{d} N}{\text{d} t}\right]  \right|_{x=t} + \\
 				   &\qquad +\int_{-\infty}^{t} \left(-\alpha q\right)\exp\left(-\alpha (t-x)\right)\frac{\text{d} N}{\text{d} x} dx =\\
 				   &= q\mu (t) - \alpha I(t) 
 .\end{aligned}\]
