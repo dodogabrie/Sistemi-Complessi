@@ -18,7 +18,9 @@ dict_names = {1: "1_markov_master",
               11.2: "11_2_MFPT",
               12:   "12_MFPT_appl",
               13: "13_Processo_Salti",
-              14: "14_ME-FK"}
+              14: "14_ME-FK", 
+              15: "15_Intro_dinamici",
+              16: "16_Canoniche_AzioneAngolo"}
 
 def create_aux_tex(N, n):
     num_str = ''

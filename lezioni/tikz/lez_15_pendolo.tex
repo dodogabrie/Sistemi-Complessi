@@ -1,5 +1,7 @@
-\begin{figure}[H]
-    \centering
+\documentclass[crop,tikz]{standalone}% 'crop' is the default for v1.0, before it was 'preview'
+\usepackage{pgfplots}
+\usetikzlibrary{math}
+\begin{document}
     \begin{tikzpicture}
   	\tikzmath{\xa = 6; \y = 3;}
 	\begin{axis}[
@@ -39,6 +41,4 @@
 	    }
 	\end{axis}
     \end{tikzpicture}
-    \caption{\scriptsize Moto nello spazio delle fasi per il pendolo, le linee rosse indicano i valori di $x$ e $v$ per il quale si annullano la $\dot{v}$ o la $\dot{x}$. Le linee più esterne indicano un moto con $E > 0$, le linee che toccano l'asse $x$ e "rimbalzano" mantenendo il segno di $v$ sono quelle con $E = 0$ mentre le linee che girano nel centro dell'"occhio" hanno $E < 0$.}
-    \label{fig:15_pendolo}
-\end{figure}
+\end{document}

@@ -2,8 +2,9 @@
 \chapter{Sistemi caotici}
 \setcounter{section}{\value{Sec}} %Applico numero sezioni
 
-\section{Lezione 15}%
+\section{Introduzione ai sistemi dinamici}%
 \label{sub:Lezione 15}
+\mylocaltoc
 \subsection{Dinamica nello spazio delle fasi.}%
 \label{sub:Dinamica nello spazio delle fasi.}
 Tipicamente si parte da un set di variabili differenziali della seguente struttura:
@@ -22,7 +23,13 @@ In cui $\vect{x}$  sono delle coordinate generalizzate, mentre le $f(\vect{x})$ 
 	\frac{\text{d} }{\text{d} t} (v^2+x^2) = 0
     .\] 
     Di conseguenza le traiettorie nello spazio delle fasi sono dei semplici cerchi.
-    \input{lezioni/tikz/lez_15_osc_armonico.tex}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\columnwidth]{lezioni/tikz/lez_15_osc_armonico.pdf}
+        \caption{\scriptsize Moto nello spazio delle fasi per un oscillatore armonico.}
+        \label{fig:osc_armonico}
+    \end{figure}
+    %\input{lezioni/tikz/lez_15_osc_armonico.tex}
 \end{exmp}
 \noindent
 \begin{exmp}[Pendolo]
@@ -46,7 +53,13 @@ In cui $\vect{x}$  sono delle coordinate generalizzate, mentre le $f(\vect{x})$ 
     \[
 	v = \pm \sqrt{2 \left( E + \frac{g}{l}(1 + \cos (x)) \right) } 
     .\] 
-    \input{lezioni/tikz/lez_15_pendolo.tex}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\columnwidth]{lezioni/tikz/lez_15_pendolo.pdf}
+    \caption{\scriptsize Moto nello spazio delle fasi per il pendolo, le linee rosse indicano i valori di $x$ e $v$ per il quale si annullano la $\dot{v}$ o la $\dot{x}$. Le linee più esterne indicano un moto con $E > 0$, le linee che toccano l'asse $x$ e "rimbalzano" mantenendo il segno di $v$ sono quelle con $E = 0$ mentre le linee che girano nel centro dell'"occhio" hanno $E < 0$.}
+    \label{fig:15_pendolo}
+    \end{figure}
+%    \input{lezioni/tikz/lez_15_pendolo.tex}
     Notiamo in figura \ref{fig:15_pendolo} che nei punti 
     \[
         x = 2k\pi, \quad v = 0
@@ -64,8 +77,16 @@ In generale vale che:
 \noindent
 \begin{exmp}[Moto in doppia buca]
 Prendiamo un potenziale formato da una doppia buca asimmetrica, il moto nello spazio delle fasi è il seguente:    
-\input{lezioni/tikz/lez_15_doppia_buca.tex}
-Notiamo in figura \ref{15_double} che il moto può rimanere confinato all'interno di una delle due buche, esistono anche traiettorie che riescono ad entrare in tutte e due le buche "girando in tondo" nello spazio delle fasi. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\columnwidth]{lezioni/tikz/lez_15_doppia_buca.pdf}
+    \includegraphics[width=0.8\columnwidth]{lezioni/tikz/lez_15_doppia_buca1.pdf}
+    \caption{\scriptsize Potenziale a doppia buca e linee di flusso per il moto nello spazio delle fasi. Notiamo la presenza di un punto sella che equivale ad un moto nel quale l'oggetto raggiunge il punto di massimo tra le buche con velocità nulla (in un tempo infinito). }
+    \label{fig:15_double}
+\end{figure}
+\noindent
+%\input{lezioni/tikz/lez_15_doppia_buca.tex}
+Notiamo in figura \ref{fig:15_double} che il moto può rimanere confinato all'interno di una delle due buche, esistono anche traiettorie che riescono ad entrare in tutte e due le buche "girando in tondo" nello spazio delle fasi. 
 \end{exmp}
 \noindent
 In generale potremmo cercare un metodo per capire quali traiettorie scappano dal potenziale e quali invece rimangono confinate.
@@ -129,7 +150,7 @@ In questa situazione l'oggetto del moto si allontana esponenzialmente dal punto 
 \[
     \lambda_1<0<\lambda_2
 .\] 
-Questa è la situazione di punto sella accennata nelle sezioni precedenti (figura \ref{fig:figures-15_lambda-png}(c)).
+Questa è la situazione di punto sella accennato nel caso del pendolo (rappresentato figura \ref{fig:figures-15_lambda-png}(c), con le frecce rosse che so sovrappongono uscenti).
 \paragraph{Spirale stabile/instabile}%
 \label{par:Spirale stabile}
 \[\begin{aligned}
@@ -153,9 +174,10 @@ In questo caso gli oggetti ruotano attorno al punto fisso, se $\beta_1=\beta_2$ 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/15_lambda.png}
-    \caption{\scriptsize Tipi particolari di punti stabili nello spazio delle fasi.}
+    \caption{\scriptsize Classificazione dei punti fissi nello spazio delle fasi.}
     \label{fig:figures-15_lambda-png}
 \end{figure}
+\noindent
 Un ultimo caso è dato dall'annullarsi di uno dei due autovalori, in tal caso il moto avviene lungo una retta nello spazio delle fasi.
 \begin{exmp}[Osillatore smorzato]
     Prendiamo l'equazione del moto:
@@ -230,11 +252,15 @@ Un ultimo caso è dato dall'annullarsi di uno dei due autovalori, in tal caso il
 	\end{pmatrix}
 	\begin{pmatrix} \delta x \\ \delta v \end{pmatrix} 
     .\end{aligned}\]
-    Dobbiamo distinguere tra il caso in cui nella matrice vi è il segno positivo da quello in cui nella matrice vi è il segno negativo, per entrambi i vasi si studia il sistema e si ottengono i seguenti risultati:
+    Gli autovalori del sistema sono quindi:
+    \[
+        \lambda  = \frac{-\gamma}{2}\pm \sqrt{\frac{\gamma^2}{4} \pm \frac{g}{4l}} 
+    .\] 
+    Si hanno quindi due situazioni distinte a seconda del segno presente nella radice degli autovalori:
     \begin{itemize}
-	\item Segno $+$ ($x_0 = (2n+1)\pi$):\\
+	\item \textbf{Segno $+$}: ($x_0 = (2n+1)\pi$):\\
 	    $\lambda_1 < 0,  \lambda_2 > 0 \implies$ Punto sella.
-	\item Segno $-$ ($x = 2n\pi$): 
+	\item \textbf{Segno $-$}: ($x = 2n\pi$): 
 	    \begin{itemize}
 		\item $\gamma^2 / 4 > g /(4l)$: \\
 		    $\lambda_1,\lambda_2 < 0 \implies$ Nodo stabile.
@@ -328,12 +354,11 @@ Un ultimo caso è dato dall'annullarsi di uno dei due autovalori, in tal caso il
     \[
         \frac{\text{d} R^2}{\text{d} t} = R^2-R^4
     .\] 
-    Quindi adesso cambiando nuovamente variabili si ottiene:
+    Con l'ulteriore cambio di variabili $R^2 = z$ si ottiene l'equazione semplificata:
     \[
         \dot{z}=z-z^2
-    .\] 
-    Questa è l'unica equazione che dobbiamo studiare, stiamo infatti risolvendo il sistema in coordinate "radiali".\\
-    I punti fissi in $z$ sono:
+    \] 
+    che presenta i seguenti punti fissi:
     \[\begin{aligned}
 	& z = 0\\
 	& z = 1
@@ -342,9 +367,9 @@ Un ultimo caso è dato dall'annullarsi di uno dei due autovalori, in tal caso il
     \[
 	\delta\dot{z}=(1-2z) \delta z
     .\] 
-    Quindi nel caso di $z=0$ abbiamo $\lambda =1$, quindi abbiamo un punto instabile. Nel caso di $z=1$ abbiamo $\lambda =-1$ e quindi un punto stabile.\\
-    La grossa differenza dai sistemi visti in precedenza è che il punto $z=1$ è in realtà una varietà: $x^2+y^2=1$, di conseguenza non è semplicemente un punto stabile ma una intera varietà stabile.\\
-    In altri termini tutti i punti del piano $x,y$ tenderanno a cadere sulla circonferenza di raggio unitario. 
+    Nel caso di $z=0$ si ha $\lambda =1$: punto instabile. Nel caso di $z=1$ si ha $\lambda =-1$: punto stabile.\\
+    La grossa differenza dai sistemi visti in precedenza è che il punto $z=1$ è in realtà una varietà stabile nel sistema di coordinate di partenza $x^2+y^2=1$.
+    Tutti i punti del piano $x,y$ tenderanno a cadere sulla circonferenza di raggio unitario. 
 \end{exmp}
 \noindent
 \clearpage
