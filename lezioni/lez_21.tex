@@ -1,5 +1,6 @@
-\section{Lezione 21}%
-\label{sub:Lezione 21}
+\section{Identificare Il caos: Caos Globale}%
+\label{sec:Lezione 20}
+\mylocaltoc
 \subsection{K.S. Entropy}%
 \label{sub:K.S. Entropy}
 Prendiamo un sistema dinamico come una mappa Hamiltoniana che conserva una certa misura su un insieme $X$.\\
@@ -484,4 +485,152 @@ Quindi per definizione di esponente di Lyapunov $\sigma$:
 .\] 
 Dove $N$ è il numero totale di punti.\\
 Quindi se da questa analisi emergono dei $\lambda$ positivi possiamo affermare con certezza che il sistema è caotico, notiamo che invece non vale il viceversa: se si ottiene un esponente negativo potremmo essere semplicemente stati sfigati a beccare una regione nello spazio delle fasi priva di caos.
+\subsection{Mixing delle traiettorie}%
+\label{sub:Mixing delle traiettorie}
+Se abbiamo delle divergenze esponenziali nelle traiettorie dello spazio delle fasi allora possiamo dedurre che il sistema realizzi un mixing.\\
+Si parla di mixing quando la misura di due traiettorie distinte ha la proprieta:
+\[
+    \left<A(t)B(t)\right> \to  \left<A\right>\left<B\right> \qquad \text{con } t\to \infty
+.\] 
+Vediamo cosa significa in pratica a partire da un famoso esempio:
+\begin{exmp}[Gatto di Arnold]
+    Il sistema del gatto di Arnold è descritto dalla seguente mappa:
+    \[
+        T: \quad
+	\begin{pmatrix} x_{n+1} \\ y_{n+1} \end{pmatrix}  = 
+	\begin{pmatrix} 
+	    1 & 1 \\
+	    1 & 2
+	\end{pmatrix} 
+	\begin{pmatrix} x_n \\ y_n \end{pmatrix} 
+	\quad \text{mod}x = \text{mod}y = 1
+    .\]
+    La mappa è Hamiltoniana poiché ha determinante unitario. \\
+    Per capire come questo sistema realizza il mixing andiamo a studiare i punti fissi. Sappiamo che un punto fisso deve finire in se stesso dalla applicazione della mappa:
+    \[
+        \begin{cases}
+            x = x+y -n \\
+	    y = x + 2y - m
+        \end{cases}
+    .\] 
+    In cui $n \in \left[0,1\right]$, $m \in \left[0,2\right]$ per via del modulo unitario.\\
+    In particolare si ha $n=1$ solo se la $x$ esce dal quadrato unitario, lo stesso vale per la $y$ che potrebbe aver bisogno anche di una spinta di $-2$ per rientrare.\\
+    Risolvendo per i punti fissi otteniamo i seguenti valori:
+    \[
+        y = n \qquad x = - y + m
+    .\] 
+    Quindi i punti fissi sono i quattro vertici del quadrato che, in sostanza, sono tutti lo stesso punto per via del modulo unitario.\\
+    La mappa tangente invece è equivalente alla mappa stessa (si ottiene con le derivate miste):
+    \[
+        \begin{pmatrix} 
+	    1 & 1 \\
+	    1 & 2
+	\end{pmatrix} 
+    .\] 
+    Gli autovalori e gli autovettori di questa mappa sono:
+    \[
+        \lambda_{\pm}= \frac{3 \pm \sqrt{5} }{2} \qquad
+	\xi_{\pm} = \begin{pmatrix} 1 \\ \frac{1 \pm \sqrt{5} }{2} \end{pmatrix} 
+    .\] 
+    Notiamo che essendo la mappa Hamiltoniana i due autovalori devono essere uno l'inverso dell'altro, questa proprietà è rispettata dai $\lambda_{\pm}$.\\
+    Possiamo quindi vedere come sono fatte le varietà stabili/instabili attorno ai quattro punti fissi. \\
+    Scostandosi da ogni punto fisso di una quantità $\epsilon$ (per ciascuna delle due coordinate) e inserendo il punto "scostato" nella mappa si ottengono i seguenti risultati:
+    \[\begin{aligned}
+	&(\epsilon,\epsilon)\to (2\epsilon, 3\epsilon)\\
+	& (1-\epsilon, \epsilon) \to (1, 1+\epsilon) \to (1, \epsilon)
+    .\end{aligned}\]
+    Quindi il primo punto è instabile, il secondo è stabile (non sappiamo se ci siamo posti esattamente sul manifold uscente/entrante, sappiamo solo che nei pressi degli scostamenti valutati c'è uno di questi due).\\
+    I risultati per gli altri punti sono riportati in figura \ref{fig:21_stab_instab}.
+    \begin{figure}[H]
+        \centering
+        \incfig{21_stab_instab}
+	\caption{\scriptsize Stabilità dei punti fissi nel sistema di Arnold.}
+        \label{fig:21_stab_instab}
+    \end{figure}
+    \noindent 
+    Visto che abbiamo valutato gli autovalori della mappa tangente possiamo prendere il maggiore e valutarvi l'esponente di Lyapunov:
+    \[
+	\sigma  = \ln (\lambda_+) = \ln\left(\frac{3 + \sqrt{5} }{2}\right) > 0 
+    .\] 
+    Il sistema presenta caos.
+    Possiamo vedere cosa succede alla mappa iterata due volte, facciamo il prodotto tra le matrici:
+    \[
+        \begin{pmatrix} 
+	    1 & 1 \\
+	    1 & 2
+	\end{pmatrix} 
+        \begin{pmatrix} 
+	    1 & 1 \\
+	    1 & 2
+	\end{pmatrix} 
+	= 
+	\begin{pmatrix} 
+	    2 & 3\\
+	    3 & 5
+	\end{pmatrix} 
+	\qquad \text{mod}1
+    .\] 
+    Possiamo cercare nuovamente i punti fissi, procedendo nello stesso modo visto nel caso della mappa iterata una sola volta si arriva a ($x, y$):
+    \[
+        \left(\frac{1}{5}, \frac{3}{5}\right); \ \left(\frac{2}{5}, \frac{1}{5}\right); \ 
+	\left(\frac{3}{5}, \frac{4}{5}\right); \ \left(\frac{4}{5}, \frac{2}{5}\right)
+    .\] 
+    E tutti questi sono ancora punti iperbolici i cui manifold si incrociano formando di nuovo caos. Gli autovalori della mappa tangente questa volta sono:
+    \[
+        \lambda_{\pm} = \frac{7 \pm \sqrt{45}}{2}
+    .\] 
+    Quindi abbiamo una mappa che induce una dinamica molto complicata e caotica già dalle prime iterazioni.
+\end{exmp}
+\noindent
+\begin{exmp}[Trasformazione di Baker]
+    Riprendiamo la trasformazione di Baker già vista nella precedente lezione:
+    \[\begin{aligned}
+	&
+        \begin{cases}
+            x_{n+1} = 2 x_n\\
+	    y_{n+1} = y_n /2
+	\end{cases} & \quad \text{se } 0 \le x_n \le  1 /2\\
+	& 
+        \begin{cases}
+            x_{n+1} = 2 x_n - 1\\
+	    y_{n+1} = y_n /2 + 1 /2
+	\end{cases} & \quad \text{se } 1 /2 < x_n \le 1 \\
+    \end{aligned}\]
+    I punti fissi della mappa sono:
+    \[
+	(0, 0); \quad (1, 1)
+    .\] 
+    Andiamo a vedere la mappa linearizzata:
+    \[
+	M = 
+        \begin{pmatrix} 
+	    1 & 0 \\
+	    0 & 2
+	\end{pmatrix} 
+    .\] 
+    Gli autovalori sono già sulla diagonale, siamo quindi in una base di autovettori:
+    \[
+        \omega_1 = \begin{pmatrix} 1\\0 \end{pmatrix} \qquad
+	\omega_2 = \begin{pmatrix} 0 \\1 \end{pmatrix} 
+    .\] 
+    Andando a vedere gli scostamenti dai punti fissi si scopre che questi sono iperbolici, rammentiamo che per capirlo è proprio necessario andare a studiare/simulare la dinamica nei pressi del punto fisso.
+    \begin{figure}[H]
+        \centering
+        \incfig{22_baker}
+        \caption{\scriptsize Punti iperbolici nel sistema di Baker.}
+        \label{fig:22_baker}
+    \end{figure}
+    \noindent
+    Potremmo andare a vedere la mappa iterata due volte, scopriremo che i punti fissi (che diventano 4) sono ancora iperbolici.
+    \subsubsection{Bernoulli Shift}%
+    \label{subsub:Bernoulli Shift}
+    La trasformazione di Beker ha un'altra importante caratteristica, riprendiamo la notazione binaria per rappresentare l'evoluzione dei numeri nella mappa: 
+    \[
+        x_n = \sum_{J<0}^{} 2^{J}a_J \qquad y_n = \sum_{k>0}^{} 2^{-k} b_k
+    .\]
+    Se prendiamo come $\vect{x}_0$ iniziale un numero irrazionale (tra $0$ e $1$) si ha che la sequenza di $a_i\ldots, b_j\ldots$ è infinita. \\
+    Se applichiamo a questo numero una trasformazione di Beker otteniamo un numero completamente random (quando si fa nuovamente il cambio di base da $2$ a $10$). Questa caratteristica del sistema è detta Bernoulli Shift e può essere utilizzata per generare numeri random (a partire da una dinamica del tutto deterministica!). 
+\end{exmp}
+\noindent
+
 \clearpage
